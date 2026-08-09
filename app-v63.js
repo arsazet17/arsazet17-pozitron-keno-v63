@@ -39,7 +39,7 @@
     }
     return out.sort((a,b)=>a.draw-b.draw);
   }
-  function saveLocal(){try{localStorage.setItem(STORE.draws,JSON.stringify(draws.slice(-35000)))}catch{}}
+  function saveLocal(){try{localStorage.setItem(STORE.draws,JSON.stringify(draws.slice(-500)))}catch(e){console.warn('v6.3 local backup failed',e)}}
   function loadLocal(){try{return JSON.parse(localStorage.getItem(STORE.draws)||'[]').map(valid).filter(Boolean)}catch{return[]}}
   function merge(list){
     const map=new Map(draws.map(d=>[d.draw,d]));
@@ -103,11 +103,15 @@
 
   async function fetchFresh(){
     const savedSource=(localStorage.getItem(STORE.source)||'').trim();
-    const live='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
     const local='./keno-history-v63.json';
-    const sources=[local,live,savedSource].filter((x,i,a)=>x&&a.indexOf(x)===i);
+    const liveRaw='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
+    const livePages='https://arsazet17.github.io/pozitron-keno-v5/keno-history-v62.json';
+    const liveCdn='https://cdn.jsdelivr.net/gh/arsazet17/pozitron-keno-v5@main/keno-history-v62.json';
+    const sources=[local,liveRaw,livePages,liveCdn,savedSource].filter((x,i,a)=>x&&a.indexOf(x)===i);
     let err=null;
-    const map=new Map();
+    // Резервные свежие тиражи добавляем ДО сети: даже если все внешние источники моргнут,
+    // приложение не имеет права вернуться на старый статический архив.
+    const map=new Map(loadLocal().map(d=>[Number(d.draw),d]));
     for(const url of sources){
       try{
         const sep=url.includes('?')?'&':'?';
