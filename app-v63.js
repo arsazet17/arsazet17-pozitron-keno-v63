@@ -14,6 +14,7 @@
   const STORE={draws:'pozitron_v63_draws',source:'pozitron_v63_source',interval:'pozitron_v63_interval',fpArchive:'pozitron_v63_fp_archive_v2'};
   const DEFAULT_SOURCE='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
   let draws=[],mode='fall',timer=null,fpMode='logic',networkReady=false;
+  let fpArchiveStatus={ok:true,code:'OK',detail:''};
 
   function valid(o){
     const draw=Number(o?.draw??o?.number??o?.drawNumber??o?.id);
@@ -53,10 +54,26 @@
     try{
       const raw=JSON.stringify(compact);
       localStorage.setItem(STORE.fpArchive,raw);
-      // обязательная проверка: записали -> прочитали обратно
-      const check=JSON.parse(localStorage.getItem(STORE.fpArchive)||'[]');
-      return Array.isArray(check)&&check.length===compact.length;
+      const stored=localStorage.getItem(STORE.fpArchive);
+      if(stored===null){
+        fpArchiveStatus={ok:false,code:'READBACK_NULL',detail:'после setItem ключ не читается'};
+        return false;
+      }
+      const check=JSON.parse(stored);
+      if(!Array.isArray(check)){
+        fpArchiveStatus={ok:false,code:'READBACK_TYPE',detail:'прочитано не как массив'};
+        return false;
+      }
+      if(check.length!==compact.length){
+        fpArchiveStatus={ok:false,code:'READBACK_LENGTH',detail:`ожидалось ${compact.length}, прочитано ${check.length}`};
+        return false;
+      }
+      fpArchiveStatus={ok:true,code:'OK',detail:`${raw.length} байт · записей ${compact.length}`};
+      return true;
     }catch(e){
+      const name=e?.name||'Error';
+      const msg=e?.message||String(e||'неизвестная ошибка');
+      fpArchiveStatus={ok:false,code:name,detail:msg};
       console.error('FINGERPRINT archive write failed',e);
       return false;
     }
@@ -180,7 +197,7 @@
     for(const url of sources){
       try{
         const sep=url.includes('?')?'&':'?';
-        const r=await fetch(`${url}${sep}v=6306&t=${Date.now()}`,{cache:'no-store'});
+        const r=await fetch(`${url}${sep}v=6307&t=${Date.now()}`,{cache:'no-store'});
         if(!r.ok)throw new Error(`HTTP ${r.status}`);
         const arr=parse(await r.text());
         for(const d of arr)map.set(Number(d.draw),d);
@@ -246,7 +263,7 @@
     if(!f){box.innerHTML='<div class="row small">Недостаточно истории для расчёта.</div>';return}
     const anti=fpMode==='antilogic';
     const nums=anti?f.anti20:f.pool20,combos=anti?f.antiCombos:f.logicCombos;
-    box.innerHTML=`<div class="row"><b>🎯 / ⏳−1 · после №${f.sourceDraw}</b><div class="small">${fpSaved?'✅ Прогноз записан в архив.':'❌ ОШИБКА ЗАПИСИ АРХИВА.'} ${anti?'ANTILOGIC — альтернативные кандидаты вне основного POOL.':'LOGIC — итог согласования независимых сигналов.'}</div></div>
+    box.innerHTML=`<div class="row"><b>🎯 / ⏳−1 · после №${f.sourceDraw}</b><div class="small">${fpSaved?`✅ Прогноз записан в архив · ${fpArchiveStatus.detail}.`:`❌ АРХИВ: ${fpArchiveStatus.code} · ${fpArchiveStatus.detail}.`} ${anti?'ANTILOGIC — альтернативные кандидаты вне основного POOL.':'LOGIC — итог согласования независимых сигналов.'}</div></div>
       <div class="signal-grid">
         <div class="signal"><b>${f.transition.count}/20</b><span>переходов</span></div>
         <div class="signal"><b>${f.matrix.meanDistance.toFixed(2)}</b><span>средний Manhattan</span></div>

@@ -1,6 +1,6 @@
 'use strict';
-const CACHE='pozitron-v63-shell-6';
-const SHELL=['./','./index.html','./styles-v63.css?v=6306','./engine-v63.js?v=6306','./app-v63.js?v=6306','./manifest.webmanifest','./icon.svg'];
+const CACHE='pozitron-v63-shell-7';
+const SHELL=['./','./index.html','./styles-v63.css?v=6307','./engine-v63.js?v=6307','./app-v63.js?v=6307','./manifest.webmanifest','./icon.svg'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()));
