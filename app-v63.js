@@ -12,7 +12,7 @@
   const showDate=v=>{const p=normDate(v).split('-');return p.length===3?`${p[2]}.${p[1]}.${p[0].slice(-2)}`:String(v||'')};
   const normTime=v=>String(v||'').match(/\d{1,2}:\d{2}(?::\d{2})?/)?.[0]||String(v||'');
   const STORE={draws:'pozitron_v63_draws',source:'pozitron_v63_source',interval:'pozitron_v63_interval'};
-  const DEFAULT_SOURCE='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v72/main/keno-history.json';
+  const DEFAULT_SOURCE='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
   let draws=[],mode='fall',timer=null,fpMode='logic',networkReady=false;
 
   function valid(o){
@@ -102,21 +102,24 @@
   }
 
   async function fetchFresh(){
-    const source=(localStorage.getItem(STORE.source)||DEFAULT_SOURCE).trim();
+    const savedSource=(localStorage.getItem(STORE.source)||'').trim();
+    const live='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
     const local='./keno-history-v63.json';
-    const sources=[source,local].filter((x,i,a)=>x&&a.indexOf(x)===i);
-    let best=[],err=null;
+    const sources=[local,live,savedSource].filter((x,i,a)=>x&&a.indexOf(x)===i);
+    let err=null;
+    const map=new Map();
     for(const url of sources){
       try{
         const sep=url.includes('?')?'&':'?';
-        const r=await fetch(`${url}${sep}v=63&t=${Date.now()}`,{cache:'no-store'});
+        const r=await fetch(`${url}${sep}v=6303&t=${Date.now()}`,{cache:'no-store'});
         if(!r.ok)throw new Error(`HTTP ${r.status}`);
         const arr=parse(await r.text());
-        if(arr.length>best.length)best=arr;
+        for(const d of arr) map.set(Number(d.draw),d);
       }catch(e){err=e}
     }
-    if(best.length){
-      draws=[];merge(best);saveLocal();networkReady=true;
+    if(map.size){
+      draws=[...map.values()].sort((a,b)=>a.draw-b.draw);
+      saveLocal();networkReady=true;
       $('status').textContent=`v6.3 · база: ${draws.length.toLocaleString('ru-RU')} · последний №${draws.at(-1).draw}`;
       renderAll();
       return true;
