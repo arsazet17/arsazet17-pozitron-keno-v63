@@ -50,8 +50,22 @@
   function sumBalls(b){return (b||[]).reduce((a,x)=>a+Number(x),0)}
   function parity(b){const odd=(b||[]).filter(n=>n%2).length;return {odd,even:20-odd}}
   function dominantColumn(b){
-    const c=Array(11).fill(0);for(const n of b||[])c[n%10===0?10:n%10]++;
-    let best=1;for(let i=2;i<=10;i++)if(c[i]>c[best])best=i;return {column:best,count:c[best]};
+    const balls=b||[];
+    const totals=Array(11).fill(0);
+    for(const n of balls) totals[n%10===0?10:n%10]++;
+    const maxCount=Math.max(...totals.slice(1));
+
+    // Если несколько столбов набрали одинаковый итоговый максимум,
+    // победитель — тот, кто первым собрал этот максимум по порядку выпадения.
+    const progress=Array(11).fill(0);
+    for(let pos=0;pos<balls.length;pos++){
+      const col=balls[pos]%10===0?10:balls[pos]%10;
+      progress[col]++;
+      if(totals[col]===maxCount && progress[col]===maxCount){
+        return {column:col,count:maxCount,completedAt:pos+1};
+      }
+    }
+    return {column:1,count:totals[1],completedAt:null};
   }
   function orderFor(draw){
     if(mode==='asc')return [...draw.balls].sort((a,b)=>a-b);
