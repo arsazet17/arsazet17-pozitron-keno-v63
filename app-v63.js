@@ -11,7 +11,7 @@
   };
   const showDate=v=>{const p=normDate(v).split('-');return p.length===3?`${p[2]}.${p[1]}.${p[0].slice(-2)}`:String(v||'')};
   const normTime=v=>String(v||'').match(/\d{1,2}:\d{2}(?::\d{2})?/)?.[0]||String(v||'');
-  const STORE={draws:'pozitron_v63_draws',source:'pozitron_v63_source',interval:'pozitron_v63_interval'};
+  const STORE={draws:'pozitron_v63_draws',source:'pozitron_v63_source',interval:'pozitron_v63_interval',fpArchive:'pozitron_v63_fp_archive_v2'};
   const DEFAULT_SOURCE='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
   let draws=[],mode='fall',timer=null,fpMode='logic',networkReady=false;
 
@@ -39,8 +39,64 @@
     }
     return out.sort((a,b)=>a.draw-b.draw);
   }
-  function saveLocal(){try{localStorage.setItem(STORE.draws,JSON.stringify(draws.slice(-500)))}catch(e){console.warn('v6.3 local backup failed',e)}}
+  function saveLocal(){try{localStorage.setItem(STORE.draws,JSON.stringify(draws.slice(-35000)))}catch{}}
   function loadLocal(){try{return JSON.parse(localStorage.getItem(STORE.draws)||'[]').map(valid).filter(Boolean)}catch{return[]}}
+
+  function loadFpArchive(){
+    try{
+      const a=JSON.parse(localStorage.getItem(STORE.fpArchive)||'[]');
+      return Array.isArray(a)?a:[];
+    }catch{return[]}
+  }
+  function saveFpArchive(list){
+    const compact=(list||[]).slice(-80);
+    try{
+      const raw=JSON.stringify(compact);
+      localStorage.setItem(STORE.fpArchive,raw);
+      // обязательная проверка: записали -> прочитали обратно
+      const check=JSON.parse(localStorage.getItem(STORE.fpArchive)||'[]');
+      return Array.isArray(check)&&check.length===compact.length;
+    }catch(e){
+      console.error('FINGERPRINT archive write failed',e);
+      return false;
+    }
+  }
+  function settleFpArchive(){
+    if(!draws.length)return;
+    const byDraw=new Map(draws.map(d=>[Number(d.draw),d]));
+    const list=loadFpArchive();
+    let changed=false;
+    for(const p of list){
+      if(p.actual||!byDraw.has(Number(p.targetDraw)))continue;
+      const d=byDraw.get(Number(p.targetDraw));
+      const set=new Set((d.balls||[]).map(Number));
+      p.actual={draw:d.draw,date:d.date,time:d.time,balls:d.balls.slice()};
+      p.poolHits=(p.pool20||[]).filter(n=>set.has(Number(n)));
+      p.antiHits=(p.anti20||[]).filter(n=>set.has(Number(n)));
+      p.logicCombos=(p.logicCombos||[]).map(c=>({...c,hits:(c.numbers||[]).filter(n=>set.has(Number(n)))}));
+      p.antiCombos=(p.antiCombos||[]).map(c=>({...c,hits:(c.numbers||[]).filter(n=>set.has(Number(n)))}));
+      changed=true;
+    }
+    if(changed)saveFpArchive(list);
+  }
+  function storeFpForecast(f){
+    if(!f)return false;
+    const list=loadFpArchive();
+    const key=`${f.sourceDraw}:${f.targetDraw}`;
+    if(!list.some(x=>`${x.sourceDraw}:${x.targetDraw}`===key)){
+      list.push({
+        version:'6.3',
+        sourceDraw:Number(f.sourceDraw),
+        targetDraw:Number(f.targetDraw),
+        createdAt:f.createdAt||new Date().toISOString(),
+        pool20:(f.pool20||[]).slice(),
+        anti20:(f.anti20||[]).slice(),
+        logicCombos:(f.logicCombos||[]).map(c=>({id:c.id,size:c.size,numbers:(c.numbers||[]).slice()})),
+        antiCombos:(f.antiCombos||[]).map(c=>({id:c.id,size:c.size,numbers:(c.numbers||[]).slice()}))
+      });
+    }
+    return saveFpArchive(list);
+  }
   function merge(list){
     const map=new Map(draws.map(d=>[d.draw,d]));
     for(const d of list)map.set(d.draw,d);
@@ -50,22 +106,8 @@
   function sumBalls(b){return (b||[]).reduce((a,x)=>a+Number(x),0)}
   function parity(b){const odd=(b||[]).filter(n=>n%2).length;return {odd,even:20-odd}}
   function dominantColumn(b){
-    const balls=b||[];
-    const totals=Array(11).fill(0);
-    for(const n of balls) totals[n%10===0?10:n%10]++;
-    const maxCount=Math.max(...totals.slice(1));
-
-    // Если несколько столбов набрали одинаковый итоговый максимум,
-    // победитель — тот, кто первым собрал этот максимум по порядку выпадения.
-    const progress=Array(11).fill(0);
-    for(let pos=0;pos<balls.length;pos++){
-      const col=balls[pos]%10===0?10:balls[pos]%10;
-      progress[col]++;
-      if(totals[col]===maxCount && progress[col]===maxCount){
-        return {column:col,count:maxCount,completedAt:pos+1};
-      }
-    }
-    return {column:1,count:totals[1],completedAt:null};
+    const c=Array(11).fill(0);for(const n of b||[])c[n%10===0?10:n%10]++;
+    let best=1;for(let i=2;i<=10;i++)if(c[i]>c[best])best=i;return {column:best,count:c[best]};
   }
   function orderFor(draw){
     if(mode==='asc')return [...draw.balls].sort((a,b)=>a-b);
@@ -117,15 +159,11 @@
 
   async function fetchFresh(){
     const savedSource=(localStorage.getItem(STORE.source)||'').trim();
+    const live='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
     const local='./keno-history-v63.json';
-    const liveRaw='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
-    const livePages='https://arsazet17.github.io/pozitron-keno-v5/keno-history-v62.json';
-    const liveCdn='https://cdn.jsdelivr.net/gh/arsazet17/pozitron-keno-v5@main/keno-history-v62.json';
-    const sources=[local,liveRaw,livePages,liveCdn,savedSource].filter((x,i,a)=>x&&a.indexOf(x)===i);
+    const sources=[local,live,savedSource].filter((x,i,a)=>x&&a.indexOf(x)===i);
     let err=null;
-    // Резервные свежие тиражи добавляем ДО сети: даже если все внешние источники моргнут,
-    // приложение не имеет права вернуться на старый статический архив.
-    const map=new Map(loadLocal().map(d=>[Number(d.draw),d]));
+    const map=new Map();
     for(const url of sources){
       try{
         const sep=url.includes('?')?'&':'?';
@@ -136,20 +174,8 @@
       }catch(e){err=e}
     }
     if(map.size){
-      // Никогда не откатываемся назад, если один из источников временно отдал старую базу.
-      // Сохраняем уже показанные/локально сохранённые свежие тиражи и только добавляем новые.
-      const merged=new Map();
-      for(const d of loadLocal()) merged.set(Number(d.draw),d);
-      for(const d of draws) merged.set(Number(d.draw),d);
-      for(const d of map.values()) merged.set(Number(d.draw),d);
-      const next=[...merged.values()].sort((a,b)=>a.draw-b.draw);
-      const currentMax=draws.length?Number(draws.at(-1).draw):0;
-      const nextMax=next.length?Number(next.at(-1).draw):0;
-      if(nextMax>=currentMax){
-        draws=next;
-        saveLocal();
-      }
-      networkReady=true;
+      draws=[...map.values()].sort((a,b)=>a.draw-b.draw);
+      saveLocal();networkReady=true;
       $('status').textContent=`v6.3 · база: ${draws.length.toLocaleString('ru-RU')} · последний №${draws.at(-1).draw}`;
       renderAll();
       return true;
@@ -178,19 +204,26 @@
   function renderFingerprint(){
     const box=$('fingerprintResult');if(!draws.length){box.innerHTML='';return}
     window.POZITRON_V63_ENGINE.settleAndLearn(draws);
+    settleFpArchive();
     if(fpMode==='archive'){
-      const list=window.POZITRON_V63_ENGINE.loadPredictions().slice().reverse();
+      const list=loadFpArchive().slice().reverse();
       box.innerHTML=list.length?list.slice(0,30).map(p=>{
-        const hit=p.poolHits?.length;
-        return `<div class="archive-item"><b>№${p.targetDraw}</b> · после №${p.sourceDraw}${p.actual?` · POOL ${hit}/20`:' · ⏳ ожидает'}<div class="small">${p.actual?'проверен':'зафиксирован'} · ${new Date(p.createdAt).toLocaleString('ru-RU')}</div></div>`;
+        const hit=(p.poolHits||[]).length;
+        const bestLogic=(p.logicCombos||[]).reduce((m,c)=>Math.max(m,(c.hits||[]).length),0);
+        const bestAnti=(p.antiCombos||[]).reduce((m,c)=>Math.max(m,(c.hits||[]).length),0);
+        return `<div class="archive-item">
+          <b>№${p.targetDraw}</b> · после №${p.sourceDraw}${p.actual?` · POOL ${hit}/20`:' · ⏳ ожидает'}
+          <div class="small">${p.actual?`проверен · лучший LOGIC ${bestLogic} · ANTILOGIC ${bestAnti}`:'зафиксирован'} · ${new Date(p.createdAt).toLocaleString('ru-RU')}</div>
+        </div>`;
       }).join(''):'<div class="row small">Архив FINGERPRINT пока пуст.</div>';
       return;
     }
     const f=window.POZITRON_V63_ENGINE.forecast(draws);
+    const fpSaved=storeFpForecast(f);
     if(!f){box.innerHTML='<div class="row small">Недостаточно истории для расчёта.</div>';return}
     const anti=fpMode==='antilogic';
     const nums=anti?f.anti20:f.pool20,combos=anti?f.antiCombos:f.logicCombos;
-    box.innerHTML=`<div class="row"><b>🎯 / ⏳−1 · после №${f.sourceDraw}</b><div class="small">Прогноз фиксируется до следующего тиража. ${anti?'ANTILOGIC — альтернативные кандидаты вне основного POOL.':'LOGIC — итог согласования независимых сигналов.'}</div></div>
+    box.innerHTML=`<div class="row"><b>🎯 / ⏳−1 · после №${f.sourceDraw}</b><div class="small">${fpSaved?'✅ Прогноз записан в архив.':'❌ ОШИБКА ЗАПИСИ АРХИВА.'} ${anti?'ANTILOGIC — альтернативные кандидаты вне основного POOL.':'LOGIC — итог согласования независимых сигналов.'}</div></div>
       <div class="signal-grid">
         <div class="signal"><b>${f.transition.count}/20</b><span>переходов</span></div>
         <div class="signal"><b>${f.matrix.meanDistance.toFixed(2)}</b><span>средний Manhattan</span></div>
@@ -204,64 +237,13 @@
   function renderMatrix(){
     const r=window.POZITRON_V63_ENGINE.matrixReport(draws),f=r.features,cur=draws.at(-1),set=new Set(cur.balls),tr=new Set(r.transition.numbers);
     const phasePct=Math.max(5,Math.min(95,50-r.delta*14));
-    const dc=dominantColumn(cur.balls);
-
-    const q=f.quadrants||[0,0,0,0];
-    const qNames=['верх-лево','верх-право','низ-лево','низ-право'];
-    const maxQ=Math.max(...q), minQ=Math.min(...q);
-    const maxQi=q.indexOf(maxQ), minQi=q.indexOf(minQ);
-
-    const movement = r.arrow==='•' ? 'центр почти не сместился' : `центр движется ${r.arrow}`;
-    const phaseText = r.phase==='СЖАТИЕ'
-      ? 'поле стало плотнее относительно предыдущего тиража'
-      : r.phase==='РАЗЖАТИЕ'
-        ? 'поле стало более рассеянным относительно предыдущего тиража'
-        : 'резкого изменения плотности поля нет';
-
-    const strength =
-      Math.abs(r.delta)>=1.0 || f.imbalance>=0.30 ? 'СИЛЬНЫЙ'
-      : Math.abs(r.delta)>=0.45 || f.imbalance>=0.18 ? 'СРЕДНИЙ'
-      : 'СЛАБЫЙ';
-
-    $('matrixResult').innerHTML=`
-    <div class="row">
-      <div class="label">РАЗБИРАЕМЫЙ ТИРАЖ</div>
-      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-top:4px">
-        <div>
-          <b style="font-size:22px">№${cur.draw}</b>
-          <div class="small">${showDate(cur.date)} ${cur.time||''}</div>
-        </div>
-        <div class="st">🔴 ст${dc.column}</div>
-      </div>
-    </div>
-
-    <div class="signal-grid">
+    $('matrixResult').innerHTML=`<div class="signal-grid">
       <div class="signal"><b>${r.phase}</b><span>фаза поля</span></div>
       <div class="signal"><b>${r.arrow}</b><span>движение центра</span></div>
       <div class="signal"><b>${f.density.toFixed(3)}</b><span>плотность D≤2</span></div>
       <div class="signal"><b>${f.imbalance.toFixed(2)}</b><span>перекос квадрантов</span></div>
     </div>
-
-    <div class="row">
-      <strong>Сжатие ↔ разжатие</strong>
-      <div class="meter"><span style="width:${phasePct}%"></span></div>
-      <div class="small">Δ среднего Manhattan: ${r.delta>=0?'+':''}${r.delta.toFixed(3)}</div>
-    </div>
-
-    <div class="row">
-      <div class="label">ВЫВОД МАТРИЦЫ</div>
-      <div style="margin-top:5px"><b>${strength} СИГНАЛ</b> · ${r.phase}</div>
-      <div class="small" style="margin-top:4px">${phaseText}; ${movement}.</div>
-      <div class="small" style="margin-top:4px">
-        Самый заполненный сектор: <b>${qNames[maxQi]}</b> (${maxQ}/20) ·
-        самый свободный: <b>${qNames[minQi]}</b> (${minQ}/20).
-      </div>
-      <div class="small" style="margin-top:5px">
-        Этот блок не выбирает комбинацию сам по себе — он передаёт FINGERPRINT режим поля:
-        <b>${r.phase}</b> + направление <b>${r.arrow}</b> + перекос <b>${f.imbalance.toFixed(2)}</b>.
-      </div>
-    </div>
-
+    <div class="row"><strong>Сжатие ↔ разжатие</strong><div class="meter"><span style="width:${phasePct}%"></span></div><div class="small">Δ среднего Manhattan: ${r.delta>=0?'+':''}${r.delta.toFixed(3)}</div></div>
     <div class="matrix-grid">${Array.from({length:80},(_,i)=>i+1).map(n=>`<div class="cell ${set.has(n)?'on':''} ${tr.has(n)?'transition':''}">${n}</div>`).join('')}</div>`;
   }
 
