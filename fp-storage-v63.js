@@ -71,10 +71,12 @@
       await idbPut(r);
     }
   }
-  async function renderArchive(){
+  async function renderArchive(liveDraws){
     const box=document.getElementById('fingerprintResult');if(!box)return;
     try{
-      const [draws,records0]=await Promise.all([fetchDraws(),idbAll()]);
+      const appDraws=Array.isArray(liveDraws)?liveDraws.filter(d=>d&&Number.isFinite(Number(d.draw))&&Array.isArray(d.balls)&&d.balls.length===20):[];
+      const draws=appDraws.length?appDraws:await fetchDraws();
+      const records0=await idbAll();
       await settle(records0,draws);
       const records=(await idbAll()).sort((a,b)=>Number(b.targetDraw)-Number(a.targetDraw));
       box.innerHTML=records.length?records.slice(0,40).map(r=>{
@@ -86,6 +88,6 @@
   }
 
   window.addEventListener('pozitron:fingerprint-forecast',e=>saveForecast(e.detail));
-  window.addEventListener('pozitron:fingerprint-archive',()=>renderArchive());
+  window.addEventListener('pozitron:fingerprint-archive',e=>renderArchive(e.detail?.draws));
   openDb().then(db=>db.close()).catch(()=>{});
 })();

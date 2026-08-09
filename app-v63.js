@@ -246,7 +246,7 @@
     window.POZITRON_V63_ENGINE.settleAndLearn(draws);
     if(fpMode==='archive'){
       box.innerHTML='<div class="row small">Загружаю архив FINGERPRINT из IndexedDB…</div>';
-      window.dispatchEvent(new CustomEvent('pozitron:fingerprint-archive'));
+      window.dispatchEvent(new CustomEvent('pozitron:fingerprint-archive',{detail:{draws:draws.slice()}}));
       return;
     }
     const f=window.POZITRON_V63_ENGINE.forecast(draws);
