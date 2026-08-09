@@ -128,5 +128,7 @@
   }
   function assemblyReport(draws){const i=draws.length-1;return {draw:draws[i]?.draw,date:draws[i]?.date,time:draws[i]?.time,...assemblyFeatures(draws,i)};}
 
-  window.POZITRON_V63_ENGINE={DEFAULT_WEIGHTS,normalizeWeights,forecast,settlePrediction,matrixReport,assemblyReport,matrixFeatures,transitionFeatures};
+  const API={DEFAULT_WEIGHTS,normalizeWeights,forecast,settlePrediction,matrixReport,assemblyReport,matrixFeatures,transitionFeatures};
+  if(typeof window!=='undefined') window.POZITRON_V63_ENGINE=API;
+  if(typeof module!=='undefined'&&module.exports) module.exports=API;
 })();

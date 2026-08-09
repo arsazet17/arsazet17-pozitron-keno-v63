@@ -1,0 +1,26 @@
+ПОЗИТРОН КЕНО 6.3 — SERVER LEARNING 6500
+
+РЕПОЗИТОРИЙ: arsazet17/arsazet17-pozitron-keno-v63
+
+КОРЕНЬ РЕПОЗИТОРИЯ — заменить:
+- app-v63.js
+- engine-v63.js
+- index.html
+- sw.js
+
+ПАПКА scripts — заменить/добавить:
+- keno-update-v63.js
+- fingerprint-server-v63.js  (новый)
+- validate-v63-server.js    (новый)
+- test-server-learning-v63.js (новый)
+
+ПАПКА .github/workflows — заменить:
+- update-keno-v63.yaml
+
+НЕ СОЗДАВАТЬ ВРУЧНУЮ:
+- fingerprint-state-v63.json
+- fingerprint-archive-v63.json
+GitHub Action создаст их сам на первом успешном запуске из свежего последнего тиража.
+
+После загрузки: Actions -> KENO v6.3 Server Learning -> Run workflow.
+Успешный запуск обязан пройти этапы Syntax check, Server learning self-test, Update, Validate server state.

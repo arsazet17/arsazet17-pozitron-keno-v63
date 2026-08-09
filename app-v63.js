@@ -17,6 +17,8 @@
     draws:'pozitron_v63_draws',
     source:'pozitron_v63_source',
     interval:'pozitron_v63_interval',
+    fpState:'pozitron_v63_server_state_cache',
+    fpArchive:'pozitron_v63_server_archive_cache',
   };
   const DEFAULT_SOURCE='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
   const PAYOUTS=Object.freeze({
@@ -30,7 +32,7 @@
     k5_5:20000
   });
   let draws=[],mode='fall',timer=null,fpMode='logic',networkReady=false;
-  let weights={...(ENGINE?.DEFAULT_WEIGHTS||{})},learningCount=0,bootstrapCount=0;
+  let serverState=null,serverArchive=[],serverFingerprintOnline=false,archiveLookup=new Map();
 
   function valid(o){
     const draw=Number(o?.draw??o?.number??o?.drawNumber??o?.id);
@@ -108,6 +110,50 @@
     }).join('');
   }
 
+  async function fetchFingerprintServer(){
+    const bust=`?v=6500&t=${Date.now()}`;
+    try{
+      const [sr,ar]=await Promise.all([
+        fetch('./fingerprint-state-v63.json'+bust,{cache:'no-store'}),
+        fetch('./fingerprint-archive-v63.json'+bust,{cache:'no-store'})
+      ]);
+      if(!sr.ok||!ar.ok)throw new Error(`SERVER FINGERPRINT HTTP ${sr.status}/${ar.status}`);
+      const state=await sr.json(),archive=await ar.json();
+      if(!state?.serverLearning||!Array.isArray(archive))throw new Error('Неверный формат SERVER FINGERPRINT');
+      serverState=state;serverArchive=archive.sort((a,b)=>Number(a.targetDraw)-Number(b.targetDraw));serverFingerprintOnline=true;
+      try{localStorage.setItem(STORE.fpState,JSON.stringify(serverState));localStorage.setItem(STORE.fpArchive,JSON.stringify(serverArchive));}catch{}
+      return true;
+    }catch(error){
+      console.warn('SERVER FINGERPRINT:',error);
+      try{
+        const state=JSON.parse(localStorage.getItem(STORE.fpState)||'null');
+        const archive=JSON.parse(localStorage.getItem(STORE.fpArchive)||'[]');
+        if(state?.serverLearning&&Array.isArray(archive)){serverState=state;serverArchive=archive;serverFingerprintOnline=false;return false;}
+      }catch{}
+      serverState=null;serverArchive=[];serverFingerprintOnline=false;return false;
+    }
+  }
+
+  async function legacyArchive(){
+    if(!DBSTORE?.listPredictions)return [];
+    try{
+      const list=(await DBSTORE.listPredictions()).filter(Boolean),facts=new Map(draws.map(d=>[Number(d.draw),d]));
+      return list.map(p=>{
+        if(p.actual||!facts.has(Number(p.targetDraw))||!ENGINE?.settlePrediction)return p;
+        try{return ENGINE.settlePrediction(p,facts.get(Number(p.targetDraw)),p.weights||ENGINE.DEFAULT_WEIGHTS).prediction}catch{return p}
+      });
+    }catch{return []}
+  }
+
+  async function combinedArchive(){
+    const legacy=await legacyArchive(),map=new Map();
+    for(const p of legacy)map.set(Number(p.targetDraw),{...p,legacyLocal:true});
+    for(const p of serverArchive)map.set(Number(p.targetDraw),{...p,server:true,legacyLocal:false});
+    const list=[...map.values()].sort((a,b)=>Number(a.targetDraw)-Number(b.targetDraw));
+    archiveLookup=new Map(list.map(p=>[Number(p.targetDraw),p]));
+    return list;
+  }
+
   async function fetchFresh(){
     const savedSource=(localStorage.getItem(STORE.source)||'').trim();
     const live='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
@@ -117,7 +163,7 @@
     for(const url of sources){
       try{
         const sep=url.includes('?')?'&':'?';
-        const r=await fetch(`${url}${sep}v=6413&t=${Date.now()}`,{cache:'no-store'});
+        const r=await fetch(`${url}${sep}v=6500&t=${Date.now()}`,{cache:'no-store'});
         if(!r.ok)throw new Error(`HTTP ${r.status}`);
         const arr=parse(await r.text()); for(const d of arr)map.set(Number(d.draw),d);
       }catch(e){err=e}
@@ -125,12 +171,14 @@
     if(map.size){
       draws=[...map.values()].sort((a,b)=>a.draw-b.draw);saveLocal();networkReady=true;
       if(DBSTORE)await DBSTORE.saveDraws(draws).catch(()=>{});
-      $('status').textContent=`v6.3 · база: ${draws.length.toLocaleString('ru-RU')} · последний №${draws.at(-1).draw}`;
+      await fetchFingerprintServer();
+      $('status').textContent=`v6.3 SERVER · база: ${draws.length.toLocaleString('ru-RU')} · последний №${draws.at(-1).draw}`;
       renderAll();return true;
     }
     const backup=loadLocal();
     if(backup.length>=3){
       draws=backup.sort((a,b)=>a.draw-b.draw);networkReady=true;
+      await fetchFingerprintServer();
       $('status').textContent=`⚠ ОФЛАЙН · сохранено до №${draws.at(-1).draw}`;renderAll();return false;
     }
     $('status').textContent='Нет связи и нет локальной резервной базы';
@@ -145,52 +193,10 @@
     if($('assemblyPanel').classList.contains('show'))renderAssembly();
   }
 
-  async function ensureBootstrapLearning(){
-    if(!DBSTORE||!ENGINE)return;
-    const done=await DBSTORE.getMeta('bootstrapVersion','');
-    weights=ENGINE.normalizeWeights(await DBSTORE.getMeta('weights',weights));
-    if(done==='6413'){
-      bootstrapCount=Number(await DBSTORE.getMeta('bootstrapCount',0))||0;return;
-    }
-    if(draws.length<80)return;
-    const steps=Math.min(36,draws.length-20);
-    let w={...weights},trained=0;
-    const start=draws.length-1-steps;
-    for(let i=start;i<draws.length-1;i++){
-      const context=draws.slice(Math.max(0,i-899),i+1);
-      const pred=ENGINE.forecast(context,w);
-      if(pred){const result=ENGINE.settlePrediction(pred,draws[i+1],w);w=result.weights;trained++}
-      if(trained%6===0)await new Promise(r=>setTimeout(r,0));
-    }
-    weights=w;bootstrapCount=trained;
-    await DBSTORE.setMeta('weights',weights);
-    await DBSTORE.setMeta('bootstrapVersion','6413');
-    await DBSTORE.setMeta('bootstrapCount',trained);
-  }
-
-  async function settlePending(){
-    if(!DBSTORE||!ENGINE)return;
-    const by=new Map(draws.map(d=>[Number(d.draw),d]));
-    const list=await DBSTORE.listPredictions();
-    let changed=false;
-    for(const p of list){
-      if(p.actual||!by.has(Number(p.targetDraw)))continue;
-      const result=ENGINE.settlePrediction(p,by.get(Number(p.targetDraw)),weights);
-      weights=result.weights; await DBSTORE.putPrediction(result.prediction); changed=true;
-    }
-    if(changed)await DBSTORE.setMeta('weights',weights);
-    const updated=await DBSTORE.listPredictions();
-    learningCount=updated.filter(p=>p.actual).length;
-  }
-
-  async function getOrCreateForecast(){
-    if(!DBSTORE||!ENGINE)return null;
-    await ensureBootstrapLearning(); await settlePending();
-    const latest=draws.at(-1); if(!latest)return null;
-    const target=Number(latest.draw)+1;
-    let p=await DBSTORE.getPrediction(target);
-    if(!p){p=ENGINE.forecast(draws,weights);if(p)await DBSTORE.putPrediction(p)}
-    return p;
+  function getServerForecast(){
+    if(!serverState||!serverArchive.length)return null;
+    const target=Number(serverState.nextTargetDraw||0);
+    return serverArchive.find(p=>Number(p.targetDraw)===target&&!p.actual)||serverArchive.find(p=>!p.actual)||null;
   }
 
   function poolHtml(nums,hits=[]){
@@ -267,39 +273,44 @@
 
   async function renderArchive(){
     const box=$('fingerprintResult');
-    await ensureBootstrapLearning();await settlePending();
-    const list=(await DBSTORE.listPredictions()).slice().reverse();
-    if(!list.length){box.innerHTML='<div class="row small">Архив FINGERPRINT пока пуст.</div>';return}
-    box.innerHTML=list.slice(0,60).map(p=>`
+    const list=(await combinedArchive()).slice().reverse();
+    if(!list.length){
+      box.innerHTML='<div class="row small">Серверный архив FINGERPRINT пока не создан. После первого успешного GitHub Action появится прогноз.</div>';
+      return;
+    }
+    box.innerHTML=list.slice(0,80).map(p=>`
       <button class="archive-item ${p.actual?'settled':'waiting'}" data-archive-draw="${p.targetDraw}">
         <div><b>№${p.targetDraw}</b> · после №${p.sourceDraw}${p.actual?` · POOL ${(p.poolHits||[]).length}/20 · ANTI ${(p.antiHits||[]).length}/20`:' · ⏳ ожидает'}</div>
-        <div class="small">${p.actual?'проверен и обучен':'зафиксирован'} · ${new Date(p.createdAt).toLocaleString('ru-RU')}</div>
+        <div class="small">${p.actual?'проверен и обучен':'зафиксирован'} · ${p.server?'SERVER':'старый локальный архив'} · ${new Date(p.createdAt).toLocaleString('ru-RU')}</div>
         <div class="archive-chevron">⌄</div>
       </button>
       <div class="archive-detail" id="archive-${p.targetDraw}"></div>`).join('');
-    box.querySelectorAll('[data-archive-draw]').forEach(btn=>btn.addEventListener('click',async()=>{
+    box.querySelectorAll('[data-archive-draw]').forEach(btn=>btn.addEventListener('click',()=>{
       const target=Number(btn.dataset.archiveDraw),detail=$(`archive-${target}`);
       const already=detail.innerHTML.trim();
       box.querySelectorAll('.archive-detail').forEach(x=>{if(x!==detail)x.innerHTML=''});
       box.querySelectorAll('.archive-item').forEach(x=>{if(x!==btn)x.classList.remove('expanded')});
       if(already){detail.innerHTML='';btn.classList.remove('expanded');return}
-      const p=await DBSTORE.getPrediction(target);
-      detail.innerHTML=archiveDetail(p);btn.classList.add('expanded');
+      const pred=archiveLookup.get(target);
+      detail.innerHTML=archiveDetail(pred);btn.classList.add('expanded');
     }));
   }
 
   async function renderFingerprint(){
     const box=$('fingerprintResult');
     if(!draws.length){box.innerHTML='';return}
-    if(!DBSTORE||!ENGINE){box.innerHTML='<div class="row small">Ошибка: модуль обучения не загружен.</div>';return}
+    if(fpMode==='archive'){await renderArchive();return}
     try{
-      if(fpMode==='archive'){await renderArchive();return}
-      box.innerHTML='<div class="row small">🧠 Расчёт и проверка обучения…</div>';
-      const p=await getOrCreateForecast();
-      if(!p){box.innerHTML='<div class="row small">Недостаточно истории для расчёта.</div>';return}
+      const p=getServerForecast();
+      if(!p){
+        box.innerHTML='<div class="row small">⏳ SERVER FINGERPRINT ещё не инициализирован. Нужен один успешный запуск GitHub Action.</div>';
+        return;
+      }
       const anti=fpMode==='antilogic',pool=anti?p.anti20:p.pool20,combos=anti?p.antiCombos:p.logicCombos;
-      box.innerHTML=`<div class="row"><strong>🎯 / ⏳−1 · после №${p.sourceDraw} → №${p.targetDraw}</strong>
-        <div class="small">🧠 обучение: архив ${bootstrapCount} + живых ${learningCount} · память IndexedDB</div></div>
+      const weights=serverState?.weights||p.weights||ENGINE?.DEFAULT_WEIGHTS||{};
+      const bootstrapCount=Number(serverState?.bootstrapCount||0),learningCount=Number(serverState?.settledCount||0);
+      box.innerHTML=`<div class="row"><strong>🎯 SERVER / ⏳−1 · после №${p.sourceDraw} → №${p.targetDraw}</strong>
+        <div class="small">🧠 обучение: архив ${bootstrapCount} + серверных ${learningCount} · ${serverFingerprintOnline?'GitHub SERVER':'кэш SERVER'}</div></div>
         <div class="signal-grid">
           <div class="signal"><b>${p.transition?.count||0}/20</b><span>переходов</span></div>
           <div class="signal"><b>${Number(p.matrix?.meanDistance||0).toFixed(2)}</b><span>средний Manhattan</span></div>
@@ -308,7 +319,7 @@
         </div>
         <div class="label" style="margin-top:12px">${anti?'ANTILOGIC-20':'POOL-20'}</div>${poolHtml(pool)}
         <div class="label" style="margin-top:12px">К3 · К4 · К5</div>${combosHtml(combos)}`;
-    }catch(error){console.error(error);box.innerHTML=`<div class="row small">Ошибка FINGERPRINT: ${String(error?.message||error)}</div>`}
+    }catch(error){console.error(error);box.innerHTML=`<div class="row small">Ошибка SERVER FINGERPRINT: ${String(error?.message||error)}</div>`}
   }
 
   function renderMatrix(){
@@ -390,6 +401,6 @@
 
   updatePanelButtons();startAuto();fetchFresh().catch(()=>{});
   if('serviceWorker' in navigator){
-    window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6413',{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{}));
+    window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6500',{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{}));
   }
 })();
