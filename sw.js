@@ -1,5 +1,5 @@
 'use strict';
-const CACHE='pozitron-v63-clean-6500';
+const CACHE='pozitron-v63-clean-6502';
 const ASSETS=['./','./index.html','./styles-v63.css','./archive-v63.css','./storage-v63.js','./engine-v63.js','./app-v63.js','./manifest.webmanifest','./icon.svg'];
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).catch(()=>{}));});
 self.addEventListener('activate',e=>{e.waitUntil((async()=>{for(const k of await caches.keys())if(k!==CACHE)await caches.delete(k);await self.clients.claim();})());});

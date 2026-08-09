@@ -41,7 +41,12 @@
     let balls=o?.balls??o?.numbers??o?.results??o?.result??o?.winningNumbers;
     if(typeof balls==='string')balls=(balls.match(/\d+/g)||[]).map(Number);
     balls=(balls||[]).map(Number).filter(n=>n>=1&&n<=80).slice(0,20);
-    return Number.isFinite(draw)&&balls.length===20&&new Set(balls).size===20?{draw,date,time,balls}:null;
+    if(!Number.isFinite(draw)||balls.length!==20||new Set(balls).size!==20)return null;
+    const result={draw,date,time,balls};
+    const column=Number(o?.column??o?.officialColumn);
+    if(Number.isInteger(column)&&column>=1&&column<=10)result.column=column;
+    if(o?.columnSource)result.columnSource=String(o.columnSource);
+    return result;
   }
   function parse(text){
     const t=String(text||'').trim();if(!t)return[];
@@ -69,8 +74,23 @@
   function sumBalls(b){return (b||[]).reduce((a,x)=>a+Number(x),0)}
   function parity(b){const odd=(b||[]).filter(n=>n%2).length;return {odd,even:20-odd}}
   function dominantColumn(b){
-    const c=Array(11).fill(0);for(const n of b||[])c[n%10===0?10:n%10]++;
-    let best=1;for(let i=2;i<=10;i++)if(c[i]>c[best])best=i;return {column:best,count:c[best]};
+    const balls=(b||[]).map(Number);
+    const totals=Array(11).fill(0);
+    for(const n of balls)totals[n%10===0?10:n%10]++;
+    const max=Math.max(...totals.slice(1));
+    if(max<=0)return {column:1,count:0};
+
+    // При равенстве побеждает тот столб, который первым собрал
+    // максимальное количество чисел по реальному порядку выпадения.
+    const running=Array(11).fill(0);
+    for(const n of balls){
+      const col=n%10===0?10:n%10;
+      running[col]++;
+      if(totals[col]===max && running[col]===max){
+        return {column:col,count:max};
+      }
+    }
+    return {column:1,count:max};
   }
   function orderFor(draw){if(mode==='asc')return [...draw.balls].sort((a,b)=>a-b);return draw.balls.slice()}
   function samePositions(draw){
@@ -88,7 +108,11 @@
   function drawCard(draw,previous,label){
     const prevSet=new Set(previous?.balls||[]);
     const trans=new Set(draw.balls.filter(n=>prevSet.has(Number(n))));
-    const same=samePositions(draw),p=parity(draw.balls),dc=dominantColumn(draw.balls);
+    const same=samePositions(draw),p=parity(draw.balls);
+    const officialColumn=Number(draw?.column);
+    const dc=(Number.isInteger(officialColumn)&&officialColumn>=1&&officialColumn<=10)
+      ? {column:officialColumn,count:null,official:true}
+      : {...dominantColumn(draw.balls),official:false};
     const nums=orderFor(draw);
     return `<section class="card">
       <div class="draw-head"><div>
@@ -111,7 +135,7 @@
   }
 
   async function fetchFingerprintServer(){
-    const bust=`?v=6500&t=${Date.now()}`;
+    const bust=`?v=6502&t=${Date.now()}`;
     try{
       const [sr,ar]=await Promise.all([
         fetch('./fingerprint-state-v63.json'+bust,{cache:'no-store'}),
@@ -163,9 +187,16 @@
     for(const url of sources){
       try{
         const sep=url.includes('?')?'&':'?';
-        const r=await fetch(`${url}${sep}v=6500&t=${Date.now()}`,{cache:'no-store'});
+        const r=await fetch(`${url}${sep}v=6502&t=${Date.now()}`,{cache:'no-store'});
         if(!r.ok)throw new Error(`HTTP ${r.status}`);
-        const arr=parse(await r.text()); for(const d of arr)map.set(Number(d.draw),d);
+        const arr=parse(await r.text());
+        for(const d of arr){
+          const key=Number(d.draw),prev=map.get(key)||{};
+          map.set(key,{...prev,...d,
+            ...(prev.column&&!d.column?{column:prev.column,columnSource:prev.columnSource}:{}),
+            ...(d.column?{column:d.column,columnSource:d.columnSource}:{}),
+          });
+        }
       }catch(e){err=e}
     }
     if(map.size){
