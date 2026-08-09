@@ -1,8 +1,11 @@
 'use strict';
 (() => {
   const $=id=>document.getElementById(id), STORE=window.POZITRON_V63_STORE, ENGINE=window.POZITRON_V63_ENGINE;
-  const BUILD='6400';
+  const BUILD='6410';
   const SOURCES=[
+    'https://raw.githubusercontent.com/arsazet17/arsazet17-pozitron-keno-v63/main/keno-history-v63.json',
+    'https://arsazet17.github.io/arsazet17-pozitron-keno-v63/keno-history-v63.json',
+    'https://cdn.jsdelivr.net/gh/arsazet17/arsazet17-pozitron-keno-v63@main/keno-history-v63.json',
     'https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json',
     'https://arsazet17.github.io/pozitron-keno-v5/keno-history-v62.json',
     'https://cdn.jsdelivr.net/gh/arsazet17/pozitron-keno-v5@main/keno-history-v62.json'
