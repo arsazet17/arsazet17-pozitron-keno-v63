@@ -118,8 +118,20 @@
       }catch(e){err=e}
     }
     if(map.size){
-      draws=[...map.values()].sort((a,b)=>a.draw-b.draw);
-      saveLocal();networkReady=true;
+      // Никогда не откатываемся назад, если один из источников временно отдал старую базу.
+      // Сохраняем уже показанные/локально сохранённые свежие тиражи и только добавляем новые.
+      const merged=new Map();
+      for(const d of loadLocal()) merged.set(Number(d.draw),d);
+      for(const d of draws) merged.set(Number(d.draw),d);
+      for(const d of map.values()) merged.set(Number(d.draw),d);
+      const next=[...merged.values()].sort((a,b)=>a.draw-b.draw);
+      const currentMax=draws.length?Number(draws.at(-1).draw):0;
+      const nextMax=next.length?Number(next.at(-1).draw):0;
+      if(nextMax>=currentMax){
+        draws=next;
+        saveLocal();
+      }
+      networkReady=true;
       $('status').textContent=`v6.3 · база: ${draws.length.toLocaleString('ru-RU')} · последний №${draws.at(-1).draw}`;
       renderAll();
       return true;
