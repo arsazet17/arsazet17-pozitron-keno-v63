@@ -1,6 +1,7 @@
 'use strict';
 (() => {
   const $=id=>document.getElementById(id);
+  const DBSTORE=window.POZITRON_V63_STORE, ENGINE=window.POZITRON_V63_ENGINE;
   const pad=n=>String(Number(n)).padStart(2,'0');
   const normDate=v=>{
     v=String(v||'').trim();
@@ -14,6 +15,7 @@
   const STORE={draws:'pozitron_v63_draws',source:'pozitron_v63_source',interval:'pozitron_v63_interval'};
   const DEFAULT_SOURCE='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
   let draws=[],mode='fall',timer=null,fpMode='logic',networkReady=false;
+  let weights={...(ENGINE?.DEFAULT_WEIGHTS||{})},learningCount=0,bootstrapCount=0;
 
   function valid(o){
     const draw=Number(o?.draw??o?.number??o?.drawNumber??o?.id);
@@ -138,41 +140,131 @@
 
   function renderAll(){
     renderCards();
-    if($('fingerprintPanel').classList.contains('show'))renderFingerprint();
+    if($('fingerprintPanel').classList.contains('show'))renderFingerprint().catch(console.error);
     if($('matrixPanel').classList.contains('show'))renderMatrix();
     if($('assemblyPanel').classList.contains('show'))renderAssembly();
   }
 
-  function poolHtml(nums){return `<div class="pool">${(nums||[]).map(n=>`<span>${pad(n)}</span>`).join('')}</div>`}
-  function combosHtml(combos){return (combos||[]).map(c=>`<div class="combo"><div class="combo-head"><b>${c.id}</b><span>К${c.size}</span></div><div class="combo-numbers">${c.numbers.map(pad).join(' · ')}</div></div>`).join('')}
-  function renderFingerprint(){
-    const box=$('fingerprintResult');if(!draws.length){box.innerHTML='';return}
-    window.POZITRON_V63_ENGINE.settleAndLearn(draws);
-    if(fpMode==='archive'){
-      const list=window.POZITRON_V63_ENGINE.loadPredictions().slice().reverse();
-      box.innerHTML=list.length?list.slice(0,30).map(p=>{
-        const hit=p.poolHits?.length;
-        return `<div class="archive-item"><b>№${p.targetDraw}</b> · после №${p.sourceDraw}${p.actual?` · POOL ${hit}/20`:' · ⏳ ожидает'}<div class="small">${p.actual?'проверен':'зафиксирован'} · ${new Date(p.createdAt).toLocaleString('ru-RU')}</div></div>`;
-      }).join(''):'<div class="row small">Архив FINGERPRINT пока пуст.</div>';
+  async function ensureBootstrapLearning(){
+    if(!DBSTORE||!ENGINE)return;
+    const done=await DBSTORE.getMeta('bootstrapVersion','');
+    weights=ENGINE.normalizeWeights(await DBSTORE.getMeta('weights',weights));
+    if(done==='6410'){
+      bootstrapCount=Number(await DBSTORE.getMeta('bootstrapCount',0))||0;
       return;
     }
-    const f=window.POZITRON_V63_ENGINE.forecast(draws);
-    if(!f){box.innerHTML='<div class="row small">Недостаточно истории для расчёта.</div>';return}
-    const anti=fpMode==='antilogic';
-    const nums=anti?f.anti20:f.pool20,combos=anti?f.antiCombos:f.logicCombos;
-    box.innerHTML=`<div class="row"><b>🎯 / ⏳−1 · после №${f.sourceDraw}</b><div class="small">Прогноз фиксируется до следующего тиража. ${anti?'ANTILOGIC — альтернативные кандидаты вне основного POOL.':'LOGIC — итог согласования независимых сигналов.'}</div></div>
-      <div class="signal-grid">
-        <div class="signal"><b>${f.transition.count}/20</b><span>переходов</span></div>
-        <div class="signal"><b>${f.matrix.meanDistance.toFixed(2)}</b><span>средний Manhattan</span></div>
-        <div class="signal"><b>${f.neighbors.length}</b><span>исторических состояний</span></div>
-        <div class="signal"><b>${f.weights.analog.toFixed(2)}</b><span>вес истории после обучения</span></div>
-      </div>
-      <div class="label" style="margin-top:12px">${anti?'ANTILOGIC-20':'POOL-20'}</div>${poolHtml(nums)}
-      <div class="label" style="margin-top:12px">К3 · К4 · К5</div>${combosHtml(combos)}`;
+    if(draws.length<80)return;
+    const steps=Math.min(36,draws.length-20);
+    let w={...weights},trained=0;
+    const start=draws.length-1-steps;
+    for(let i=start;i<draws.length-1;i++){
+      const context=draws.slice(Math.max(0,i-899),i+1);
+      const pred=ENGINE.forecast(context,w);
+      if(pred){
+        const result=ENGINE.settlePrediction(pred,draws[i+1],w);
+        w=result.weights;
+        trained++;
+      }
+      if(trained%6===0)await new Promise(r=>setTimeout(r,0));
+    }
+    weights=w;
+    bootstrapCount=trained;
+    await DBSTORE.setMeta('weights',weights);
+    await DBSTORE.setMeta('bootstrapVersion','6410');
+    await DBSTORE.setMeta('bootstrapCount',trained);
+  }
+
+  async function settlePending(){
+    if(!DBSTORE||!ENGINE)return;
+    const by=new Map(draws.map(d=>[Number(d.draw),d]));
+    const list=await DBSTORE.listPredictions();
+    let changed=false;
+    for(const p of list){
+      if(p.actual||!by.has(Number(p.targetDraw)))continue;
+      const result=ENGINE.settlePrediction(p,by.get(Number(p.targetDraw)),weights);
+      weights=result.weights;
+      await DBSTORE.putPrediction(result.prediction);
+      changed=true;
+    }
+    if(changed)await DBSTORE.setMeta('weights',weights);
+    const updated=await DBSTORE.listPredictions();
+    learningCount=updated.filter(p=>p.actual).length;
+  }
+
+  async function getOrCreateForecast(){
+    if(!DBSTORE||!ENGINE)return null;
+    await ensureBootstrapLearning();
+    await settlePending();
+    const latest=draws.at(-1);
+    if(!latest)return null;
+    const target=Number(latest.draw)+1;
+    let p=await DBSTORE.getPrediction(target);
+    if(!p){
+      p=ENGINE.forecast(draws,weights);
+      if(p)await DBSTORE.putPrediction(p);
+    }
+    return p;
+  }
+
+  function poolHtml(nums,hits=[]){
+    const hs=new Set((hits||[]).map(Number));
+    return `<div class="pool">${(nums||[]).map(n=>`<span class="${hs.has(Number(n))?'hit':''}">${pad(n)}</span>`).join('')}</div>`;
+  }
+
+  function combosHtml(combos,settled=false){
+    return (combos||[]).map(c=>`<div class="combo"><div class="combo-head"><b>${c.id}</b><span>К${c.size}${settled?` · ${(c.hits||[]).length}/${c.size}`:''}</span></div><div class="combo-numbers">${(c.numbers||[]).map(pad).join(' · ')}</div>${settled&&c.hits?.length?`<div class="small">попали: ${c.hits.map(pad).join(', ')}</div>`:''}</div>`).join('');
+  }
+
+  async function renderArchive(){
+    const box=$('fingerprintResult');
+    await ensureBootstrapLearning();
+    await settlePending();
+    const list=(await DBSTORE.listPredictions()).slice().reverse();
+    if(!list.length){
+      box.innerHTML='<div class="row small">Архив FINGERPRINT пока пуст.</div>';
+      return;
+    }
+    box.innerHTML=list.slice(0,40).map(p=>`<div class="archive-item"><div><b>№${p.targetDraw}</b> · после №${p.sourceDraw}${p.actual?` · POOL ${(p.poolHits||[]).length}/20 · ANTI ${(p.antiHits||[]).length}/20`:' · ⏳ ожидает'}</div><div class="small">${p.actual?'проверен и обучен':'зафиксирован'} · ${new Date(p.createdAt).toLocaleString('ru-RU')}</div></div>`).join('');
+  }
+
+  async function renderFingerprint(){
+    const box=$('fingerprintResult');
+    if(!draws.length){box.innerHTML='';return;}
+    if(!DBSTORE||!ENGINE){
+      box.innerHTML='<div class="row small">Ошибка: модуль обучения не загружен.</div>';
+      return;
+    }
+    try{
+      if(fpMode==='archive'){
+        await renderArchive();
+        return;
+      }
+      box.innerHTML='<div class="row small">🧠 Расчёт и проверка обучения…</div>';
+      const p=await getOrCreateForecast();
+      if(!p){
+        box.innerHTML='<div class="row small">Недостаточно истории для расчёта.</div>';
+        return;
+      }
+      const anti=fpMode==='antilogic';
+      const pool=anti?p.anti20:p.pool20;
+      const combos=anti?p.antiCombos:p.logicCombos;
+      box.innerHTML=`<div class="row"><strong>🎯 / ⏳−1 · после №${p.sourceDraw} → №${p.targetDraw}</strong><div class="small">🧠 обучение: архив ${bootstrapCount} + живых ${learningCount} · память IndexedDB</div></div>
+        <div class="signal-grid">
+          <div class="signal"><b>${p.transition?.count||0}/20</b><span>переходов</span></div>
+          <div class="signal"><b>${Number(p.matrix?.meanDistance||0).toFixed(2)}</b><span>средний Manhattan</span></div>
+          <div class="signal"><b>${p.neighborsCount||0}</b><span>исторических состояний</span></div>
+          <div class="signal"><b>${Number(weights.analog||0).toFixed(3)}</b><span>вес истории после обучения</span></div>
+        </div>
+        <div class="label" style="margin-top:12px">${anti?'ANTILOGIC-20':'POOL-20'}</div>${poolHtml(pool)}
+        <div class="label" style="margin-top:12px">К3 · К4 · К5</div>${combosHtml(combos)}`;
+    }catch(error){
+      console.error('FINGERPRINT:',error);
+      box.innerHTML=`<div class="row small">Ошибка FINGERPRINT: ${String(error?.message||error)}</div>`;
+    }
   }
 
   function renderMatrix(){
-    const r=window.POZITRON_V63_ENGINE.matrixReport(draws),f=r.features,cur=draws.at(-1),set=new Set(cur.balls),tr=new Set(r.transition.numbers);
+    const r=ENGINE.matrixReport(draws),f=r.features,cur=draws.at(-1),set=new Set(cur.balls),tr=new Set(r.transition.numbers);
     const phasePct=Math.max(5,Math.min(95,50-r.delta*14));
     $('matrixResult').innerHTML=`<div class="signal-grid">
       <div class="signal"><b>${r.phase}</b><span>фаза поля</span></div>
@@ -188,7 +280,7 @@
     return `<div class="label" style="margin-top:11px">${title}</div>${items.slice(0,5).map(x=>`<div class="row"><b>${x.kind==='H'?'↔':'↕'} ${x.kind==='H'?`М${x.place}–М${x.place+x.length-1}`:`М${x.place}`}</b><div>${(x.numbers||[]).map(pad).join(' · ')}</div><div class="small">сила ${Number(x.score||0).toFixed(3)}</div></div>`).join('')||'<div class="row small">Сильных сигналов нет.</div>'}`;
   }
   function renderAssembly(){
-    const r=window.POZITRON_V63_ENGINE.assemblyReport(draws);
+    const r=ENGINE.assemblyReport(draws);
     $('assemblyResult').innerHTML=`<div class="row"><b>Тираж №${r.draw}</b><div class="small">Места считаются по порядку выпадения М1–М20.</div></div>${listAssembly('ГОРИЗОНТАЛИ',r.horizontal)}${listAssembly('ВЕРТИКАЛИ',r.vertical)}`;
   }
 
@@ -196,7 +288,7 @@
     document.querySelectorAll('.panel').forEach(p=>{if(p.id!==id)p.classList.remove('show')});
     const p=$(id);p.classList.toggle('show');
     if(!p.classList.contains('show'))return;
-    if(id==='fingerprintPanel')renderFingerprint();
+    if(id==='fingerprintPanel')renderFingerprint().catch(console.error);
     if(id==='matrixPanel')renderMatrix();
     if(id==='assemblyPanel')renderAssembly();
     setTimeout(()=>p.scrollIntoView({behavior:'smooth',block:'start'}),30);
@@ -221,7 +313,7 @@
   document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>$(b.dataset.close).classList.remove('show')));
   document.querySelector('[data-home]').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
   document.querySelectorAll('[data-fp-mode]').forEach(b=>b.addEventListener('click',()=>{
-    document.querySelectorAll('[data-fp-mode]').forEach(x=>x.classList.remove('active'));b.classList.add('active');fpMode=b.dataset.fpMode;renderFingerprint();
+    document.querySelectorAll('[data-fp-mode]').forEach(x=>x.classList.remove('active'));b.classList.add('active');fpMode=b.dataset.fpMode;renderFingerprint().catch(console.error);
   }));
   $('syncBtn').addEventListener('click',()=>refresh(true));$('syncBtn2').addEventListener('click',()=>refresh(true));
   $('settingsBtn').addEventListener('click',()=>{
@@ -241,6 +333,6 @@
   fetchFresh().catch(()=>{});
 
   if('serviceWorker' in navigator){
-    window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{}));
+    window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6411',{updateViaCache:'none'}).catch(()=>{}));
   }
 })();
