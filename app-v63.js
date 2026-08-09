@@ -244,26 +244,16 @@
   function renderFingerprint(){
     const box=$('fingerprintResult');if(!draws.length){box.innerHTML='';return}
     window.POZITRON_V63_ENGINE.settleAndLearn(draws);
-    settleFpArchive();
     if(fpMode==='archive'){
-      const list=loadFpArchive().slice().reverse();
-      box.innerHTML=list.length?list.slice(0,30).map(p=>{
-        const hit=(p.poolHits||[]).length;
-        const bestLogic=(p.logicCombos||[]).reduce((m,c)=>Math.max(m,(c.hits||[]).length),0);
-        const bestAnti=(p.antiCombos||[]).reduce((m,c)=>Math.max(m,(c.hits||[]).length),0);
-        return `<div class="archive-item">
-          <b>№${p.targetDraw}</b> · после №${p.sourceDraw}${p.actual?` · POOL ${hit}/20`:' · ⏳ ожидает'}
-          <div class="small">${p.actual?`проверен · лучший LOGIC ${bestLogic} · ANTILOGIC ${bestAnti}`:'зафиксирован'} · ${new Date(p.createdAt).toLocaleString('ru-RU')}</div>
-        </div>`;
-      }).join(''):'<div class="row small">Архив FINGERPRINT пока пуст.</div>';
+      box.innerHTML='<div class="row small">Загружаю архив FINGERPRINT из IndexedDB…</div>';
+      window.dispatchEvent(new CustomEvent('pozitron:fingerprint-archive'));
       return;
     }
     const f=window.POZITRON_V63_ENGINE.forecast(draws);
-    const fpSaved=storeFpForecast(f);
     if(!f){box.innerHTML='<div class="row small">Недостаточно истории для расчёта.</div>';return}
     const anti=fpMode==='antilogic';
     const nums=anti?f.anti20:f.pool20,combos=anti?f.antiCombos:f.logicCombos;
-    box.innerHTML=`<div class="row"><b>🎯 / ⏳−1 · после №${f.sourceDraw}</b><div class="small">${fpSaved?`✅ Прогноз записан в архив · ${fpArchiveStatus.detail}.`:`❌ АРХИВ: ${fpArchiveStatus.code} · ${fpArchiveStatus.detail}.`} ${anti?'ANTILOGIC — альтернативные кандидаты вне основного POOL.':'LOGIC — итог согласования независимых сигналов.'}</div></div>
+    box.innerHTML=`<div class="row"><b>🎯 / ⏳−1 · после №${f.sourceDraw}</b><div class="small">⏳ Сохраняю прогноз в архив IndexedDB… ${anti?'ANTILOGIC — альтернативные кандидаты вне основного POOL.':'LOGIC — итог согласования независимых сигналов.'}</div></div>
       <div class="signal-grid">
         <div class="signal"><b>${f.transition.count}/20</b><span>переходов</span></div>
         <div class="signal"><b>${f.matrix.meanDistance.toFixed(2)}</b><span>средний Manhattan</span></div>
@@ -272,6 +262,7 @@
       </div>
       <div class="label" style="margin-top:12px">${anti?'ANTILOGIC-20':'POOL-20'}</div>${poolHtml(nums)}
       <div class="label" style="margin-top:12px">К3 · К4 · К5</div>${combosHtml(combos)}`;
+    window.dispatchEvent(new CustomEvent('pozitron:fingerprint-forecast',{detail:f}));
   }
 
   function renderMatrix(){
