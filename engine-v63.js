@@ -91,22 +91,116 @@
     return {scores,parts,neighbors,matrix:mf,transition:tf,assembly:af,weights};
   }
 
-  function diversify(sorted,size,count=2){
-    const out=[];
-    for(let offset=0;offset<10&&out.length<count;offset++){
-      const arr=[];for(let i=offset;i<sorted.length&&arr.length<size;i+=Math.max(1,Math.floor((offset+2)/2)))if(!arr.includes(sorted[i]))arr.push(sorted[i]);
-      if(arr.length===size&&!out.some(x=>x.filter(n=>arr.includes(n)).length>Math.floor(size/2)))out.push(arr);
+  /* 6.3.1 — сборщик комбинаций.
+     POOL-20 и ANTILOGIC-20 не меняются. Меняется только выбор K3/K4/K5:
+     теперь оценивается вся группа по индивидуальному сигналу, исторической
+     совместной встречаемости после похожих состояний, Manhattan и M1–M20. */
+  function buildPairCompatibility(draws,index,d,candidates){
+    const candidateSet=setOf(candidates),pair=new Map(),assemblyPair=new Map();
+    const key=(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`;
+
+    let histWeight=0;
+    for(const nei of d.neighbors||[]){
+      const w=1/(Number(nei.distance||0)+.025);
+      histWeight+=w;
+      const n1=setOf(draws[nei.index+1]?.balls),n2=setOf(draws[nei.index+2]?.balls);
+      for(let i=0;i<candidates.length;i++)for(let j=i+1;j<candidates.length;j++){
+        const a=candidates[i],b=candidates[j];
+        let v=0;
+        if(n1.has(a)&&n1.has(b))v+=.65;
+        if(n2.has(a)&&n2.has(b))v+=.35;
+        if(v)pair.set(key(a,b),(pair.get(key(a,b))||0)+w*v);
+      }
     }
-    while(out.length<count)out.push(sorted.slice(out.length,size+out.length));
-    return out.slice(0,count);
+    if(histWeight)for(const [k,v] of pair)pair.set(k,clamp(v/histWeight,0,1));
+
+    for(const x of [...(d.assembly?.horizontal||[]).slice(0,4),...(d.assembly?.vertical||[]).slice(0,4)]){
+      const nums=(x.numbers||[]).map(Number).filter(n=>candidateSet.has(n));
+      const strength=clamp(Number(x.score||0)/1.5,0,1);
+      for(let i=0;i<nums.length;i++)for(let j=i+1;j<nums.length;j++){
+        const k=key(nums[i],nums[j]);
+        assemblyPair.set(k,Math.max(assemblyPair.get(k)||0,strength));
+      }
+    }
+
+    return {
+      history:(a,b)=>pair.get(key(a,b))||0,
+      assembly:(a,b)=>assemblyPair.get(key(a,b))||0,
+      spatial:(a,b)=>{
+        const dist=manhattan(coord(a),coord(b));
+        return clamp(1-Math.abs(dist-4)/6,0,1);
+      }
+    };
+  }
+
+  function allCombinations(values,size){
+    const out=[],buf=[];
+    function walk(start){
+      if(buf.length===size){out.push(buf.slice());return;}
+      const need=size-buf.length;
+      for(let i=start;i<=values.length-need;i++){buf.push(values[i]);walk(i+1);buf.pop();}
+    }
+    walk(0);
+    return out;
+  }
+
+  function smartCombos(draws,index,d,candidates,size,count,baseScore){
+    const compat=buildPairCompatibility(draws,index,d,candidates);
+    const vals=candidates.map(n=>Number(baseScore(n)||0));
+    const lo=Math.min(...vals),hi=Math.max(...vals),span=hi-lo||1;
+    const norm=n=>(Number(baseScore(n)||0)-lo)/span;
+
+    const ranked=allCombinations(candidates,size).map(numbers=>{
+      const individual=mean(numbers.map(norm));
+      const pairHist=[],pairSpatial=[],pairAssembly=[];
+      for(let i=0;i<numbers.length;i++)for(let j=i+1;j<numbers.length;j++){
+        pairHist.push(compat.history(numbers[i],numbers[j]));
+        pairSpatial.push(compat.spatial(numbers[i],numbers[j]));
+        pairAssembly.push(compat.assembly(numbers[i],numbers[j]));
+      }
+
+      const history=mean(pairHist),spatial=mean(pairSpatial),assembly=mean(pairAssembly);
+      const quadrants=new Set(numbers.map(n=>{const p=coord(n);return (p.y>=4?2:0)+(p.x>=5?1:0)})).size;
+      const spread=clamp((quadrants-1)/Math.min(3,size-1||1),0,1);
+
+      const comboScore=
+        individual*.55+
+        history*.20+
+        spatial*.12+
+        assembly*.08+
+        spread*.05;
+
+      return {numbers,comboScore,individual,history,spatial,assembly,spread};
+    }).sort((a,b)=>b.comboScore-a.comboScore||b.individual-a.individual||a.numbers.join(',').localeCompare(b.numbers.join(',')));
+
+    const chosen=[];
+    const maxOverlap=Math.floor(size/2);
+    for(const c of ranked){
+      if(chosen.every(x=>x.numbers.filter(n=>c.numbers.includes(n)).length<=maxOverlap)){
+        chosen.push(c);
+        if(chosen.length===count)break;
+      }
+    }
+    for(const c of ranked){
+      if(chosen.length===count)break;
+      if(!chosen.some(x=>x.numbers.join(',')===c.numbers.join(',')))chosen.push(c);
+    }
+    return chosen.slice(0,count);
   }
 
   function forecast(draws,weightsInput){
     const index=draws.length-1;if(index<8)return null;
     const d=numberScores(draws,index,weightsInput),ranked=Array.from({length:80},(_,i)=>i+1).sort((a,b)=>d.scores[b]-d.scores[a]||a-b),pool20=ranked.slice(0,20),logicSet=setOf(pool20);
-    const anti20=Array.from({length:80},(_,i)=>i+1).filter(n=>!logicSet.has(n)).sort((a,b)=>{const A=d.parts[a],B=d.parts[b];const sa=A.analog*1.2+A.balance*.7+A.spatial*.5-A.transition*.25-A.assembly*.15,sb=B.analog*1.2+B.balance*.7+B.spatial*.5-B.transition*.25-B.assembly*.15;return sb-sa||a-b;}).slice(0,20);
-    const logicCombos=[3,4,5].flatMap(size=>diversify(pool20,size,2).map((numbers,i)=>({id:`K${size}-${i+1}`,size,numbers})));
-    const antiCombos=[3,4,5].flatMap(size=>diversify(anti20,size,2).map((numbers,i)=>({id:`A-K${size}-${i+1}`,size,numbers})));
+    const antiBase=n=>{const A=d.parts[n];return A.analog*1.2+A.balance*.7+A.spatial*.5-A.transition*.25-A.assembly*.15;};
+    const anti20=Array.from({length:80},(_,i)=>i+1).filter(n=>!logicSet.has(n)).sort((a,b)=>antiBase(b)-antiBase(a)||a-b).slice(0,20);
+
+    const logicCombos=[3,4,5].flatMap(size=>smartCombos(draws,index,d,pool20,size,2,n=>d.scores[n]).map((c,i)=>({
+      id:`K${size}-${i+1}`,size,numbers:c.numbers,comboScore:+c.comboScore.toFixed(4)
+    })));
+    const antiCombos=[3,4,5].flatMap(size=>smartCombos(draws,index,d,anti20,size,2,antiBase).map((c,i)=>({
+      id:`A-K${size}-${i+1}`,size,numbers:c.numbers,comboScore:+c.comboScore.toFixed(4)
+    })));
+
     const latest=draws[index];
     return {version:'6.3-clean',sourceDraw:Number(latest.draw),targetDraw:Number(latest.draw)+1,createdAt:new Date().toISOString(),pool20,anti20,logicCombos,antiCombos,signalTop:ranked.slice(0,20).map(n=>({number:n,score:+d.scores[n].toFixed(4),parts:d.parts[n]})),matrix:d.matrix,transition:d.transition,assembly:d.assembly,neighborsCount:d.neighbors.length,weights:d.weights};
   }
