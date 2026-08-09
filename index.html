@@ -5,116 +5,25 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#08111f">
 <title>ПОЗИТРОН КЕНО v6.3</title>
-<link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" type="image/svg+xml" href="./icon.svg">
-<link rel="stylesheet" href="./styles-v63.css?v=6310">
+<link rel="manifest" href="./manifest.webmanifest?v=6400">
+<link rel="icon" type="image/svg+xml" href="./icon.svg?v=6400">
+<link rel="stylesheet" href="./styles-v63.css?v=6400">
 </head>
 <body>
 <div class="app">
-  <header class="top">
-    <div class="top-main">
-      <div class="brand">🎯 ПОЗИТРОН КЕНО v6.3</div>
-      <div class="build">СБОРКА 6.3 · АВТООБНОВЛЕНИЕ · ЖИВАЯ ПРОВЕРКА</div>
-      <div id="status" class="sub">Проверяю последний тираж…</div>
-    </div>
-    <div class="top-actions">
-      <button id="syncBtn" class="icon" aria-label="Обновить">↻</button>
-      <button id="settingsBtn" class="icon" aria-label="Настройки">⚙</button>
-    </div>
-  </header>
-
-  <nav class="mode" aria-label="Режим отображения">
-    <button class="on" data-mode="fall">Выпадение</button>
-    <button data-mode="asc">Возрастание</button>
-    <button data-mode="both">Вместе</button>
-  </nav>
-
-  <div class="legend">🔸 реальное переходное число из предыдущего тиража · зелёная линия — одно и то же число стоит на одинаковом месте в выпадении и возрастании</div>
-
-  <main id="cards">
-    <section class="card loading-card">
-      <div class="loading-title">Загружаю свежие данные…</div>
-      <div class="loading-bar"><span></span></div>
-      <div class="small">Старые локальные тиражи не показываются до завершения проверки сети.</div>
-    </section>
-  </main>
-
+  <header class="top"><div class="top-main"><div class="brand">🎯 ПОЗИТРОН КЕНО v6.3</div><div class="build">СБОРКА 6.3 CLEAN · ОБУЧЕНИЕ · ЖИВАЯ ПРОВЕРКА</div><div id="status" class="sub">Проверяю последний тираж…</div></div><div class="top-actions"><button id="syncBtn" class="icon">↻</button><button id="settingsBtn" class="icon">⚙</button></div></header>
+  <nav class="mode"><button class="on" data-mode="fall">Выпадение</button><button data-mode="asc">Возрастание</button><button data-mode="both">Вместе</button></nav>
+  <div class="legend">🔸 переходное число · зелёная линия — одинаковая позиция в выпадении и возрастании</div>
+  <main id="cards"><section class="card loading-card"><div class="loading-title">Проверяю свежие данные…</div><div class="loading-bar"><span></span></div><div class="small">Старые тиражи не показываются до завершения проверки сети.</div></section></main>
   <section class="section-title">Инструменты</section>
-  <div class="tools">
-    <button class="tool" data-panel="fingerprintPanel">🧭 FINGERPRINT</button>
-    <button class="tool" data-panel="matrixPanel">🌐 МАТРИЦА</button>
-    <button class="tool tool-wide" data-panel="assemblyPanel">🧩 М1–М20</button>
-  </div>
-
-  <section id="fingerprintPanel" class="card panel">
-    <div class="panel-head">
-      <div>
-        <div class="label">🧭 FINGERPRINT 6.3</div>
-        <div class="small">единый горизонт 🎯 / ⏳−1 · переходы · Manhattan · состояние поля · М1–М20</div>
-      </div>
-      <button class="panel-close" data-close="fingerprintPanel">✕</button>
-    </div>
-    <div class="fp-tabs">
-      <button class="fp-tab active" data-fp-mode="logic">LOGIC</button>
-      <button class="fp-tab" data-fp-mode="antilogic">ANTILOGIC</button>
-      <button class="fp-tab" data-fp-mode="archive">📚</button>
-    </div>
-    <div id="fingerprintResult"></div>
-  </section>
-
-  <section id="matrixPanel" class="card panel">
-    <div class="panel-head">
-      <div>
-        <div class="label">🌐 МАТРИЦА 1–80</div>
-        <div class="small">сжатие / разжатие · плотность · центр массы · баланс поля</div>
-      </div>
-      <button class="panel-close" data-close="matrixPanel">✕</button>
-    </div>
-    <div id="matrixResult"></div>
-  </section>
-
-  <section id="assemblyPanel" class="card panel">
-    <div class="panel-head">
-      <div>
-        <div class="label">🧩 М1–М20</div>
-        <div class="small">горизонтали · вертикали · движение сборок · продолжения</div>
-      </div>
-      <button class="panel-close" data-close="assemblyPanel">✕</button>
-    </div>
-    <div id="assemblyResult"></div>
-  </section>
+  <div class="tools"><button class="tool" data-panel="fingerprintPanel">🧭 FINGERPRINT</button><button class="tool" data-panel="matrixPanel">🌐 МАТРИЦА</button><button class="tool tool-wide" data-panel="assemblyPanel">🧩 М1–М20</button></div>
+  <section id="fingerprintPanel" class="card panel"><div class="panel-head"><div><div class="label">🧭 FINGERPRINT 6.3 · LEARNING</div><div class="small">🎯 / ⏳−1 · переходы · Manhattan · состояние поля · М1–М20 · обучение весов</div></div><button class="panel-close" data-close="fingerprintPanel">✕</button></div><div class="fp-tabs"><button class="fp-tab active" data-fp-mode="logic">LOGIC</button><button class="fp-tab" data-fp-mode="antilogic">ANTILOGIC</button><button class="fp-tab" data-fp-mode="archive">📚</button></div><div id="fingerprintResult"></div></section>
+  <section id="matrixPanel" class="card panel"><div class="panel-head"><div><div class="label">🌐 МАТРИЦА 1–80</div><div class="small">сжатие / разжатие · плотность · центр массы · баланс поля</div></div><button class="panel-close" data-close="matrixPanel">✕</button></div><div id="matrixResult"></div></section>
+  <section id="assemblyPanel" class="card panel"><div class="panel-head"><div><div class="label">🧩 М1–М20</div><div class="small">горизонтали · вертикали · движение сборок</div></div><button class="panel-close" data-close="assemblyPanel">✕</button></div><div id="assemblyResult"></div></section>
 </div>
-
-<footer class="footer">
-  <div class="footerin">
-    <button data-home><b>⌂</b>Главная</button>
-    <button data-open="fingerprintPanel"><b>◎</b>FINGERPRINT</button>
-    <button data-open="matrixPanel"><b>◉</b>Матрица</button>
-    <button id="syncBtn2"><b>↻</b>Обновить</button>
-  </div>
-</footer>
-
-<dialog id="settings">
-  <form method="dialog">
-    <div class="dialog-head"><b>Настройки 6.3</b><button class="icon">✕</button></div>
-    <label class="small">Основной источник истории</label>
-    <input id="sourceUrl" value="https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json">
-    <div class="gap"></div>
-    <label class="small">Автообновление</label>
-    <select id="interval">
-      <option value="300000">5 минут</option>
-      <option value="600000">10 минут</option>
-      <option value="900000">15 минут</option>
-      <option value="0">Выключено</option>
-    </select>
-    <div class="gap"></div>
-    <button id="saveSettings" class="tool full">Сохранить</button>
-    <p class="small">При запуске 6.3 сначала проверяет сеть. Локальная копия используется только как резерв при ошибке сети.</p>
-  </form>
-</dialog>
-
-<script src="./engine-v63.js?v=6310"></script>
-<script src="./fp-storage-v63.js?v=6310"></script>
-<script src="./app-v63.js?v=6310"></script>
-</body>
-</html>
+<footer class="footer"><div class="footerin"><button data-home><b>⌂</b>Главная</button><button data-open="fingerprintPanel"><b>◎</b>FINGERPRINT</button><button data-open="matrixPanel"><b>◉</b>Матрица</button><button id="syncBtn2"><b>↻</b>Обновить</button></div></footer>
+<dialog id="settings"><form method="dialog"><div class="dialog-head"><b>Настройки 6.3</b><button class="icon">✕</button></div><label class="small">Дополнительный источник истории</label><input id="sourceUrl" placeholder="необязательно"><div class="gap"></div><label class="small">Автообновление</label><select id="interval"><option value="300000">5 минут</option><option value="600000">10 минут</option><option value="900000">15 минут</option><option value="0">Выключено</option></select><div class="gap"></div><button id="saveSettings" class="tool full">Сохранить</button></form></dialog>
+<script src="./storage-v63.js?v=6400"></script>
+<script src="./engine-v63.js?v=6400"></script>
+<script src="./app-v63.js?v=6400"></script>
+</body></html>

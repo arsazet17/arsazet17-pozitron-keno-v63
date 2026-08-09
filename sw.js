@@ -1,29 +1,9 @@
 'use strict';
-const CACHE='pozitron-v63-shell-10';
-const SHELL=['./','./index.html','./styles-v63.css?v=6310','./engine-v63.js?v=6310','./app-v63.js?v=6310','./fp-storage-v63.js?v=6310','./manifest.webmanifest','./icon.svg'];
-
-self.addEventListener('install',event=>{
-  event.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()));
-});
-self.addEventListener('activate',event=>{
-  event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));
-});
-self.addEventListener('fetch',event=>{
-  const req=event.request;
-  if(req.method!=='GET')return;
-  const url=new URL(req.url);
-  const isHistory=/keno-history/i.test(url.pathname);
-  if(isHistory){
-    event.respondWith(fetch(req,{cache:'no-store'}));
-    return;
-  }
-  if(req.mode==='navigate'){
-    event.respondWith(fetch(req,{cache:'no-store'}).catch(()=>caches.match('./index.html')));
-    return;
-  }
-  if(url.origin===self.location.origin){
-    event.respondWith(fetch(req,{cache:'no-store'}).then(r=>{
-      const copy=r.clone();caches.open(CACHE).then(c=>c.put(req,copy));return r;
-    }).catch(()=>caches.match(req)));
-  }
+const CACHE='pozitron-v63-clean-6400';
+const ASSETS=['./','./index.html','./styles-v63.css','./storage-v63.js','./engine-v63.js','./app-v63.js','./manifest.webmanifest','./icon.svg'];
+self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).catch(()=>{}));});
+self.addEventListener('activate',e=>{e.waitUntil((async()=>{for(const k of await caches.keys())if(k!==CACHE)await caches.delete(k);await self.clients.claim();})());});
+self.addEventListener('fetch',e=>{
+  if(e.request.method!=='GET')return;
+  e.respondWith((async()=>{try{const r=await fetch(e.request,{cache:'no-store'});if(r&&r.ok){const c=await caches.open(CACHE);c.put(e.request,r.clone()).catch(()=>{});}return r;}catch{const c=await caches.open(CACHE);return (await c.match(e.request))||(await c.match('./index.html'));}})());
 });

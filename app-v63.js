@@ -1,350 +1,122 @@
 'use strict';
 (() => {
-  const $=id=>document.getElementById(id);
+  const $=id=>document.getElementById(id), STORE=window.POZITRON_V63_STORE, ENGINE=window.POZITRON_V63_ENGINE;
+  const BUILD='6400';
+  const SOURCES=[
+    'https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json',
+    'https://arsazet17.github.io/pozitron-keno-v5/keno-history-v62.json',
+    'https://cdn.jsdelivr.net/gh/arsazet17/pozitron-keno-v5@main/keno-history-v62.json'
+  ];
+  let draws=[],mode='fall',fpMode='logic',timer=null,weights={...ENGINE.DEFAULT_WEIGHTS},learningCount=0,bootstrapCount=0,networkReady=false;
   const pad=n=>String(Number(n)).padStart(2,'0');
-  const normDate=v=>{
-    v=String(v||'').trim();
-    let m=v.match(/^(\d{2})[.\-/](\d{2})[.\-/](\d{2,4})$/);
-    if(m){let y=m[3];if(y.length===2)y='20'+y;return `${y}-${m[2]}-${m[1]}`}
-    m=v.match(/^(\d{4})[.\-/](\d{2})[.\-/](\d{2})$/);
-    return m?`${m[1]}-${m[2]}-${m[3]}`:v.slice(0,10);
-  };
+  const normDate=v=>{v=String(v||'').trim();let m=v.match(/^(\d{2})[.\-/](\d{2})[.\-/](\d{2,4})$/);if(m){let y=m[3];if(y.length===2)y='20'+y;return `${y}-${m[2]}-${m[1]}`;}m=v.match(/^(\d{4})[.\-/](\d{2})[.\-/](\d{2})$/);return m?`${m[1]}-${m[2]}-${m[3]}`:v.slice(0,10);};
   const showDate=v=>{const p=normDate(v).split('-');return p.length===3?`${p[2]}.${p[1]}.${p[0].slice(-2)}`:String(v||'')};
   const normTime=v=>String(v||'').match(/\d{1,2}:\d{2}(?::\d{2})?/)?.[0]||String(v||'');
-  const STORE={draws:'pozitron_v63_draws',source:'pozitron_v63_source',interval:'pozitron_v63_interval',fpArchive:'pozitron_v63_fp_archive_v2'};
-  const DEFAULT_SOURCE='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
-  let draws=[],mode='fall',timer=null,fpMode='logic',networkReady=false;
-  let fpArchiveStatus={ok:true,code:'OK',detail:''};
 
   function valid(o){
-    const draw=Number(o?.draw??o?.number??o?.drawNumber??o?.id);
-    const date=normDate(o?.date??o?.drawDate??o?.datetime??'');
-    const time=normTime(o?.time??o?.drawTime??o?.datetime??'');
-    let balls=o?.balls??o?.numbers??o?.results??o?.result??o?.winningNumbers;
-    if(typeof balls==='string')balls=(balls.match(/\d+/g)||[]).map(Number);
+    const draw=Number(o?.draw??o?.number??o?.drawNumber??o?.id),date=normDate(o?.date??o?.drawDate??o?.datetime??''),time=normTime(o?.time??o?.drawTime??o?.datetime??'');
+    let balls=o?.balls??o?.numbers??o?.results??o?.result??o?.winningNumbers;if(typeof balls==='string')balls=(balls.match(/\d+/g)||[]).map(Number);
     balls=(balls||[]).map(Number).filter(n=>n>=1&&n<=80).slice(0,20);
     return Number.isFinite(draw)&&balls.length===20&&new Set(balls).size===20?{draw,date,time,balls}:null;
   }
-  function parse(text){
-    const t=String(text||'').trim();if(!t)return[];
-    try{
-      const j=JSON.parse(t),arr=Array.isArray(j)?j:(j.draws||j.records||j.history||[]);
-      return arr.map(valid).filter(Boolean).sort((a,b)=>a.draw-b.draw);
-    }catch{}
-    const rows=t.split(/\r?\n/).filter(Boolean),out=[];
-    for(const row of rows){
-      const nums=(row.match(/\d+/g)||[]).map(Number);
-      if(nums.length>=21){
-        const d=valid({draw:nums[0],balls:nums.slice(-20),date:'',time:''});if(d)out.push(d);
-      }
-    }
-    return out.sort((a,b)=>a.draw-b.draw);
-  }
-  function saveLocal(){try{localStorage.setItem(STORE.draws,JSON.stringify(draws.slice(-500)))}catch(e){console.warn('v6.3 local backup failed',e)}}
-  function loadLocal(){try{return JSON.parse(localStorage.getItem(STORE.draws)||'[]').map(valid).filter(Boolean)}catch{return[]}}
+  function parse(text){try{const j=JSON.parse(String(text||'')),arr=Array.isArray(j)?j:(j.draws||j.records||j.history||[]);return arr.map(valid).filter(Boolean).sort((a,b)=>a.draw-b.draw);}catch{return[]}}
+  function mergeLists(...lists){const m=new Map();for(const list of lists)for(const d of list||[])if(d)m.set(Number(d.draw),d);return [...m.values()].sort((a,b)=>a.draw-b.draw);}
 
-  function loadFpArchive(){
-    try{
-      const a=JSON.parse(localStorage.getItem(STORE.fpArchive)||'[]');
-      return Array.isArray(a)?a:[];
-    }catch{return[]}
-  }
-  function saveFpArchive(list){
-    const compact=(list||[]).slice(-80);
-    try{
-      const raw=JSON.stringify(compact);
-      localStorage.setItem(STORE.fpArchive,raw);
-      const stored=localStorage.getItem(STORE.fpArchive);
-      if(stored===null){
-        fpArchiveStatus={ok:false,code:'READBACK_NULL',detail:'после setItem ключ не читается'};
-        return false;
-      }
-      const check=JSON.parse(stored);
-      if(!Array.isArray(check)){
-        fpArchiveStatus={ok:false,code:'READBACK_TYPE',detail:'прочитано не как массив'};
-        return false;
-      }
-      if(check.length!==compact.length){
-        fpArchiveStatus={ok:false,code:'READBACK_LENGTH',detail:`ожидалось ${compact.length}, прочитано ${check.length}`};
-        return false;
-      }
-      fpArchiveStatus={ok:true,code:'OK',detail:`${raw.length} байт · записей ${compact.length}`};
-      return true;
-    }catch(e){
-      const name=e?.name||'Error';
-      const msg=e?.message||String(e||'неизвестная ошибка');
-      fpArchiveStatus={ok:false,code:name,detail:msg};
-      console.error('FINGERPRINT archive write failed',e);
-      return false;
+  async function fetchOne(url){const sep=url.includes('?')?'&':'?';const r=await fetch(`${url}${sep}v=${BUILD}&t=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`${url} HTTP ${r.status}`);return parse(await r.text());}
+  async function fetchFresh(){
+    $('status').textContent='Проверяю новый тираж…';
+    const saved=await STORE.getMeta('source','');const sources=[...SOURCES,...(saved?[saved]:[])].filter((x,i,a)=>x&&a.indexOf(x)===i);
+    const results=await Promise.allSettled(sources.map(fetchOne));
+    const good=results.filter(x=>x.status==='fulfilled'&&x.value.length).map(x=>x.value);
+    if(good.length){
+      const next=mergeLists(draws,...good),oldMax=draws.at(-1)?.draw||0,newMax=next.at(-1)?.draw||0;
+      if(newMax>=oldMax)draws=next;
+      await STORE.saveDraws(draws);networkReady=true;await ensureBootstrapLearning();await settlePending();renderAll();
+      $('status').textContent=`v6.3 CLEAN · база: ${draws.length.toLocaleString('ru-RU')} · последний №${draws.at(-1).draw}`;return true;
     }
+    const backup=await STORE.loadDraws();
+    if(backup.length>=3){draws=mergeLists(draws,backup);networkReady=true;await ensureBootstrapLearning();await settlePending();renderAll();$('status').textContent=`⚠ ОФЛАЙН · резерв до №${draws.at(-1).draw}`;return false;}
+    $('cards').innerHTML='<section class="card"><b>Не удалось получить историю тиражей.</b><div class="small">Проверь интернет и нажми ↻.</div></section>';
+    $('status').textContent='Нет связи и резервной базы';return false;
   }
-  function settleFpArchive(){
-    if(!draws.length)return;
-    const byDraw=new Map(draws.map(d=>[Number(d.draw),d]));
-    const list=loadFpArchive();
-    let changed=false;
-    for(const p of list){
-      if(p.actual||!byDraw.has(Number(p.targetDraw)))continue;
-      const d=byDraw.get(Number(p.targetDraw));
-      const set=new Set((d.balls||[]).map(Number));
-      p.actual={draw:d.draw,date:d.date,time:d.time,balls:d.balls.slice()};
-      p.poolHits=(p.pool20||[]).filter(n=>set.has(Number(n)));
-      p.antiHits=(p.anti20||[]).filter(n=>set.has(Number(n)));
-      p.logicCombos=(p.logicCombos||[]).map(c=>({...c,hits:(c.numbers||[]).filter(n=>set.has(Number(n)))}));
-      p.antiCombos=(p.antiCombos||[]).map(c=>({...c,hits:(c.numbers||[]).filter(n=>set.has(Number(n)))}));
-      changed=true;
+
+
+  async function ensureBootstrapLearning(){
+    const done=await STORE.getMeta('bootstrapVersion','');
+    if(done==='6400'){bootstrapCount=Number(await STORE.getMeta('bootstrapCount',0))||0;return;}
+    if(draws.length<80)return;
+    const steps=Math.min(36,draws.length-20);let w={...weights},trained=0;
+    $('status').textContent=`🧠 Первичное обучение FINGERPRINT по архиву: 0/${steps}`;
+    const start=draws.length-1-steps;
+    for(let i=start;i<draws.length-1;i++){
+      const context=draws.slice(Math.max(0,i-899),i+1);
+      const pred=ENGINE.forecast(context,w);
+      if(pred){const r=ENGINE.settlePrediction(pred,draws[i+1],w);w=r.weights;trained++;}
+      if(trained%6===0){$('status').textContent=`🧠 Первичное обучение FINGERPRINT по архиву: ${trained}/${steps}`;await new Promise(r=>setTimeout(r,0));}
     }
-    if(changed)saveFpArchive(list);
+    weights=w;bootstrapCount=trained;
+    await STORE.setMeta('weights',weights);await STORE.setMeta('bootstrapVersion','6400');await STORE.setMeta('bootstrapCount',trained);
   }
-  function storeFpForecast(f){
-    if(!f)return false;
-    const list=loadFpArchive();
-    const key=`${f.sourceDraw}:${f.targetDraw}`;
-    if(!list.some(x=>`${x.sourceDraw}:${x.targetDraw}`===key)){
-      list.push({
-        version:'6.3',
-        sourceDraw:Number(f.sourceDraw),
-        targetDraw:Number(f.targetDraw),
-        createdAt:f.createdAt||new Date().toISOString(),
-        pool20:(f.pool20||[]).slice(),
-        anti20:(f.anti20||[]).slice(),
-        logicCombos:(f.logicCombos||[]).map(c=>({id:c.id,size:c.size,numbers:(c.numbers||[]).slice()})),
-        antiCombos:(f.antiCombos||[]).map(c=>({id:c.id,size:c.size,numbers:(c.numbers||[]).slice()}))
-      });
-    }
-    return saveFpArchive(list);
+
+  async function settlePending(){
+    const by=new Map(draws.map(d=>[Number(d.draw),d])),list=await STORE.listPredictions();let changed=false;
+    for(const p of list){if(p.actual||!by.has(Number(p.targetDraw)))continue;const result=ENGINE.settlePrediction(p,by.get(Number(p.targetDraw)),weights);weights=result.weights;await STORE.putPrediction(result.prediction);changed=true;}
+    if(changed)await STORE.setMeta('weights',weights);
+    const updated=await STORE.listPredictions();learningCount=updated.filter(p=>p.actual).length;
   }
-  function merge(list){
-    const map=new Map(draws.map(d=>[d.draw,d]));
-    for(const d of list)map.set(d.draw,d);
-    draws=[...map.values()].sort((a,b)=>a.draw-b.draw);
+
+  async function getOrCreateForecast(){
+    await settlePending();const latest=draws.at(-1);if(!latest)return null;
+    let p=await STORE.getPrediction(Number(latest.draw)+1);
+    if(!p){p=ENGINE.forecast(draws,weights);if(p)await STORE.putPrediction(p);}return p;
   }
 
   function sumBalls(b){return (b||[]).reduce((a,x)=>a+Number(x),0)}
   function parity(b){const odd=(b||[]).filter(n=>n%2).length;return {odd,even:20-odd}}
-  function dominantColumn(b){
-    const balls=b||[];
-    const totals=Array(11).fill(0);
-    for(const n of balls)totals[n%10===0?10:n%10]++;
-    const maxCount=Math.max(...totals.slice(1));
-    const progress=Array(11).fill(0);
-    for(let pos=0;pos<balls.length;pos++){
-      const col=balls[pos]%10===0?10:balls[pos]%10;
-      progress[col]++;
-      if(totals[col]===maxCount&&progress[col]===maxCount){
-        return {column:col,count:maxCount,completedAt:pos+1};
-      }
-    }
-    return {column:1,count:totals[1],completedAt:null};
-  }
-  function orderFor(draw){
-    if(mode==='asc')return [...draw.balls].sort((a,b)=>a-b);
-    return draw.balls.slice();
-  }
-  function samePositions(draw){
-    const asc=[...draw.balls].sort((a,b)=>a-b),set=new Set();
-    draw.balls.forEach((n,i)=>{if(Number(n)===Number(asc[i]))set.add(Number(n))});return set;
-  }
-  function singletonText(draw){
-    const cols=Array.from({length:10},()=>[]);
-    for(const n of draw.balls)cols[n%10===0?9:(n%10)-1].push(n);
-    const singles=cols.map((a,i)=>a.length===1?i+1:null).filter(Boolean);
-    const empty=cols.map((a,i)=>a.length===0?i+1:null).filter(Boolean);
-    const s=singles.length?`☝ одиночные: ${singles.map(x=>'ст'+x).join(', ')}`:'☝ одиночные: —';
-    return s+(empty.length?` · <span class="empty">${empty.map(x=>'ст'+x+' □ — пустой!').join(' ')}</span>`:'');
+  function dominantColumn(b){const totals=Array(11).fill(0);for(const n of b)totals[n%10===0?10:n%10]++;const max=Math.max(...totals.slice(1)),progress=Array(11).fill(0);for(let i=0;i<b.length;i++){const c=b[i]%10===0?10:b[i]%10;progress[c]++;if(totals[c]===max&&progress[c]===max)return {column:c,count:max,completedAt:i+1};}return {column:1,count:totals[1],completedAt:null};}
+  function samePositions(d){const asc=[...d.balls].sort((a,b)=>a-b),s=new Set();d.balls.forEach((n,i)=>{if(n===asc[i])s.add(n)});return s;}
+  function singletonText(d){const cols=Array.from({length:10},()=>[]);for(const n of d.balls)cols[n%10===0?9:n%10-1].push(n);const singles=cols.map((a,i)=>a.length===1?i+1:null).filter(Boolean),empty=cols.map((a,i)=>a.length===0?i+1:null).filter(Boolean);return `☝ одиночные: ${singles.length?singles.map(x=>'ст'+x).join(', '):'—'}${empty.length?` · <span class="empty">${empty.map(x=>'ст'+x+' □ — пустой!').join(' ')}</span>`:''}`;}
+  function drawCard(d,prev,label){const prevSet=new Set(prev?.balls||[]),trans=new Set(d.balls.filter(n=>prevSet.has(n))),same=samePositions(d),p=parity(d.balls),dc=dominantColumn(d.balls),nums=mode==='asc'?[...d.balls].sort((a,b)=>a-b):d.balls;return `<section class="card"><div class="draw-head"><div><div class="label">${label}</div><div class="draw-no">№${d.draw}</div><div class="draw-time">${showDate(d.date)} ${d.time||''}</div><div class="meta"><span>Σ ${sumBalls(d.balls)}</span><span>${p.even}/${p.odd}</span><span>${sumBalls(d.balls)%2?'нечёт':'чёт'}</span></div></div><div class="st">🔴 ст${dc.column}</div></div>${grids}<div class="singletons">${singletonText(d)}</div></section>`;}
+  function renderCards(){if(!networkReady||draws.length<3)return;const i=draws.length-1;$('cards').innerHTML=drawCard(draws[i],draws[i-1],'ПОСЛЕДНИЙ ТИРАЖ')+drawCard(draws[i-1],draws[i-2],'ПРЕДЫДУЩИЙ ТИРАЖ')+drawCard(draws[i-2],draws[i-3],'ПРЕДПРЕДЫДУЩИЙ ТИРАЖ');}
+
+  const poolHtml=(nums,hits=[])=>{const hs=new Set((hits||[]).map(Number));return `<div class="pool">${(nums||[]).map(n=>`<span class="${hs.has(Number(n))?'hit':''}">${pad(n)}</span>`).join('')}</div>`};
+  const combosHtml=(combos,settled=false)=> (combos||[]).map(c=>`<div class="combo"><div class="combo-head"><b>${c.id}</b><span>К${c.size}${settled?` · ${(c.hits||[]).length}/${c.size}`:''}</span></div><div class="combo-numbers">${(c.numbers||[]).map(pad).join(' · ')}</div>${settled&&c.hits?.length?`<div class="small">попали: ${c.hits.map(pad).join(', ')}</div>`:''}</div>`).join('');
+
+  async function renderFingerprint(){
+    const box=$('fingerprintResult');if(!draws.length){box.innerHTML='';return;}
+    if(fpMode==='archive'){await renderArchive();return;}
+    const p=await getOrCreateForecast();if(!p){box.innerHTML='<div class="row small">Недостаточно истории.</div>';return;}
+    const anti=fpMode==='antilogic',pool=anti?p.anti20:p.pool20,combos=anti?p.antiCombos:p.logicCombos;
+    box.innerHTML=`<div class="row"><strong>🎯 / ⏳−1 · после №${p.sourceDraw} → №${p.targetDraw}</strong><div class="small">🧠 обучение: архив ${bootstrapCount} + живых ${learningCount} · память IndexedDB</div></div><div class="signal-grid"><div class="signal"><b>${p.transition?.count||0}/20</b><span>переходов</span></div><div class="signal"><b>${Number(p.matrix?.meanDistance||0).toFixed(2)}</b><span>средний Manhattan</span></div><div class="signal"><b>${p.neighborsCount||0}</b><span>исторических состояний</span></div><div class="signal"><b>${Number(weights.analog||0).toFixed(3)}</b><span>вес аналогов после обучения</span></div></div><div class="label" style="margin-top:10px">${anti?'ANTILOGIC-20':'POOL-20'}</div>${poolHtml(pool)}<div class="label" style="margin-top:10px">К3 · К4 · К5</div>${combosHtml(combos)}`;
   }
 
-  function drawCard(draw,previous,label){
-    const prevSet=new Set(previous?.balls||[]);
-    const trans=new Set(draw.balls.filter(n=>prevSet.has(Number(n))));
-    const same=samePositions(draw),p=parity(draw.balls),dc=dominantColumn(draw.balls);
-    const nums=orderFor(draw);
-    return `<section class="card">
-      <div class="draw-head">
-        <div>
-          <div class="label">${label}</div>
-          <div class="draw-no">№${draw.draw}</div>
-          <div class="draw-time">${showDate(draw.date)} ${draw.time||''}</div>
-          <div class="meta"><span>Σ ${sumBalls(draw.balls)}</span><span>${p.even}/${p.odd}</span><span>${sumBalls(draw.balls)%2?'нечёт':'чёт'}</span></div>
-        </div>
-        <div class="st">🔴 ст${dc.column}</div>
-      </div>
-      <div class="numbers">${nums.map(n=>`<div class="ball ${trans.has(Number(n))?'pass':''} ${same.has(Number(n))?'same':''}">${pad(n)}${trans.has(Number(n))?' ◆':''}</div>`).join('')}</div>
-      <div class="singletons">${singletonText(draw)}</div>
-    </section>`;
+  async function renderArchive(){
+    await settlePending();const list=(await STORE.listPredictions()).slice().reverse();const box=$('fingerprintResult');
+    if(!list.length){box.innerHTML='<div class="row small">Архив FINGERPRINT пока пуст.</div>';return;}
+    box.innerHTML=list.slice(0,40).map(p=>`<button class="archive-item" data-archive-draw="${p.targetDraw}"><div><b>№${p.targetDraw}</b> · после №${p.sourceDraw}${p.actual?` · POOL ${(p.poolHits||[]).length}/20 · ANTI ${(p.antiHits||[]).length}/20`:' · ⏳ ожидает'}</div><div class="small">${p.actual?'проверен и обучен':'зафиксирован'} · ${new Date(p.createdAt).toLocaleString('ru-RU')}</div></button><div class="archive-detail" id="ad-${p.targetDraw}"></div>`).join('');
+  }
+  async function toggleArchiveDetail(target){
+    const box=$(`ad-${target}`);if(!box)return;if(box.innerHTML){box.innerHTML='';return;}
+    const p=await STORE.getPrediction(Number(target));if(!p)return;
+    box.innerHTML=`<div class="archive-open"><div class="label">ПРОГНОЗ LOGIC</div>${poolHtml(p.pool20,p.poolHits)}<div class="label" style="margin-top:8px">LOGIC К3/К4/К5</div>${combosHtml(p.logicCombos,!!p.actual)}<div class="label" style="margin-top:10px">ANTILOGIC</div>${poolHtml(p.anti20,p.antiHits)}<div class="label" style="margin-top:8px">ANTILOGIC К3/К4/К5</div>${combosHtml(p.antiCombos,!!p.actual)}${p.actual?`<div class="label" style="margin-top:10px">ФАКТ №${p.actual.draw} · ${showDate(p.actual.date)} ${p.actual.time}</div>${poolHtml(p.actual.balls)}<div class="small">веса после обучения: ${Object.entries(p.learnedWeights||{}).map(([k,v])=>`${k} ${Number(v).toFixed(3)}`).join(' · ')}</div>`:'<div class="row small">⏳ Фактический тираж ещё не получен.</div>'}</div>`;
   }
 
-  function renderCards(){
-    if(!networkReady||draws.length<3)return;
-    const last=draws.length-1;
-    const labels=['ПРЕДПРЕДЫДУЩИЙ ТИРАЖ','ПРЕДЫДУЩИЙ ТИРАЖ','ПОСЛЕДНИЙ ТИРАЖ'];
-    const idx=[last-2,last-1,last];
-    $('cards').innerHTML=idx.reverse().map((i,k)=>{
-      const lab=k===0?'ПОСЛЕДНИЙ ТИРАЖ':k===1?'ПРЕДЫДУЩИЙ ТИРАЖ':'ПРЕДПРЕДЫДУЩИЙ ТИРАЖ';
-      return drawCard(draws[i],draws[i-1],lab);
-    }).join('');
-  }
+  function renderMatrix(){const r=ENGINE.matrixReport(draws),d=draws.at(-1),dc=dominantColumn(d.balls),f=r.features;$('matrixResult').innerHTML=`<div class="row"><strong>№${r.draw} · ${showDate(r.date)} ${r.time||''} · ст${dc.column}</strong><div class="small">сжатие / разжатие · плотность · центр массы · баланс поля</div></div><div class="signal-grid"><div class="signal"><b>${r.phase}</b><span>фаза поля</span></div><div class="signal"><b>${r.arrow}</b><span>движение центра</span></div><div class="signal"><b>${Number(f.density).toFixed(3)}</b><span>плотность D≤2</span></div><div class="signal"><b>${Number(f.imbalance).toFixed(2)}</b><span>перекос квадрантов</span></div></div><div class="row"><b>Сжатие ↔ разжатие</b><div class="meter"><span style="width:${Math.max(5,Math.min(95,50+r.delta*18))}%"></span></div><div class="small">Δ среднего Manhattan: ${r.delta.toFixed(3)}</div></div><div class="matrix-grid">${Array.from({length:80},(_,i)=>i+1).map(n=>`<div class="cell ${d.balls.includes(n)?'on':''}">${n}</div>`).join('')}</div>`;}
+  function renderAssembly(){const r=ENGINE.assemblyReport(draws);$('assemblyResult').innerHTML=`<div class="row"><strong>№${r.draw} · ${showDate(r.date)} ${r.time||''}</strong><div class="small">М1–М20 · горизонтали и вертикали</div></div><div class="label" style="margin-top:9px">Сильные горизонтали</div>${r.horizontal.slice(0,5).map(x=>`<div class="combo"><b>М${x.place}–М${x.place+x.length-1}</b><div class="combo-numbers">${x.numbers.map(pad).join(' · ')}</div><div class="small">сила ${x.score.toFixed(2)}</div></div>`).join('')}<div class="label" style="margin-top:9px">Сильные вертикали</div>${r.vertical.slice(0,5).map(x=>`<div class="combo"><b>М${x.place}</b><div class="combo-numbers">${x.numbers.map(pad).join(' → ')}</div><div class="small">сила ${x.score.toFixed(2)}</div></div>`).join('')}`;}
 
-  async function fetchFresh(){
-    const savedSource=(localStorage.getItem(STORE.source)||'').trim();
-    const local='./keno-history-v63.json';
-    const liveRaw='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
-    const livePages='https://arsazet17.github.io/pozitron-keno-v5/keno-history-v62.json';
-    const liveCdn='https://cdn.jsdelivr.net/gh/arsazet17/pozitron-keno-v5@main/keno-history-v62.json';
-    const sources=[local,liveRaw,livePages,liveCdn,savedSource].filter((x,i,a)=>x&&a.indexOf(x)===i);
-    let err=null;
-    const map=new Map(loadLocal().map(d=>[Number(d.draw),d]));
-    for(const url of sources){
-      try{
-        const sep=url.includes('?')?'&':'?';
-        const r=await fetch(`${url}${sep}v=6307&t=${Date.now()}`,{cache:'no-store'});
-        if(!r.ok)throw new Error(`HTTP ${r.status}`);
-        const arr=parse(await r.text());
-        for(const d of arr)map.set(Number(d.draw),d);
-      }catch(e){err=e}
-    }
-    if(map.size){
-      const merged=new Map();
-      for(const d of loadLocal())merged.set(Number(d.draw),d);
-      for(const d of draws)merged.set(Number(d.draw),d);
-      for(const d of map.values())merged.set(Number(d.draw),d);
-      const next=[...merged.values()].sort((a,b)=>a.draw-b.draw);
-      const currentMax=draws.length?Number(draws.at(-1).draw):0;
-      const nextMax=next.length?Number(next.at(-1).draw):0;
-      if(nextMax>=currentMax){
-        draws=next;
-        saveLocal();
-      }
-      networkReady=true;
-      $('status').textContent=`v6.3 · база: ${draws.length.toLocaleString('ru-RU')} · последний №${draws.at(-1).draw}`;
-      renderAll();
-      return true;
-    }
-    const backup=loadLocal();
-    if(backup.length>=3){
-      draws=backup.sort((a,b)=>a.draw-b.draw);networkReady=true;
-      $('status').textContent=`⚠ ОФЛАЙН · сохранено до №${draws.at(-1).draw}`;
-      renderAll();
-      return false;
-    }
-    $('status').textContent='Нет связи и нет локальной резервной базы';
-    $('cards').innerHTML='<section class="card"><b>Не удалось получить историю тиражей.</b><div class="small">Проверьте интернет и нажмите ↻.</div></section>';
-    throw err||new Error('Нет данных');
-  }
+  function renderAll(){renderCards();if($('fingerprintPanel').classList.contains('show'))renderFingerprint();if($('matrixPanel').classList.contains('show'))renderMatrix();if($('assemblyPanel').classList.contains('show'))renderAssembly();}
+  function openPanel(id){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));$(id)?.classList.add('show');if(id==='fingerprintPanel')renderFingerprint();if(id==='matrixPanel')renderMatrix();if(id==='assemblyPanel')renderAssembly();setTimeout(()=>$(id)?.scrollIntoView({behavior:'smooth',block:'start'}),40);}
 
-  function renderAll(){
-    renderCards();
-    if($('fingerprintPanel').classList.contains('show'))renderFingerprint();
-    if($('matrixPanel').classList.contains('show'))renderMatrix();
-    if($('assemblyPanel').classList.contains('show'))renderAssembly();
-  }
-
-  function poolHtml(nums){return `<div class="pool">${(nums||[]).map(n=>`<span>${pad(n)}</span>`).join('')}</div>`}
-  function combosHtml(combos){return (combos||[]).map(c=>`<div class="combo"><div class="combo-head"><b>${c.id}</b><span>К${c.size}</span></div><div class="combo-numbers">${c.numbers.map(pad).join(' · ')}</div></div>`).join('')}
-  function renderFingerprint(){
-    const box=$('fingerprintResult');if(!draws.length){box.innerHTML='';return}
-    window.POZITRON_V63_ENGINE.settleAndLearn(draws);
-    if(fpMode==='archive'){
-      box.innerHTML='<div class="row small">Загружаю архив FINGERPRINT из IndexedDB…</div>';
-      window.dispatchEvent(new CustomEvent('pozitron:fingerprint-archive',{detail:{draws:draws.slice()}}));
-      return;
-    }
-    const f=window.POZITRON_V63_ENGINE.forecast(draws);
-    if(!f){box.innerHTML='<div class="row small">Недостаточно истории для расчёта.</div>';return}
-    const anti=fpMode==='antilogic';
-    const nums=anti?f.anti20:f.pool20,combos=anti?f.antiCombos:f.logicCombos;
-    box.innerHTML=`<div class="row"><b>🎯 / ⏳−1 · после №${f.sourceDraw}</b><div class="small">⏳ Сохраняю прогноз в архив IndexedDB… ${anti?'ANTILOGIC — альтернативные кандидаты вне основного POOL.':'LOGIC — итог согласования независимых сигналов.'}</div></div>
-      <div class="signal-grid">
-        <div class="signal"><b>${f.transition.count}/20</b><span>переходов</span></div>
-        <div class="signal"><b>${f.matrix.meanDistance.toFixed(2)}</b><span>средний Manhattan</span></div>
-        <div class="signal"><b>${f.neighbors.length}</b><span>исторических состояний</span></div>
-        <div class="signal"><b>${f.weights.analog.toFixed(2)}</b><span>вес истории после обучения</span></div>
-      </div>
-      <div class="label" style="margin-top:12px">${anti?'ANTILOGIC-20':'POOL-20'}</div>${poolHtml(nums)}
-      <div class="label" style="margin-top:12px">К3 · К4 · К5</div>${combosHtml(combos)}`;
-    window.dispatchEvent(new CustomEvent('pozitron:fingerprint-forecast',{detail:f}));
-  }
-
-  function renderMatrix(){
-    const r=window.POZITRON_V63_ENGINE.matrixReport(draws),f=r.features,cur=draws.at(-1),set=new Set(cur.balls),tr=new Set(r.transition.numbers);
-    const phasePct=Math.max(5,Math.min(95,50-r.delta*14));
-    const dc=dominantColumn(cur.balls);
-    const q=f.quadrants||[0,0,0,0];
-    const qNames=['верх-лево','верх-право','низ-лево','низ-право'];
-    const maxQ=Math.max(...q),minQ=Math.min(...q),maxQi=q.indexOf(maxQ),minQi=q.indexOf(minQ);
-    const movement=r.arrow==='•'?'центр почти не сместился':`центр движется ${r.arrow}`;
-    const phaseText=r.phase==='СЖАТИЕ'?'поле стало плотнее относительно предыдущего тиража':r.phase==='РАЗЖАТИЕ'?'поле стало более рассеянным относительно предыдущего тиража':'резкого изменения плотности поля нет';
-    const strength=Math.abs(r.delta)>=1.0||f.imbalance>=0.30?'СИЛЬНЫЙ':Math.abs(r.delta)>=0.45||f.imbalance>=0.18?'СРЕДНИЙ':'СЛАБЫЙ';
-    $('matrixResult').innerHTML=`
-    <div class="row"><div class="label">РАЗБИРАЕМЫЙ ТИРАЖ</div><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-top:4px"><div><b style="font-size:22px">№${cur.draw}</b><div class="small">${showDate(cur.date)} ${cur.time||''}</div></div><div class="st">🔴 ст${dc.column}</div></div></div>
-    <div class="signal-grid">
-      <div class="signal"><b>${r.phase}</b><span>фаза поля</span></div>
-      <div class="signal"><b>${r.arrow}</b><span>движение центра</span></div>
-      <div class="signal"><b>${f.density.toFixed(3)}</b><span>плотность D≤2</span></div>
-      <div class="signal"><b>${f.imbalance.toFixed(2)}</b><span>перекос квадрантов</span></div>
-    </div>
-    <div class="row"><strong>Сжатие ↔ разжатие</strong><div class="meter"><span style="width:${phasePct}%"></span></div><div class="small">Δ среднего Manhattan: ${r.delta>=0?'+':''}${r.delta.toFixed(3)}</div></div>
-    <div class="row"><div class="label">ВЫВОД МАТРИЦЫ</div><div style="margin-top:5px"><b>${strength} СИГНАЛ</b> · ${r.phase}</div><div class="small" style="margin-top:4px">${phaseText}; ${movement}.</div><div class="small" style="margin-top:4px">Самый заполненный сектор: <b>${qNames[maxQi]}</b> (${maxQ}/20) · самый свободный: <b>${qNames[minQi]}</b> (${minQ}/20).</div><div class="small" style="margin-top:5px">Матрица передаёт FINGERPRINT режим поля: <b>${r.phase}</b> + направление <b>${r.arrow}</b> + перекос <b>${f.imbalance.toFixed(2)}</b>.</div></div>
-    <div class="matrix-grid">${Array.from({length:80},(_,i)=>i+1).map(n=>`<div class="cell ${set.has(n)?'on':''} ${tr.has(n)?'transition':''}">${n}</div>`).join('')}</div>`;
-  }
-
-  function listAssembly(title,items){
-    return `<div class="label" style="margin-top:11px">${title}</div>${items.slice(0,5).map(x=>`<div class="row"><b>${x.kind==='H'?'↔':'↕'} ${x.kind==='H'?`М${x.place}–М${x.place+x.length-1}`:`М${x.place}`}</b><div>${(x.numbers||[]).map(pad).join(' · ')}</div><div class="small">сила ${Number(x.score||0).toFixed(3)}</div></div>`).join('')||'<div class="row small">Сильных сигналов нет.</div>'}`;
-  }
-  function renderAssembly(){
-    const r=window.POZITRON_V63_ENGINE.assemblyReport(draws);
-    $('assemblyResult').innerHTML=`<div class="row"><b>Тираж №${r.draw}</b><div class="small">Места считаются по порядку выпадения М1–М20.</div></div>${listAssembly('ГОРИЗОНТАЛИ',r.horizontal)}${listAssembly('ВЕРТИКАЛИ',r.vertical)}`;
-  }
-
-  function openPanel(id){
-    document.querySelectorAll('.panel').forEach(p=>{if(p.id!==id)p.classList.remove('show')});
-    const p=$(id);p.classList.toggle('show');
-    if(!p.classList.contains('show'))return;
-    if(id==='fingerprintPanel')renderFingerprint();
-    if(id==='matrixPanel')renderMatrix();
-    if(id==='assemblyPanel')renderAssembly();
-    setTimeout(()=>p.scrollIntoView({behavior:'smooth',block:'start'}),30);
-  }
-
-  function startAuto(){
-    clearInterval(timer);timer=null;
-    const ms=Number(localStorage.getItem(STORE.interval)||300000);
-    if(ms)timer=setInterval(()=>refresh(false),ms);
-  }
-  async function refresh(scrollTop=false){
-    $('status').textContent='Проверяю новый тираж…';
-    await fetchFresh().catch(()=>{});
-    if(scrollTop)window.scrollTo({top:0,behavior:'smooth'});
-  }
-
-  document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{
-    document.querySelectorAll('[data-mode]').forEach(x=>x.classList.remove('on'));b.classList.add('on');mode=b.dataset.mode;renderCards();
-  }));
-  document.querySelectorAll('[data-panel]').forEach(b=>b.addEventListener('click',()=>openPanel(b.dataset.panel)));
-  document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>openPanel(b.dataset.open)));
-  document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>$(b.dataset.close).classList.remove('show')));
-  document.querySelector('[data-home]').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
-  document.querySelectorAll('[data-fp-mode]').forEach(b=>b.addEventListener('click',()=>{
-    document.querySelectorAll('[data-fp-mode]').forEach(x=>x.classList.remove('active'));b.classList.add('active');fpMode=b.dataset.fpMode;renderFingerprint();
-  }));
-  $('syncBtn').addEventListener('click',()=>refresh(true));$('syncBtn2').addEventListener('click',()=>refresh(true));
-  $('settingsBtn').addEventListener('click',()=>{
-    $('sourceUrl').value=localStorage.getItem(STORE.source)||DEFAULT_SOURCE;
-    $('interval').value=localStorage.getItem(STORE.interval)||'300000';
-    $('settings').showModal();
+  document.addEventListener('click',async e=>{
+    const modeBtn=e.target.closest('[data-mode]');if(modeBtn){mode=modeBtn.dataset.mode;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('on',b===modeBtn));renderCards();return;}
+    const tool=e.target.closest('[data-panel],[data-open]');if(tool){openPanel(tool.dataset.panel||tool.dataset.open);return;}
+    const close=e.target.closest('[data-close]');if(close){$(close.dataset.close)?.classList.remove('show');return;}
+    const tab=e.target.closest('[data-fp-mode]');if(tab){fpMode=tab.dataset.fpMode;document.querySelectorAll('[data-fp-mode]').forEach(b=>b.classList.toggle('active',b===tab));await renderFingerprint();return;}
+    const ar=e.target.closest('[data-archive-draw]');if(ar){await toggleArchiveDetail(ar.dataset.archiveDraw);return;}
   });
-  $('saveSettings').addEventListener('click',()=>{
-    localStorage.setItem(STORE.source,$('sourceUrl').value.trim()||DEFAULT_SOURCE);
-    localStorage.setItem(STORE.interval,$('interval').value);
-    startAuto();setTimeout(()=>refresh(false),0);
-  });
+  $('syncBtn')?.addEventListener('click',fetchFresh);$('syncBtn2')?.addEventListener('click',fetchFresh);$('settingsBtn')?.addEventListener('click',()=>$('settings').showModal());
+  $('saveSettings')?.addEventListener('click',async()=>{await STORE.setMeta('source',$('sourceUrl').value.trim());await STORE.setMeta('interval',Number($('interval').value)||0);setupTimer();});
+  async function setupTimer(){if(timer)clearInterval(timer);const ms=Number(await STORE.getMeta('interval',300000));$('interval').value=String(ms);if(ms>0)timer=setInterval(fetchFresh,ms);}
 
-  // ВАЖНО: при старте НЕ вызываем render() из localStorage.
-  // Сначала сеть; localStorage используется только внутри fetchFresh() при ошибке сети.
-  startAuto();
-  fetchFresh().catch(()=>{});
-
-  if('serviceWorker' in navigator){
-    window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{}));
-  }
+  (async()=>{await STORE.clearLegacy();weights=ENGINE.normalizeWeights(await STORE.getMeta('weights',ENGINE.DEFAULT_WEIGHTS));draws=await STORE.loadDraws();$('sourceUrl').value=await STORE.getMeta('source','');await setupTimer();if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js?v=6400').catch(()=>{});await fetchFresh();})();
 })();
