@@ -39,7 +39,7 @@
     }
     return out.sort((a,b)=>a.draw-b.draw);
   }
-  function saveLocal(){try{localStorage.setItem(STORE.draws,JSON.stringify(draws.slice(-35000)))}catch{}}
+  function saveLocal(){try{localStorage.setItem(STORE.draws,JSON.stringify(draws.slice(-500)))}catch(e){console.warn('v6.3 local backup failed',e)}}
   function loadLocal(){try{return JSON.parse(localStorage.getItem(STORE.draws)||'[]').map(valid).filter(Boolean)}catch{return[]}}
 
   function loadFpArchive(){
@@ -106,8 +106,19 @@
   function sumBalls(b){return (b||[]).reduce((a,x)=>a+Number(x),0)}
   function parity(b){const odd=(b||[]).filter(n=>n%2).length;return {odd,even:20-odd}}
   function dominantColumn(b){
-    const c=Array(11).fill(0);for(const n of b||[])c[n%10===0?10:n%10]++;
-    let best=1;for(let i=2;i<=10;i++)if(c[i]>c[best])best=i;return {column:best,count:c[best]};
+    const balls=b||[];
+    const totals=Array(11).fill(0);
+    for(const n of balls)totals[n%10===0?10:n%10]++;
+    const maxCount=Math.max(...totals.slice(1));
+    const progress=Array(11).fill(0);
+    for(let pos=0;pos<balls.length;pos++){
+      const col=balls[pos]%10===0?10:balls[pos]%10;
+      progress[col]++;
+      if(totals[col]===maxCount&&progress[col]===maxCount){
+        return {column:col,count:maxCount,completedAt:pos+1};
+      }
+    }
+    return {column:1,count:totals[1],completedAt:null};
   }
   function orderFor(draw){
     if(mode==='asc')return [...draw.balls].sort((a,b)=>a-b);
@@ -159,23 +170,35 @@
 
   async function fetchFresh(){
     const savedSource=(localStorage.getItem(STORE.source)||'').trim();
-    const live='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
     const local='./keno-history-v63.json';
-    const sources=[local,live,savedSource].filter((x,i,a)=>x&&a.indexOf(x)===i);
+    const liveRaw='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
+    const livePages='https://arsazet17.github.io/pozitron-keno-v5/keno-history-v62.json';
+    const liveCdn='https://cdn.jsdelivr.net/gh/arsazet17/pozitron-keno-v5@main/keno-history-v62.json';
+    const sources=[local,liveRaw,livePages,liveCdn,savedSource].filter((x,i,a)=>x&&a.indexOf(x)===i);
     let err=null;
-    const map=new Map();
+    const map=new Map(loadLocal().map(d=>[Number(d.draw),d]));
     for(const url of sources){
       try{
         const sep=url.includes('?')?'&':'?';
-        const r=await fetch(`${url}${sep}v=6303&t=${Date.now()}`,{cache:'no-store'});
+        const r=await fetch(`${url}${sep}v=6306&t=${Date.now()}`,{cache:'no-store'});
         if(!r.ok)throw new Error(`HTTP ${r.status}`);
         const arr=parse(await r.text());
-        for(const d of arr) map.set(Number(d.draw),d);
+        for(const d of arr)map.set(Number(d.draw),d);
       }catch(e){err=e}
     }
     if(map.size){
-      draws=[...map.values()].sort((a,b)=>a.draw-b.draw);
-      saveLocal();networkReady=true;
+      const merged=new Map();
+      for(const d of loadLocal())merged.set(Number(d.draw),d);
+      for(const d of draws)merged.set(Number(d.draw),d);
+      for(const d of map.values())merged.set(Number(d.draw),d);
+      const next=[...merged.values()].sort((a,b)=>a.draw-b.draw);
+      const currentMax=draws.length?Number(draws.at(-1).draw):0;
+      const nextMax=next.length?Number(next.at(-1).draw):0;
+      if(nextMax>=currentMax){
+        draws=next;
+        saveLocal();
+      }
+      networkReady=true;
       $('status').textContent=`v6.3 · база: ${draws.length.toLocaleString('ru-RU')} · последний №${draws.at(-1).draw}`;
       renderAll();
       return true;
@@ -237,13 +260,23 @@
   function renderMatrix(){
     const r=window.POZITRON_V63_ENGINE.matrixReport(draws),f=r.features,cur=draws.at(-1),set=new Set(cur.balls),tr=new Set(r.transition.numbers);
     const phasePct=Math.max(5,Math.min(95,50-r.delta*14));
-    $('matrixResult').innerHTML=`<div class="signal-grid">
+    const dc=dominantColumn(cur.balls);
+    const q=f.quadrants||[0,0,0,0];
+    const qNames=['верх-лево','верх-право','низ-лево','низ-право'];
+    const maxQ=Math.max(...q),minQ=Math.min(...q),maxQi=q.indexOf(maxQ),minQi=q.indexOf(minQ);
+    const movement=r.arrow==='•'?'центр почти не сместился':`центр движется ${r.arrow}`;
+    const phaseText=r.phase==='СЖАТИЕ'?'поле стало плотнее относительно предыдущего тиража':r.phase==='РАЗЖАТИЕ'?'поле стало более рассеянным относительно предыдущего тиража':'резкого изменения плотности поля нет';
+    const strength=Math.abs(r.delta)>=1.0||f.imbalance>=0.30?'СИЛЬНЫЙ':Math.abs(r.delta)>=0.45||f.imbalance>=0.18?'СРЕДНИЙ':'СЛАБЫЙ';
+    $('matrixResult').innerHTML=`
+    <div class="row"><div class="label">РАЗБИРАЕМЫЙ ТИРАЖ</div><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-top:4px"><div><b style="font-size:22px">№${cur.draw}</b><div class="small">${showDate(cur.date)} ${cur.time||''}</div></div><div class="st">🔴 ст${dc.column}</div></div></div>
+    <div class="signal-grid">
       <div class="signal"><b>${r.phase}</b><span>фаза поля</span></div>
       <div class="signal"><b>${r.arrow}</b><span>движение центра</span></div>
       <div class="signal"><b>${f.density.toFixed(3)}</b><span>плотность D≤2</span></div>
       <div class="signal"><b>${f.imbalance.toFixed(2)}</b><span>перекос квадрантов</span></div>
     </div>
     <div class="row"><strong>Сжатие ↔ разжатие</strong><div class="meter"><span style="width:${phasePct}%"></span></div><div class="small">Δ среднего Manhattan: ${r.delta>=0?'+':''}${r.delta.toFixed(3)}</div></div>
+    <div class="row"><div class="label">ВЫВОД МАТРИЦЫ</div><div style="margin-top:5px"><b>${strength} СИГНАЛ</b> · ${r.phase}</div><div class="small" style="margin-top:4px">${phaseText}; ${movement}.</div><div class="small" style="margin-top:4px">Самый заполненный сектор: <b>${qNames[maxQi]}</b> (${maxQ}/20) · самый свободный: <b>${qNames[minQi]}</b> (${minQ}/20).</div><div class="small" style="margin-top:5px">Матрица передаёт FINGERPRINT режим поля: <b>${r.phase}</b> + направление <b>${r.arrow}</b> + перекос <b>${f.imbalance.toFixed(2)}</b>.</div></div>
     <div class="matrix-grid">${Array.from({length:80},(_,i)=>i+1).map(n=>`<div class="cell ${set.has(n)?'on':''} ${tr.has(n)?'transition':''}">${n}</div>`).join('')}</div>`;
   }
 
