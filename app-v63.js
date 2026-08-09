@@ -174,13 +174,64 @@
   function renderMatrix(){
     const r=window.POZITRON_V63_ENGINE.matrixReport(draws),f=r.features,cur=draws.at(-1),set=new Set(cur.balls),tr=new Set(r.transition.numbers);
     const phasePct=Math.max(5,Math.min(95,50-r.delta*14));
-    $('matrixResult').innerHTML=`<div class="signal-grid">
+    const dc=dominantColumn(cur.balls);
+
+    const q=f.quadrants||[0,0,0,0];
+    const qNames=['верх-лево','верх-право','низ-лево','низ-право'];
+    const maxQ=Math.max(...q), minQ=Math.min(...q);
+    const maxQi=q.indexOf(maxQ), minQi=q.indexOf(minQ);
+
+    const movement = r.arrow==='•' ? 'центр почти не сместился' : `центр движется ${r.arrow}`;
+    const phaseText = r.phase==='СЖАТИЕ'
+      ? 'поле стало плотнее относительно предыдущего тиража'
+      : r.phase==='РАЗЖАТИЕ'
+        ? 'поле стало более рассеянным относительно предыдущего тиража'
+        : 'резкого изменения плотности поля нет';
+
+    const strength =
+      Math.abs(r.delta)>=1.0 || f.imbalance>=0.30 ? 'СИЛЬНЫЙ'
+      : Math.abs(r.delta)>=0.45 || f.imbalance>=0.18 ? 'СРЕДНИЙ'
+      : 'СЛАБЫЙ';
+
+    $('matrixResult').innerHTML=`
+    <div class="row">
+      <div class="label">РАЗБИРАЕМЫЙ ТИРАЖ</div>
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-top:4px">
+        <div>
+          <b style="font-size:22px">№${cur.draw}</b>
+          <div class="small">${showDate(cur.date)} ${cur.time||''}</div>
+        </div>
+        <div class="st">🔴 ст${dc.column}</div>
+      </div>
+    </div>
+
+    <div class="signal-grid">
       <div class="signal"><b>${r.phase}</b><span>фаза поля</span></div>
       <div class="signal"><b>${r.arrow}</b><span>движение центра</span></div>
       <div class="signal"><b>${f.density.toFixed(3)}</b><span>плотность D≤2</span></div>
       <div class="signal"><b>${f.imbalance.toFixed(2)}</b><span>перекос квадрантов</span></div>
     </div>
-    <div class="row"><strong>Сжатие ↔ разжатие</strong><div class="meter"><span style="width:${phasePct}%"></span></div><div class="small">Δ среднего Manhattan: ${r.delta>=0?'+':''}${r.delta.toFixed(3)}</div></div>
+
+    <div class="row">
+      <strong>Сжатие ↔ разжатие</strong>
+      <div class="meter"><span style="width:${phasePct}%"></span></div>
+      <div class="small">Δ среднего Manhattan: ${r.delta>=0?'+':''}${r.delta.toFixed(3)}</div>
+    </div>
+
+    <div class="row">
+      <div class="label">ВЫВОД МАТРИЦЫ</div>
+      <div style="margin-top:5px"><b>${strength} СИГНАЛ</b> · ${r.phase}</div>
+      <div class="small" style="margin-top:4px">${phaseText}; ${movement}.</div>
+      <div class="small" style="margin-top:4px">
+        Самый заполненный сектор: <b>${qNames[maxQi]}</b> (${maxQ}/20) ·
+        самый свободный: <b>${qNames[minQi]}</b> (${minQ}/20).
+      </div>
+      <div class="small" style="margin-top:5px">
+        Этот блок не выбирает комбинацию сам по себе — он передаёт FINGERPRINT режим поля:
+        <b>${r.phase}</b> + направление <b>${r.arrow}</b> + перекос <b>${f.imbalance.toFixed(2)}</b>.
+      </div>
+    </div>
+
     <div class="matrix-grid">${Array.from({length:80},(_,i)=>i+1).map(n=>`<div class="cell ${set.has(n)?'on':''} ${tr.has(n)?'transition':''}">${n}</div>`).join('')}</div>`;
   }
 
