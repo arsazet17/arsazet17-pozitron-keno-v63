@@ -12,7 +12,7 @@
   const showDate=v=>{const p=normDate(v).split('-');return p.length===3?`${p[2]}.${p[1]}.${p[0].slice(-2)}`:String(v||'')};
   const normTime=v=>String(v||'').match(/\d{1,2}:\d{2}(?::\d{2})?/)?.[0]||String(v||'');
   const STORE={draws:'pozitron_v63_draws',source:'pozitron_v63_source',interval:'pozitron_v63_interval'};
-  const DEFAULT_SOURCE='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
+  const DEFAULT_SOURCE='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v72/main/keno-history.json';
   let draws=[],mode='fall',timer=null,fpMode='logic',networkReady=false;
 
   function valid(o){
@@ -104,7 +104,7 @@
   async function fetchFresh(){
     const source=(localStorage.getItem(STORE.source)||DEFAULT_SOURCE).trim();
     const local='./keno-history-v63.json';
-    const sources=[local,source].filter((x,i,a)=>x&&a.indexOf(x)===i);
+    const sources=[source,local].filter((x,i,a)=>x&&a.indexOf(x)===i);
     let best=[],err=null;
     for(const url of sources){
       try{
