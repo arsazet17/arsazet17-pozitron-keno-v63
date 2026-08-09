@@ -1,6 +1,6 @@
 'use strict';
-const CACHE='pozitron-v63-shell-1';
-const SHELL=['./','./index.html','./styles-v63.css','./engine-v63.js','./app-v63.js','./manifest.webmanifest','./icon.svg'];
+const CACHE='pozitron-v63-shell-5';
+const SHELL=['./','./index.html','./styles-v63.css?v=6305','./engine-v63.js?v=6305','./app-v63.js?v=6305','./manifest.webmanifest','./icon.svg'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()));
@@ -14,16 +14,15 @@ self.addEventListener('fetch',event=>{
   const url=new URL(req.url);
   const isHistory=/keno-history/i.test(url.pathname);
   if(isHistory){
-    // История всегда сеть-сначала. Кэш оболочки не имеет права подменять свежие тиражи.
     event.respondWith(fetch(req,{cache:'no-store'}));
     return;
   }
   if(req.mode==='navigate'){
-    event.respondWith(fetch(req).catch(()=>caches.match('./index.html')));
+    event.respondWith(fetch(req,{cache:'no-store'}).catch(()=>caches.match('./index.html')));
     return;
   }
   if(url.origin===self.location.origin){
-    event.respondWith(fetch(req).then(r=>{
+    event.respondWith(fetch(req,{cache:'no-store'}).then(r=>{
       const copy=r.clone();caches.open(CACHE).then(c=>c.put(req,copy));return r;
     }).catch(()=>caches.match(req)));
   }
