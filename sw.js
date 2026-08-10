@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE='pozitron-v63-clean-6503';
+const CACHE='pozitron-v63-clean-6504';
 const REPO_RAW='https://raw.githubusercontent.com/arsazet17/arsazet17-pozitron-keno-v63/main/';
 
 const STATIC_ASSETS=[
@@ -16,10 +16,34 @@ const STATIC_ASSETS=[
 ];
 
 const SERVER_FILES=new Set([
+  'keno-history-v63.json',
   'fingerprint-state-v63.json',
   'fingerprint-archive-v63.json',
   'keno-status-v63.json'
 ]);
+
+function freshRaw(file){
+  return REPO_RAW + file + '?t=' + Date.now();
+}
+
+function isOldV62History(url,file){
+  return file==='keno-history-v62.json' &&
+    url.hostname==='raw.githubusercontent.com' &&
+    url.pathname.includes('/arsazet17/pozitron-keno-v5/');
+}
+
+async function fetchFreshRaw(file,fallbackRequest){
+  try{
+    const response=await fetch(freshRaw(file),{
+      cache:'no-store',
+      headers:{'cache-control':'no-cache'}
+    });
+    if(!response.ok) throw new Error('RAW HTTP '+response.status);
+    return response;
+  }catch(error){
+    return fetch(fallbackRequest,{cache:'no-store'});
+  }
+}
 
 self.addEventListener('install',event=>{
   self.skipWaiting();
@@ -45,23 +69,17 @@ self.addEventListener('fetch',event=>{
   const url=new URL(event.request.url);
   const file=url.pathname.split('/').filter(Boolean).pop() || '';
 
-  // Критические серверные JSON FINGERPRINT читаем прямо из main.
-  // GitHub Pages может отставать от commit, поэтому здесь Pages не используем.
+  // Старый резерв 6.2 в клиенте не должен убегать вперёд от SERVER LEARNING 6.3.
+  // Любой такой запрос подменяем на текущую серверную историю 6.3 из main.
+  if(isOldV62History(url,file)){
+    event.respondWith(fetchFreshRaw('keno-history-v63.json',event.request));
+    return;
+  }
+
+  // Вся критическая серверная связка 6.3 читается из одного свежего main:
+  // история -> settle/learn -> fingerprint state/archive.
   if(SERVER_FILES.has(file)){
-    event.respondWith((async()=>{
-      const rawUrl=REPO_RAW + file + '?t=' + Date.now();
-      try{
-        const response=await fetch(rawUrl,{
-          cache:'no-store',
-          headers:{'cache-control':'no-cache'}
-        });
-        if(!response.ok) throw new Error('RAW HTTP '+response.status);
-        return response;
-      }catch(error){
-        // Последний шанс — запросить исходный URL без браузерного кэша.
-        return fetch(event.request,{cache:'no-store'});
-      }
-    })());
+    event.respondWith(fetchFreshRaw(file,event.request));
     return;
   }
 
