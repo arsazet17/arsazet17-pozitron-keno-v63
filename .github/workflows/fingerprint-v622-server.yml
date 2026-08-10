@@ -1,0 +1,120 @@
+name: FINGERPRINT v6.2.2 server archive
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_run:
+    workflows: ["KENO v6.2 Auto Update"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fingerprint-v622-server-archive
+  cancel-in-progress: false
+
+jobs:
+  build-fingerprint-archives:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Get latest main
+        run: git pull --rebase origin main
+
+      - name: Build shared FINGERPRINT archives
+        run: node scripts/fingerprint-v622-server.mjs
+
+      - name: Verify FINGERPRINT is on the same draw
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+
+          const pairs = [
+            ['cluster-archive-next-v622.json',   'fingerprint-archive-next-v622.json',   '🎯'],
+            ['cluster-archive-minus1-v622.json', 'fingerprint-archive-minus1-v622.json', '⏳−1'],
+            ['cluster-archive-minus2-v622.json', 'fingerprint-archive-minus2-v622.json', '⏳−2']
+          ];
+
+          for (const [clusterFile, fpFile, label] of pairs) {
+            const cluster = JSON.parse(fs.readFileSync(clusterFile, 'utf8'));
+            const fp = JSON.parse(fs.readFileSync(fpFile, 'utf8'));
+
+            const clusterDraw = Number(cluster.latestHistoryDraw || 0);
+            const fpDraw = Number(fp.latestHistoryDraw || 0);
+
+            console.log(`${label}: cluster №${clusterDraw} · fingerprint №${fpDraw}`);
+
+            if (!clusterDraw || clusterDraw !== fpDraw) {
+              throw new Error(
+                `${label}: FINGERPRINT отстаёт: cluster №${clusterDraw}, fingerprint №${fpDraw}`
+              );
+            }
+          }
+
+          console.log('FINGERPRINT синхронизирован с основным архивом.');
+          NODE
+
+      - name: Commit shared FINGERPRINT archives
+        shell: bash
+        run: |
+          if git diff --quiet -- fingerprint-archive-next-v622.json fingerprint-archive-minus1-v622.json fingerprint-archive-minus2-v622.json; then
+            echo "No FINGERPRINT archive changes"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add             fingerprint-archive-next-v622.json             fingerprint-archive-minus1-v622.json             fingerprint-archive-minus2-v622.json
+
+          git commit -m "Sync FINGERPRINT with latest KENO draw"
+
+          if git push origin HEAD:main; then
+            exit 0
+          fi
+
+          echo "Main changed in parallel; rebuilding FINGERPRINT from latest main..."
+          git fetch origin main
+          git reset --hard origin/main
+          node scripts/fingerprint-v622-server.mjs
+
+          node <<'NODE'
+          const fs = require('fs');
+          const pairs = [
+            ['cluster-archive-next-v622.json',   'fingerprint-archive-next-v622.json',   '🎯'],
+            ['cluster-archive-minus1-v622.json', 'fingerprint-archive-minus1-v622.json', '⏳−1'],
+            ['cluster-archive-minus2-v622.json', 'fingerprint-archive-minus2-v622.json', '⏳−2']
+          ];
+          for (const [clusterFile, fpFile, label] of pairs) {
+            const cluster = JSON.parse(fs.readFileSync(clusterFile, 'utf8'));
+            const fp = JSON.parse(fs.readFileSync(fpFile, 'utf8'));
+            const clusterDraw = Number(cluster.latestHistoryDraw || 0);
+            const fpDraw = Number(fp.latestHistoryDraw || 0);
+            if (!clusterDraw || clusterDraw !== fpDraw) {
+              throw new Error(`${label}: FINGERPRINT отстаёт: cluster №${clusterDraw}, fingerprint №${fpDraw}`);
+            }
+          }
+          NODE
+
+          git add             fingerprint-archive-next-v622.json             fingerprint-archive-minus1-v622.json             fingerprint-archive-minus2-v622.json
+
+          if git diff --cached --quiet; then
+            echo "Latest main already contains synchronized FINGERPRINT"
+            exit 0
+          fi
+
+          git commit -m "Sync FINGERPRINT with latest KENO draw"
+          git push origin HEAD:main
