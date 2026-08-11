@@ -44,13 +44,13 @@
   }
 
   async function saveDraws(draws){
-    const clean=(draws||[]).slice(-500);
+    const clean=(draws||[]).slice(-800);
     const db=await openDb();
     await new Promise((resolve,reject)=>{
       const t=db.transaction(STORES.draws,'readwrite');
       const s=t.objectStore(STORES.draws);
       s.clear();
-      clean.forEach(d=>s.put({draw:Number(d.draw),date:d.date||'',time:d.time||'',balls:(d.balls||[]).map(Number)}));
+      clean.forEach(d=>s.put({draw:Number(d.draw),date:d.date||'',time:d.time||'',balls:(d.balls||[]).map(Number),column:Number(d.column)||null,columnSource:d.columnSource||'',parity:d.parity||'',source:d.source||''}));
       t.oncomplete=resolve; t.onerror=()=>reject(t.error); t.onabort=()=>reject(t.error);
     });
     db.close();

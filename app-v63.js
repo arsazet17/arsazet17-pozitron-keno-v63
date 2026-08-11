@@ -20,7 +20,7 @@
     fpState:'pozitron_v63_server_state_cache',
     fpArchive:'pozitron_v63_server_archive_cache',
   };
-  const DEFAULT_SOURCE='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
+  const DEFAULT_SOURCE='./keno-history-v63.json';
   const PAYOUTS=Object.freeze({
     k3_2:300,
     k3_3:1500,
@@ -43,6 +43,9 @@
     balls=(balls||[]).map(Number).filter(n=>n>=1&&n<=80).slice(0,20);
     if(!Number.isFinite(draw)||balls.length!==20||new Set(balls).size!==20)return null;
     const result={draw,date,time,balls};
+    const officialParity=String(o?.parity??o?.parityLabel??o?.oddEvenLabel??'').trim();
+    if(['Больше чётных','Больше нечётных','Поровну'].includes(officialParity))result.parity=officialParity;
+    if(o?.source)result.source=String(o.source);
     const column=Number(o?.column??o?.officialColumn);
     if(Number.isInteger(column)&&column>=1&&column<=10)result.column=column;
     if(o?.columnSource)result.columnSource=String(o.columnSource);
@@ -63,7 +66,7 @@
     }
     return out.sort((a,b)=>a.draw-b.draw);
   }
-  function saveLocal(){try{localStorage.setItem(STORE.draws,JSON.stringify(draws.slice(-35000)))}catch{}}
+  function saveLocal(){try{localStorage.setItem(STORE.draws,JSON.stringify(draws.slice(-800)))}catch{}}
   function loadLocal(){try{return JSON.parse(localStorage.getItem(STORE.draws)||'[]').map(valid).filter(Boolean)}catch{return[]}}
 
   function payoutFor(size,hits){
@@ -72,26 +75,6 @@
   const rub=n=>`${Number(n||0).toLocaleString('ru-RU')} ₽`;
 
   function sumBalls(b){return (b||[]).reduce((a,x)=>a+Number(x),0)}
-  function parity(b){const odd=(b||[]).filter(n=>n%2).length;return {odd,even:20-odd}}
-  function dominantColumn(b){
-    const balls=(b||[]).map(Number);
-    const totals=Array(11).fill(0);
-    for(const n of balls)totals[n%10===0?10:n%10]++;
-    const max=Math.max(...totals.slice(1));
-    if(max<=0)return {column:1,count:0};
-
-    // При равенстве побеждает тот столб, который первым собрал
-    // максимальное количество чисел по реальному порядку выпадения.
-    const running=Array(11).fill(0);
-    for(const n of balls){
-      const col=n%10===0?10:n%10;
-      running[col]++;
-      if(totals[col]===max && running[col]===max){
-        return {column:col,count:max};
-      }
-    }
-    return {column:1,count:max};
-  }
   function orderFor(draw){if(mode==='asc')return [...draw.balls].sort((a,b)=>a-b);return draw.balls.slice()}
   function samePositions(draw){
     const asc=[...draw.balls].sort((a,b)=>a-b),set=new Set();
@@ -108,18 +91,18 @@
   function drawCard(draw,previous,label){
     const prevSet=new Set(previous?.balls||[]);
     const trans=new Set(draw.balls.filter(n=>prevSet.has(Number(n))));
-    const same=samePositions(draw),p=parity(draw.balls);
+    const same=samePositions(draw);
+    const officialParity=String(draw?.parity||'').trim();
     const officialColumn=Number(draw?.column);
-    const dc=(Number.isInteger(officialColumn)&&officialColumn>=1&&officialColumn<=10)
-      ? {column:officialColumn,count:null,official:true}
-      : {...dominantColumn(draw.balls),official:false};
+    const parityText=['Больше чётных','Больше нечётных','Поровну'].includes(officialParity)?officialParity:'чёт/нечёт: —';
+    const columnText=(Number.isInteger(officialColumn)&&officialColumn>=1&&officialColumn<=10)?`🔴 ст${officialColumn}`:'🔴 ст—';
     const nums=orderFor(draw);
     return `<section class="card">
       <div class="draw-head"><div>
         <div class="label">${label}</div><div class="draw-no">№${draw.draw}</div>
         <div class="draw-time">${showDate(draw.date)} ${draw.time||''}</div>
-        <div class="meta"><span>Σ ${sumBalls(draw.balls)}</span><span>${p.even}/${p.odd}</span><span>${sumBalls(draw.balls)%2?'нечёт':'чёт'}</span></div>
-      </div><div class="st">🔴 ст${dc.column}</div></div>
+        <div class="meta"><span>Σ ${sumBalls(draw.balls)}</span><span>${parityText}</span></div>
+      </div><div class="st">${columnText}</div></div>
       <div class="numbers">${nums.map(n=>`<div class="ball ${trans.has(Number(n))?'pass':''} ${same.has(Number(n))?'same':''}">${pad(n)}${trans.has(Number(n))?' ◆':''}</div>`).join('')}</div>
       <div class="singletons">${singletonText(draw)}</div>
     </section>`;
@@ -179,33 +162,23 @@
   }
 
   async function fetchFresh(){
-    const savedSource=(localStorage.getItem(STORE.source)||'').trim();
-    const live='https://raw.githubusercontent.com/arsazet17/pozitron-keno-v5/main/keno-history-v62.json';
-    const local='./keno-history-v63.json';
-    const sources=[local,live,savedSource].filter((x,i,a)=>x&&a.indexOf(x)===i);
-    let err=null; const map=new Map();
-    for(const url of sources){
-      try{
-        const sep=url.includes('?')?'&':'?';
-        const r=await fetch(`${url}${sep}v=6502&t=${Date.now()}`,{cache:'no-store'});
-        if(!r.ok)throw new Error(`HTTP ${r.status}`);
-        const arr=parse(await r.text());
-        for(const d of arr){
-          const key=Number(d.draw),prev=map.get(key)||{};
-          map.set(key,{...prev,...d,
-            ...(prev.column&&!d.column?{column:prev.column,columnSource:prev.columnSource}:{}),
-            ...(d.column?{column:d.column,columnSource:d.columnSource}:{}),
-          });
-        }
-      }catch(e){err=e}
-    }
-    if(map.size){
-      draws=[...map.values()].sort((a,b)=>a.draw-b.draw);saveLocal();networkReady=true;
-      if(DBSTORE)await DBSTORE.saveDraws(draws).catch(()=>{});
-      await fetchFingerprintServer();
-      $('status').textContent=`v6.3 SERVER · база: ${draws.length.toLocaleString('ru-RU')} · последний №${draws.at(-1).draw}`;
-      renderAll();return true;
-    }
+    const url='./keno-history-v63.json';
+    let err=null;
+    try{
+      const sep=url.includes('?')?'&':'?';
+      const r=await fetch(`${url}${sep}v=6600&t=${Date.now()}`,{cache:'no-store'});
+      if(!r.ok)throw new Error(`HTTP ${r.status}`);
+      const arr=parse(await r.text());
+      if(arr.length){
+        draws=arr.sort((a,b)=>a.draw-b.draw);
+        saveLocal();networkReady=true;
+        if(DBSTORE)await DBSTORE.saveDraws(draws).catch(()=>{});
+        await fetchFingerprintServer();
+        $('status').textContent=`v6.3 STOLOTO SERVER · база: ${draws.length.toLocaleString('ru-RU')} · последний №${draws.at(-1).draw}`;
+        renderAll();return true;
+      }
+      throw new Error('Локальная серверная история пуста');
+    }catch(e){err=e}
     const backup=loadLocal();
     if(backup.length>=3){
       draws=backup.sort((a,b)=>a.draw-b.draw);networkReady=true;
@@ -406,7 +379,9 @@
   }
 
   function openSettings(){
-    $('sourceUrl').value=localStorage.getItem(STORE.source)||DEFAULT_SOURCE;
+    localStorage.removeItem(STORE.source);
+    $('sourceUrl').value=DEFAULT_SOURCE;
+    $('sourceUrl').disabled=true;
     $('interval').value=localStorage.getItem(STORE.interval)||'300000';
     $('settings').showModal();
   }
@@ -425,13 +400,13 @@
   $('syncBtn').addEventListener('click',()=>refresh(true));$('syncBtn2').addEventListener('click',()=>refresh(true));
   $('settingsBtn').addEventListener('click',()=>openSettings());
   $('saveSettings').addEventListener('click',()=>{
-    localStorage.setItem(STORE.source,$('sourceUrl').value.trim()||DEFAULT_SOURCE);
+    localStorage.removeItem(STORE.source);
     localStorage.setItem(STORE.interval,$('interval').value);
     startAuto();setTimeout(()=>refresh(false),0);
   });
 
   updatePanelButtons();startAuto();fetchFresh().catch(()=>{});
   if('serviceWorker' in navigator){
-    window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6500',{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{}));
+    window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6600',{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{}));
   }
 })();

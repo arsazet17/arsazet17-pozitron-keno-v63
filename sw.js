@@ -1,34 +1,20 @@
 'use strict';
 
-const CACHE='pozitron-v63-clean-6505';
+const CACHE='pozitron-v63-stoloto-6600';
 const REPO_RAW='https://raw.githubusercontent.com/arsazet17/arsazet17-pozitron-keno-v63/main/';
 
 const STATIC_ASSETS=[
-  './',
-  './index.html',
-  './styles-v63.css',
-  './archive-v63.css',
-  './storage-v63.js',
-  './engine-v63.js',
-  './sync-v63-client.js',
-  './app-v63.js',
-  './manifest.webmanifest',
-  './icon.svg'
+  './','./index.html','./styles-v63.css','./archive-v63.css',
+  './storage-v63.js','./engine-v63.js','./sync-v63-client.js','./app-v63.js',
+  './manifest.webmanifest','./icon.svg'
 ];
 
 const SERVER_FILES=new Set([
-  'keno-history-v63.json',
-  'fingerprint-state-v63.json',
-  'fingerprint-archive-v63.json',
-  'keno-status-v63.json'
+  'keno-history-v63.json','fingerprint-state-v63.json',
+  'fingerprint-archive-v63.json','keno-status-v63.json'
 ]);
 
-function freshRaw(file){return REPO_RAW+file+'?t='+Date.now()}
-function isOldV62History(url,file){
-  return file==='keno-history-v62.json' &&
-    url.hostname==='raw.githubusercontent.com' &&
-    url.pathname.includes('/arsazet17/pozitron-keno-v5/');
-}
+function freshRaw(file){return REPO_RAW+file+'?v=6600&t='+Date.now()}
 async function fetchFreshRaw(file,fallbackRequest){
   try{
     const response=await fetch(freshRaw(file),{cache:'no-store',headers:{'cache-control':'no-cache'}});
@@ -53,11 +39,6 @@ self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET')return;
   const url=new URL(event.request.url);
   const file=url.pathname.split('/').filter(Boolean).pop()||'';
-
-  if(isOldV62History(url,file)){
-    event.respondWith(fetchFreshRaw('keno-history-v63.json',event.request));
-    return;
-  }
   if(SERVER_FILES.has(file)){
     event.respondWith(fetchFreshRaw(file,event.request));
     return;
