@@ -1,0 +1,51 @@
+name: TEST · KENO 6.3 · Stoloto OAuth · эталон 7.2
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: keno-v63-stoloto-test
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Получить KENO 6.3
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Установить Playwright
+        run: |
+          npm init -y
+          npm install playwright
+          npx playwright install --with-deps chromium
+
+      - name: Проверить синтаксис
+        run: node --check scripts/stoloto-keno-v63-test.mjs
+
+      - name: Столото · OAuth · 3 чтения · только TEST
+        env:
+          STOLOTO_EMAIL: ${{ secrets.STOLOTO_EMAIL }}
+          STOLOTO_PASSWORD: ${{ secrets.STOLOTO_PASSWORD }}
+        run: node scripts/stoloto-keno-v63-test.mjs
+
+      - name: Сохранить отчёт теста
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: keno-v63-stoloto-test-report
+          path: .stoloto-v63-test/
+          if-no-files-found: warn
+          retention-days: 7
