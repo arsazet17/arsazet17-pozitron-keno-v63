@@ -1,9 +1,17 @@
 'use strict';
-/* ПОЗИТРОН КЕНО 6.3 CLEAN — обучающий многосигнальный движок.
+/* ПОЗИТРОН КЕНО 6.3.2 — ALL-80 outcome learning + diversified combo portfolio.
    Статистический исследовательский алгоритм, не гарантия выигрыша. */
 (() => {
-  const DEFAULT_WEIGHTS = Object.freeze({transition:1.05,spatial:0.95,balance:0.80,assembly:1.00,analog:1.20});
+  const DEFAULT_WEIGHTS = Object.freeze({
+    transition:1.05,spatial:0.95,balance:0.80,assembly:1.00,analog:1.20,outcome:1.00,
+    comboIndividual:1.00,comboHistory:1.00,comboSpatial:0.85,comboAssembly:0.90,comboSpread:0.80,comboOutcome:1.00
+  });
   const GRID_W=10, GRID_H=8;
+  const NUMBER_KEYS=['transition','spatial','balance','assembly','analog','outcome'];
+  const COMBO_KEYS={
+    comboIndividual:'individual',comboHistory:'history',comboSpatial:'spatial',
+    comboAssembly:'assembly',comboSpread:'spread',comboOutcome:'outcome'
+  };
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const mean=a=>a?.length?a.reduce((s,x)=>s+Number(x||0),0)/a.length:0;
   const std=a=>{if(!a||a.length<2)return 0;const m=mean(a);return Math.sqrt(mean(a.map(x=>(x-m)**2)))};
@@ -11,6 +19,7 @@
   const manhattan=(a,b)=>Math.abs(a.x-b.x)+Math.abs(a.y-b.y);
   const setOf=a=>new Set((a||[]).map(Number));
   const overlap=(a,b)=>{const B=setOf(b);return (a||[]).filter(x=>B.has(Number(x))).map(Number)};
+  const round4=n=>+Number(n||0).toFixed(4);
 
   function normalizeWeights(w){return {...DEFAULT_WEIGHTS,...(w||{})};}
 
@@ -72,9 +81,31 @@
     arr.sort((a,b)=>a.distance-b.distance);return arr.slice(0,limit);
   }
 
+  /* Выход числа: эмпирическая вероятность следующего появления при текущем
+     состоянии present/absent + короткая/средняя частота + направление частоты. */
+  function outcomeFeature(draws,index,n){
+    const from=Math.max(0,index-159),curPresent=setOf(draws[index]?.balls).has(Number(n));
+    let cases=0,hits=0;
+    for(let i=from;i<index;i++){
+      const present=setOf(draws[i]?.balls).has(Number(n));
+      if(present!==curPresent)continue;
+      cases++;
+      if(setOf(draws[i+1]?.balls).has(Number(n)))hits++;
+    }
+    const conditional=cases?hits/cases:.25;
+    const recent12=draws.slice(Math.max(0,index-11),index+1);
+    const recent36=draws.slice(Math.max(0,index-35),index+1);
+    const f12=mean(recent12.map(d=>setOf(d.balls).has(Number(n))?1:0));
+    const f36=mean(recent36.map(d=>setOf(d.balls).has(Number(n))?1:0));
+    const conditionalScore=clamp(conditional/.50,0,1);
+    const frequencyScore=clamp((f12*.60+f36*.40)/.50,0,1);
+    const trendScore=clamp(.50+(f12-f36)*2.2,0,1);
+    return conditionalScore*.50+frequencyScore*.35+trendScore*.15;
+  }
+
   function numberScores(draws,index,weightsInput){
     const weights=normalizeWeights(weightsInput),cur=draws[index],prev=draws[index-1],mf=matrixFeatures(cur),tf=transitionFeatures(cur,prev),af=assemblyFeatures(draws,index);
-    const parts=Array.from({length:81},()=>({transition:0,spatial:0,balance:0,assembly:0,analog:0})),scores=Array(81).fill(0);
+    const parts=Array.from({length:81},()=>({transition:0,spatial:0,balance:0,assembly:0,analog:0,outcome:0})),scores=Array(81).fill(0);
     const prevSet=setOf(prev?.balls),curSet=setOf(cur?.balls),currentPts=(cur?.balls||[]).map(coord);
     for(let n=1;n<=80;n++){
       parts[n].transition=curSet.has(n)&&prevSet.has(n)?.70:(curSet.has(n)?.18:0);
@@ -82,21 +113,20 @@
       parts[n].spatial=mf.density>.18?clamp(near/6,0,1):clamp(1-centerD/10,0,1);
       const qi=(p.y>=4?2:0)+(p.x>=5?1:0),deficit=clamp((5-mf.quadrants[qi])/5,-1,1),colDef=clamp((2-mf.cols[p.x])/2,-1,1);
       parts[n].balance=clamp(.5+deficit*.28+colDef*.22,0,1);
+      parts[n].outcome=outcomeFeature(draws,index,n);
     }
     for(const x of [...af.horizontal.slice(0,4),...af.vertical.slice(0,4)])for(const n of x.numbers||[])if(n>=1&&n<=80)parts[n].assembly=Math.max(parts[n].assembly,clamp(x.score,0,1.5)/1.5);
     const neighbors=historicalNeighbors(draws,index,48);let wsum=0;
     for(const nei of neighbors){const w=1/(nei.distance+.025);wsum+=w;const n1=setOf(draws[nei.index+1].balls),n2=setOf(draws[nei.index+2].balls);for(let n=1;n<=80;n++)parts[n].analog+=w*((n1.has(n)?.65:0)+(n2.has(n)?.35:0));}
     if(wsum)for(let n=1;n<=80;n++)parts[n].analog/=wsum;
-    for(let n=1;n<=80;n++)scores[n]=parts[n].transition*weights.transition+parts[n].spatial*weights.spatial+parts[n].balance*weights.balance+parts[n].assembly*weights.assembly+parts[n].analog*weights.analog;
+    for(let n=1;n<=80;n++)scores[n]=NUMBER_KEYS.reduce((s,k)=>s+parts[n][k]*Number(weights[k]||0),0);
     return {scores,parts,neighbors,matrix:mf,transition:tf,assembly:af,weights};
   }
 
-  /* 6.3.1 — сборщик комбинаций.
-     POOL-20 и ANTILOGIC-20 не меняются. Меняется только выбор K3/K4/K5:
-     теперь оценивается вся группа по индивидуальному сигналу, исторической
-     совместной встречаемости после похожих состояний, Manhattan и M1–M20. */
+  /* Совместимость пары строится по реальным выходам чисел: похожие состояния
+     + последние фактические тиражи. */
   function buildPairCompatibility(draws,index,d,candidates){
-    const candidateSet=setOf(candidates),pair=new Map(),assemblyPair=new Map();
+    const candidateSet=setOf(candidates),pair=new Map(),recentPair=new Map(),assemblyPair=new Map();
     const key=(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`;
 
     let histWeight=0;
@@ -114,6 +144,16 @@
     }
     if(histWeight)for(const [k,v] of pair)pair.set(k,clamp(v/histWeight,0,1));
 
+    const recent=draws.slice(Math.max(0,index-79),index+1);
+    for(const dr of recent){
+      const b=setOf(dr?.balls);
+      const present=candidates.filter(n=>b.has(Number(n)));
+      for(let i=0;i<present.length;i++)for(let j=i+1;j<present.length;j++){
+        const k=key(present[i],present[j]);recentPair.set(k,(recentPair.get(k)||0)+1);
+      }
+    }
+    if(recent.length)for(const [k,v] of recentPair)recentPair.set(k,clamp((v/recent.length)*8,0,1));
+
     for(const x of [...(d.assembly?.horizontal||[]).slice(0,4),...(d.assembly?.vertical||[]).slice(0,4)]){
       const nums=(x.numbers||[]).map(Number).filter(n=>candidateSet.has(n));
       const strength=clamp(Number(x.score||0)/1.5,0,1);
@@ -124,7 +164,7 @@
     }
 
     return {
-      history:(a,b)=>pair.get(key(a,b))||0,
+      history:(a,b)=>(pair.get(key(a,b))||0)*.68+(recentPair.get(key(a,b))||0)*.32,
       assembly:(a,b)=>assemblyPair.get(key(a,b))||0,
       spatial:(a,b)=>{
         const dist=manhattan(coord(a),coord(b));
@@ -144,13 +184,18 @@
     return out;
   }
 
-  function smartCombos(draws,index,d,candidates,size,count,baseScore){
-    const compat=buildPairCompatibility(draws,index,d,candidates);
+  function comboRankings(draws,index,d,candidates,size,baseScore,weightsInput){
+    const weights=normalizeWeights(weightsInput),compat=buildPairCompatibility(draws,index,d,candidates);
     const vals=candidates.map(n=>Number(baseScore(n)||0));
     const lo=Math.min(...vals),hi=Math.max(...vals),span=hi-lo||1;
     const norm=n=>(Number(baseScore(n)||0)-lo)/span;
+    const weightMap={
+      individual:weights.comboIndividual,history:weights.comboHistory,spatial:weights.comboSpatial,
+      assembly:weights.comboAssembly,spread:weights.comboSpread,outcome:weights.comboOutcome
+    };
+    const weightSum=Object.values(weightMap).reduce((s,x)=>s+Number(x||0),0)||1;
 
-    const ranked=allCombinations(candidates,size).map(numbers=>{
+    return allCombinations(candidates,size).map(numbers=>{
       const individual=mean(numbers.map(norm));
       const pairHist=[],pairSpatial=[],pairAssembly=[];
       for(let i=0;i<numbers.length;i++)for(let j=i+1;j<numbers.length;j++){
@@ -158,51 +203,86 @@
         pairSpatial.push(compat.spatial(numbers[i],numbers[j]));
         pairAssembly.push(compat.assembly(numbers[i],numbers[j]));
       }
-
       const history=mean(pairHist),spatial=mean(pairSpatial),assembly=mean(pairAssembly);
       const quadrants=new Set(numbers.map(n=>{const p=coord(n);return (p.y>=4?2:0)+(p.x>=5?1:0)})).size;
       const spread=clamp((quadrants-1)/Math.min(3,size-1||1),0,1);
+      const outcome=mean(numbers.map(n=>Number(d.parts?.[n]?.outcome||0)));
+      const components={individual,history,spatial,assembly,spread,outcome};
+      const comboScore=Object.entries(components).reduce((s,[k,v])=>s+v*Number(weightMap[k]||0),0)/weightSum;
+      return {numbers,comboScore,components};
+    }).sort((a,b)=>b.comboScore-a.comboScore||a.numbers.join(',').localeCompare(b.numbers.join(',')));
+  }
 
-      const comboScore=
-        individual*.55+
-        history*.20+
-        spatial*.12+
-        assembly*.08+
-        spread*.05;
-
-      return {numbers,comboScore,individual,history,spatial,assembly,spread};
-    }).sort((a,b)=>b.comboScore-a.comboScore||b.individual-a.individual||a.numbers.join(',').localeCompare(b.numbers.join(',')));
-
-    const chosen=[];
-    const maxOverlap=Math.floor(size/2);
-    for(const c of ranked){
-      if(chosen.every(x=>x.numbers.filter(n=>c.numbers.includes(n)).length<=maxOverlap)){
-        chosen.push(c);
-        if(chosen.length===count)break;
+  /* Общий портфель K3/K4/K5: одна таблица использования чисел на все размеры.
+     Один номер не может стать корнем всех комбинаций. */
+  function selectComboPortfolio(rankingsBySize,countPerSize=2){
+    const chosen=[],usage=new Map(),quota=new Map([[3,0],[4,0],[5,0]]);
+    const overlapRatio=(a,b)=>a.filter(n=>b.includes(n)).length/Math.max(1,Math.min(a.length,b.length));
+    const candidateScore=c=>{
+      const repeat=mean(c.numbers.map(n=>usage.get(n)||0));
+      const maxOverlap=chosen.length?Math.max(...chosen.map(x=>overlapRatio(c.numbers,x.numbers))):0;
+      return c.comboScore-repeat*.08-maxOverlap*.12;
+    };
+    const tryPick=(size,strict=true)=>{
+      const list=rankingsBySize[size]||[];
+      let best=null,bestScore=-Infinity;
+      for(const c of list){
+        if(chosen.some(x=>x.numbers.join(',')===c.numbers.join(',')))continue;
+        if(strict&&c.numbers.some(n=>(usage.get(n)||0)>=2))continue;
+        if(strict&&chosen.some(x=>c.numbers.filter(n=>x.numbers.includes(n)).length>Math.max(1,Math.floor(Math.min(size,x.numbers.length)/2))))continue;
+        const s=candidateScore(c);if(s>bestScore){best=c;bestScore=s;}
       }
-    }
-    for(const c of ranked){
-      if(chosen.length===count)break;
-      if(!chosen.some(x=>x.numbers.join(',')===c.numbers.join(',')))chosen.push(c);
-    }
-    return chosen.slice(0,count);
+      if(!best)return false;
+      chosen.push({...best,size,portfolioScore:bestScore});
+      quota.set(size,(quota.get(size)||0)+1);
+      for(const n of best.numbers)usage.set(n,(usage.get(n)||0)+1);
+      return true;
+    };
+    for(let round=0;round<countPerSize;round++)for(const size of [5,4,3])if((quota.get(size)||0)<countPerSize)tryPick(size,true);
+    for(const size of [5,4,3])while((quota.get(size)||0)<countPerSize){if(!tryPick(size,false))break;}
+    return chosen.sort((a,b)=>a.size-b.size||b.portfolioScore-a.portfolioScore);
+  }
+
+  function buildCombos(draws,index,d,candidates,baseScore,weights){
+    const rankings={};
+    for(const size of [3,4,5])rankings[size]=comboRankings(draws,index,d,candidates,size,baseScore,weights);
+    return selectComboPortfolio(rankings,2).map((c,i)=>({
+      size:c.size,numbers:c.numbers,comboScore:round4(c.comboScore),components:Object.fromEntries(Object.entries(c.components).map(([k,v])=>[k,round4(v)]))
+    }));
+  }
+
+  function packSignal(n,d){
+    const A=d.parts[n];
+    return [n,round4(A.transition),round4(A.spatial),round4(A.balance),round4(A.assembly),round4(A.analog),round4(A.outcome)];
+  }
+  function unpackSignal(row){
+    if(!Array.isArray(row))return row;
+    return {number:Number(row[0]),parts:{transition:Number(row[1]||0),spatial:Number(row[2]||0),balance:Number(row[3]||0),assembly:Number(row[4]||0),analog:Number(row[5]||0),outcome:Number(row[6]||0)}};
   }
 
   function forecast(draws,weightsInput){
     const index=draws.length-1;if(index<8)return null;
     const d=numberScores(draws,index,weightsInput),ranked=Array.from({length:80},(_,i)=>i+1).sort((a,b)=>d.scores[b]-d.scores[a]||a-b),pool20=ranked.slice(0,20),logicSet=setOf(pool20);
-    const antiBase=n=>{const A=d.parts[n];return A.analog*1.2+A.balance*.7+A.spatial*.5-A.transition*.25-A.assembly*.15;};
+    const antiBase=n=>{const A=d.parts[n];return A.analog*1.2+A.balance*.7+A.spatial*.5+A.outcome*.45-A.transition*.25-A.assembly*.15;};
     const anti20=Array.from({length:80},(_,i)=>i+1).filter(n=>!logicSet.has(n)).sort((a,b)=>antiBase(b)-antiBase(a)||a-b).slice(0,20);
 
-    const logicCombos=[3,4,5].flatMap(size=>smartCombos(draws,index,d,pool20,size,2,n=>d.scores[n]).map((c,i)=>({
-      id:`K${size}-${i+1}`,size,numbers:c.numbers,comboScore:+c.comboScore.toFixed(4)
-    })));
-    const antiCombos=[3,4,5].flatMap(size=>smartCombos(draws,index,d,anti20,size,2,antiBase).map((c,i)=>({
-      id:`A-K${size}-${i+1}`,size,numbers:c.numbers,comboScore:+c.comboScore.toFixed(4)
-    })));
+    /* id назначаем после группировки, чтобы K3/K4/K5 сохраняли привычные имена. */
+    const antiRaw=buildCombos(draws,index,d,anti20,antiBase,d.weights);
+    const renumber=(arr,prefix='')=>{
+      const counters={3:0,4:0,5:0};
+      return arr.map(c=>{counters[c.size]++;return {...c,id:`${prefix}K${c.size}-${counters[c.size]}`};});
+    };
+    const logic=renumber(buildCombos(draws,index,d,pool20,n=>d.scores[n],d.weights));
+    const anti=renumber(antiRaw,'A-');
 
     const latest=draws[index];
-    return {version:'6.3-clean',sourceDraw:Number(latest.draw),targetDraw:Number(latest.draw)+1,createdAt:new Date().toISOString(),pool20,anti20,logicCombos,antiCombos,signalTop:ranked.slice(0,20).map(n=>({number:n,score:+d.scores[n].toFixed(4),parts:d.parts[n]})),matrix:d.matrix,transition:d.transition,assembly:d.assembly,neighborsCount:d.neighbors.length,weights:d.weights};
+    return {
+      version:'6.3.2-all80',sourceDraw:Number(latest.draw),targetDraw:Number(latest.draw)+1,createdAt:new Date().toISOString(),
+      pool20,anti20,logicCombos:logic,antiCombos:anti,
+      signalTop:ranked.slice(0,20).map(n=>({number:n,score:round4(d.scores[n]),parts:Object.fromEntries(NUMBER_KEYS.map(k=>[k,round4(d.parts[n][k])]))})),
+      signalAll:Array.from({length:80},(_,i)=>packSignal(i+1,d)),
+      matrix:d.matrix,transition:d.transition,assembly:d.assembly,neighborsCount:d.neighbors.length,weights:d.weights
+    };
   }
 
   function settlePrediction(pred,actual,weightsInput){
@@ -211,8 +291,39 @@
     p.poolHits=(p.pool20||[]).filter(n=>aset.has(Number(n)));p.antiHits=(p.anti20||[]).filter(n=>aset.has(Number(n)));
     p.logicCombos=(p.logicCombos||[]).map(c=>({...c,hits:(c.numbers||[]).filter(n=>aset.has(Number(n)))}));
     p.antiCombos=(p.antiCombos||[]).map(c=>({...c,hits:(c.numbers||[]).filter(n=>aset.has(Number(n)))}));
-    const keys=['transition','spatial','balance','assembly','analog'];
-    for(const k of keys){const top=p.signalTop||[],hit=top.filter(x=>aset.has(Number(x.number))).map(x=>Number(x.parts?.[k]||0)),miss=top.filter(x=>!aset.has(Number(x.number))).map(x=>Number(x.parts?.[k]||0));if(!hit.length&&!miss.length)continue;weights[k]=clamp((weights[k]??DEFAULT_WEIGHTS[k])+(mean(hit)-mean(miss))*.035,.45,1.75);}
+
+    const rows=((p.signalAll||[]).length? p.signalAll.map(unpackSignal):(p.signalTop||[]));
+    const poolSet=setOf(p.pool20||[]);
+    const actualRows=rows.filter(x=>aset.has(Number(x.number))),nonActualRows=rows.filter(x=>!aset.has(Number(x.number)));
+    const missedActual=rows.filter(x=>aset.has(Number(x.number))&&!poolSet.has(Number(x.number)));
+    const falsePool=rows.filter(x=>!aset.has(Number(x.number))&&poolSet.has(Number(x.number)));
+    const learningBySignal={};
+    for(const k of NUMBER_KEYS){
+      const positive=mean(actualRows.map(x=>Number(x.parts?.[k]||0))),negative=mean(nonActualRows.map(x=>Number(x.parts?.[k]||0)));
+      const missed=mean(missedActual.map(x=>Number(x.parts?.[k]||0))),falseSelected=mean(falsePool.map(x=>Number(x.parts?.[k]||0)));
+      const globalGap=positive-negative,errorGap=(missedActual.length&&falsePool.length)?missed-falseSelected:0;
+      const delta=clamp(globalGap*.060+errorGap*.040,-.050,.050);
+      weights[k]=clamp((weights[k]??DEFAULT_WEIGHTS[k])+delta,.45,1.75);
+      learningBySignal[k]={positive:round4(positive),negative:round4(negative),missed:round4(missed),falseSelected:round4(falseSelected),delta:round4(delta)};
+    }
+
+    const comboRows=[...(p.logicCombos||[]),...(p.antiCombos||[])].filter(c=>c.components&&Number(c.size)>0);
+    const performances=comboRows.map(c=>(c.hits||[]).length/Number(c.size));
+    const perfMean=mean(performances),comboDeltas={};
+    for(const [weightKey,componentKey] of Object.entries(COMBO_KEYS)){
+      const vals=comboRows.map(c=>Number(c.components?.[componentKey]||0));
+      const vm=mean(vals);
+      const cov=mean(vals.map((v,i)=>(v-vm)*(Number(performances[i]||0)-perfMean)));
+      const delta=clamp(cov*.18,-.025,.025);
+      weights[weightKey]=clamp((weights[weightKey]??DEFAULT_WEIGHTS[weightKey])+delta,.45,1.75);
+      comboDeltas[weightKey]=round4(delta);
+    }
+
+    p.learningStats={
+      scope:rows.length>=80?'ALL_80':'LEGACY_TOP',numbersEvaluated:rows.length,actualCount:actualRows.length,nonActualCount:nonActualRows.length,
+      missedActualCount:missedActual.length,falsePoolCount:falsePool.length,signals:learningBySignal,comboDeltas
+    };
+    delete p.signalAll; // все 80 нужны только до закрытия прогноза; архив не раздуваем
     p.learnedWeights={...weights};p.settledAt=new Date().toISOString();return {prediction:p,weights};
   }
 
