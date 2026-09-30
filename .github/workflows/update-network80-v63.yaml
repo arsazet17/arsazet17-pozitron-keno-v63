@@ -2,6 +2,16 @@ name: KENO v6.3 · СЕТЬ 80
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/update-network80-v63.yaml'
+      - 'network80-engine-v63.js'
+      - 'network80-ui-v63.js'
+      - 'network80-v63.css'
+      - 'scripts/network80-server-v63.js'
+      - 'scripts/network80-update-v63.js'
+      - 'scripts/test-network80-v63.js'
   schedule:
     - cron: '7,22,37,52 * * * *'
   workflow_run:
