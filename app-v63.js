@@ -3,6 +3,7 @@
   const $=id=>document.getElementById(id);
   const DBSTORE=window.POZITRON_V63_STORE;
   const ENGINE=window.POZITRON_V63_ENGINE;
+  const NETWORK80UI=window.POZITRON_V63_NETWORK80_UI;
   const pad=n=>String(Number(n)).padStart(2,'0');
   const normDate=v=>{
     v=String(v||'').trim();
@@ -144,217 +145,24 @@
   async function legacyArchive(){
     if(!DBSTORE?.listPredictions)return [];
     try{
-      const list=(await DBSTORE.listPredictions()).filter(Boolean),facts=new Map(draws.map(d=>[Number(d.draw),d]));
-      return list.map(p=>{
-        if(p.actual||!facts.has(Number(p.targetDraw))||!ENGINE?.settlePrediction)return p;
-        try{return ENGINE.settlePrediction(p,facts.get(Number(p.targetDraw)),p.weights||ENGINE.DEFAULT_WEIGHTS).prediction}catch{return p}
-      });
+      const list=(await DBSTORE.listPredictions()).filter(Boolean),all=[];
+      for(const p of list){
+      const t=Number(p?.targetDraw||p?.forD||0||0);if(!t)continue;
+      all.push({targetDraw:t,prediction:p});
+      }
+      return all;
     }catch{return []}
   }
-
-  async function combinedArchive(){
-    const legacy=await legacyArchive(),map=new Map();
-    for(const p of legacy)map.set(Number(p.targetDraw),{...p,legacyLocal:true});
-    for(const p of serverArchive)map.set(Number(p.targetDraw),{...p,server:true,legacyLocal:false});
-    const list=[...map.values()].sort((a,b)=>Number(a.targetDraw)-Number(b.targetDraw));
-    archiveLookup=new Map(list.map(p=>[Number(p.targetDraw),p]));
-    return list;
-  }
-
-  async function fetchFresh(){
-    const url='./keno-history-v63.json';
-    let err=null;
-    try{
-      const sep=url.includes('?')?'&':'?';
-      const r=await fetch(`${url}${sep}v=6600&t=${Date.now()}`,{cache:'no-store'});
-      if(!r.ok)throw new Error(`HTTP ${r.status}`);
-      const arr=parse(await r.text());
-      if(arr.length){
-        draws=arr.sort((a,b)=>a.draw-b.draw);
-        saveLocal();networkReady=true;
-        if(DBSTORE)await DBSTORE.saveDraws(draws).catch(()=>{});
-        await fetchFingerprintServer();
-        $('status').textContent=`v6.3 STOLOTO SERVER Â· Ğ±Ğ°Ğ·Ğ°: ${draws.length.toLocaleString('ru-RU')} Â· Ğ¿Ğ¾ÑĞ»ĞµĞ´Ğ½Ğ¸Ğ¹ â„–${draws.at(-1).draw}`;
-        renderAll();return true;
-      }
-      throw new Error('Ğ›Ğ¾ĞºĞ°Ğ»ÑŒĞ½Ğ°Ñ ÑĞµÑ€Ğ²ĞµÑ€Ğ½Ğ°Ñ Ğ¸ÑÑ‚Ğ¾Ñ€Ğ¸Ñ Ğ¿ÑƒÑÑ‚Ğ°');
-    }catch(e){err=e}
-    const backup=loadLocal();
-    if(backup.length>=3){
-      draws=backup.sort((a,b)=>a.draw-b.draw);networkReady=true;
-      await fetchFingerprintServer();
-      $('status').textContent=`âš  ĞĞ¤Ğ›ĞĞ™Ğ Â· ÑĞ¾Ñ…Ñ€Ğ°Ğ½ĞµĞ½Ğ¾ Ğ´Ğ¾ â„–${draws.at(-1).draw}`;renderAll();return false;
-    }
-    $('status').textContent='ĞĞµÑ‚ ÑĞ²ÑĞ·Ğ¸ Ğ¸ Ğ½ĞµÑ‚ Ğ»Ğ¾ĞºĞ°Ğ»ÑŒĞ½Ğ¾Ğ¹ Ñ€ĞµĞ·ĞµÑ€Ğ²Ğ½Ğ¾Ğ¹ Ğ±Ğ°Ğ·Ñ‹';
-    $('cards').innerHTML='<section class="card"><b>ĞĞµ ÑƒĞ´Ğ°Ğ»Ğ¾ÑÑŒ Ğ¿Ğ¾Ğ»ÑƒÑ‡Ğ¸Ñ‚ÑŒ Ğ¸ÑÑ‚Ğ¾Ñ€Ğ¸Ñ Ñ‚Ğ¸Ñ€Ğ°Ğ¶ĞµĞ¹.</b><div class="small">ĞŸÑ€Ğ¾Ğ²ĞµÑ€ÑŒÑ‚Ğµ Ğ¸Ğ½Ñ‚ĞµÑ€Ğ½ĞµÑ‚ Ğ¸ Ğ½Ğ°Ğ¶Ğ¼Ğ¸Ñ‚Ğµ â†».</div></section>';
-    throw err||new Error('ĞĞµÑ‚ Ğ´Ğ°Ğ½Ğ½Ñ‹Ñ…');
-  }
-
-  function renderAll(){
-    renderCards();
-    if($('fingerprintPanel').classList.contains('show'))renderFingerprint().catch(console.error);
-    if($('matrixPanel').classList.contains('show'))renderMatrix();
-    if($('assemblyPanel').classList.contains('show'))renderAssembly();
-  }
-
   function getServerForecast(){
-    if(!serverState||!serverArchive.length)return null;
-    const target=Number(serverState.nextTargetDraw||0);
-    return serverArchive.find(p=>Number(p.targetDraw)===target&&!p.actual)||serverArchive.find(p=>!p.actual)||null;
-  }
-
-  function poolHtml(nums,hits=[]){
-    const hs=new Set((hits||[]).map(Number));
-    return `<div class="pool">${(nums||[]).map(n=>`<span class="${hs.has(Number(n))?'hit':''}">${pad(n)}</span>`).join('')}</div>`;
-  }
-  function actualHtml(p){
-    if(!p.actual)return '';
-    const logic=new Set((p.poolHits||[]).map(Number)),anti=new Set((p.antiHits||[]).map(Number));
-    return `<div class="actual-grid">${p.actual.balls.map(n=>{
-      const cls=logic.has(Number(n))&&anti.has(Number(n))?'both-hit':logic.has(Number(n))?'logic-hit':anti.has(Number(n))?'anti-hit':'';
-      return `<span class="${cls}">${pad(n)}</span>`;
-    }).join('')}</div>`;
-  }
-  function comboPayout(c){return payoutFor(c.size,(c.hits||[]).length)}
-  function combosHtml(combos,settled=false){
-    return (combos||[]).map(c=>{
-      const hits=(c.hits||[]).map(Number),hitSet=new Set(hits);
-      const amount=settled?comboPayout(c):0;
-      const perfect=settled&&hits.length===Number(c.size);
-      const winning=settled&&amount>0;
-      const cls=`combo ${perfect?'combo-perfect ':''}${winning?'combo-win':''}`;
-      return `<div class="${cls}">
-        <div class="combo-head"><b>${perfect?'ğŸ”¥ ':''}${c.id}</b><span>Ğš${c.size}${settled?` Â· ${hits.length}/${c.size}`:''}</span></div>
-        <div class="combo-balls">${(c.numbers||[]).map(n=>`<span class="${hitSet.has(Number(n))?'hit':''}">${pad(n)}</span>`).join('')}</div>
-        ${settled?`<div class="combo-result">${hits.length?`Ğ¿Ğ¾Ğ¿Ğ°Ğ»Ğ¸: ${hits.map(pad).join(', ')}`:'ÑĞ¾Ğ²Ğ¿Ğ°Ğ´ĞµĞ½Ğ¸Ğ¹ Ğ½ĞµÑ‚'}${winning?` Â· <b>${rub(amount)}</b>`:''}</div>`:''}
-      </div>`;
-    }).join('');
-  }
-  function totalsFor(p,side){
-    const combos=side==='logic'?p.logicCombos:p.antiCombos;
-    return (combos||[]).reduce((s,c)=>s+comboPayout(c),0);
-  }
-  function weightsHtml(p){
-    if(!p.learnedWeights||!p.weights)return '<div class="small">Ğ’ĞµÑĞ¾Ğ²Ñ‹Ğµ Ğ¸Ğ·Ğ¼ĞµĞ½ĞµĞ½Ğ¸Ñ Ğ½Ğµ Ğ·Ğ°Ğ¿Ğ¸ÑĞ°Ğ½Ñ‹.</div>';
-    const labels={transition:'Ğ¿ĞµÑ€ĞµÑ…Ğ¾Ğ´Ñ‹',spatial:'Ğ¿Ñ€Ğ¾ÑÑ‚Ñ€Ğ°Ğ½ÑÑ‚Ğ²Ğ¾',balance:'Ğ±Ğ°Ğ»Ğ°Ğ½Ñ',assembly:'Ğœ1â€“Ğœ20',analog:'Ğ¸ÑÑ‚Ğ¾Ñ€Ğ¸Ñ'};
-    return `<div class="weight-grid">${Object.keys(labels).map(k=>{
-      const a=Number(p.weights[k]||0),b=Number(p.learnedWeights[k]||0),d=b-a;
-      return `<div><span>${labels[k]}</span><b>${a.toFixed(3)} â†’ ${b.toFixed(3)}</b><em class="${d>0?'up':d<0?'down':''}">${d>=0?'+':''}${d.toFixed(3)}</em></div>`;
-    }).join('')}</div>`;
-  }
-
-  function archiveDetail(p){
-    if(!p.actual)return `<div class="archive-open"><div class="wait-big">â³ ĞĞ–Ğ˜Ğ”ĞĞ•Ğ¢ Ğ¢Ğ˜Ğ ĞĞ– â„–${p.targetDraw}</div>
-      <div class="small">ĞŸÑ€Ğ¾Ğ³Ğ½Ğ¾Ğ· ÑƒĞ¶Ğµ Ğ·Ğ°Ñ„Ğ¸ĞºÑĞ¸Ñ€Ğ¾Ğ²Ğ°Ğ½. ĞŸĞ¾ÑĞ»Ğµ Ğ¿Ğ¾ÑĞ²Ğ»ĞµĞ½Ğ¸Ñ Ñ€ĞµĞ·ÑƒĞ»ÑŒÑ‚Ğ°Ñ‚Ğ° Ğ·Ğ´ĞµÑÑŒ Ğ¾Ñ‚ĞºÑ€Ğ¾ÑÑ‚ÑÑ Ñ„Ğ°ĞºÑ‚Ğ¸Ñ‡ĞµÑĞºĞ¸Ğµ Ñ‡Ğ¸ÑĞ»Ğ°, LOGIC, ANTILOGIC, ĞºĞ¾Ğ¼Ğ±Ğ¸Ğ½Ğ°Ñ†Ğ¸Ğ¸, Ğ²Ñ‹Ğ¿Ğ»Ğ°Ñ‚Ñ‹ Ğ¸ Ğ¸Ğ·Ğ¼ĞµĞ½ĞµĞ½Ğ¸Ğµ Ğ²ĞµÑĞ¾Ğ².</div></div>`;
-    const logicTotal=totalsFor(p,'logic'),antiTotal=totalsFor(p,'anti');
-    return `<div class="archive-open">
-      <div class="archive-title">Ğ¤ĞĞšĞ¢ â„–${p.actual.draw} Â· ${showDate(p.actual.date)} ${p.actual.time||''}</div>
-      <div class="legend-mini"><span class="lg">LOGIC</span><span class="an">ANTILOGIC</span><span class="bo">Ğ¾Ğ±Ğ°</span></div>
-      ${actualHtml(p)}
-
-      <div class="archive-side logic-side">
-        <div class="archive-side-head"><b>ğŸ”¥ LOGIC</b><span>POOL ${(p.poolHits||[]).length}/20</span></div>
-        ${poolHtml(p.pool20,p.poolHits)}
-        <div class="label archive-sub">Ğš3 Â· Ğš4 Â· Ğš5</div>
-        ${combosHtml(p.logicCombos,true)}
-        <div class="payout-total">Ğ˜Ğ¢ĞĞ“ LOGIC: <b>${rub(logicTotal)}</b></div>
-      </div>
-
-      <div class="archive-side anti-side">
-        <div class="archive-side-head"><b>ğŸ”¥ ANTILOGIC</b><span>ANTI ${(p.antiHits||[]).length}/20</span></div>
-        ${poolHtml(p.anti20,p.antiHits)}
-        <div class="label archive-sub">Ğš3 Â· Ğš4 Â· Ğš5</div>
-        ${combosHtml(p.antiCombos,true)}
-        <div class="payout-total">Ğ˜Ğ¢ĞĞ“ ANTILOGIC: <b>${rub(antiTotal)}</b></div>
-      </div>
-
-      <div class="grand-total">ğŸ’° ĞĞ‘Ğ©Ğ˜Ğ™ Ğ˜Ğ¢ĞĞ“: <b>${rub(logicTotal+antiTotal)}</b></div>
-
-      <div class="label archive-sub">ğŸ§  ĞĞ‘Ğ£Ğ§Ğ•ĞĞ˜Ğ• Ğ’Ğ•Ğ¡ĞĞ’</div>${weightsHtml(p)}
-      <div class="small archive-foot">ĞŸÑ€Ğ¾Ğ²ĞµÑ€ĞµĞ½: ${p.settledAt?new Date(p.settledAt).toLocaleString('ru-RU'):'â€”'}</div>
-    </div>`;
-  }
-
-  async function renderArchive(){
-    const box=$('fingerprintResult');
-    const list=(await combinedArchive()).slice().reverse();
-    if(!list.length){
-      box.innerHTML='<div class="row small">Ğ¡ĞµÑ€Ğ²ĞµÑ€Ğ½Ñ‹Ğ¹ Ğ°Ñ€Ñ…Ğ¸Ğ² FINGERPRINT Ğ¿Ğ¾ĞºĞ° Ğ½Ğµ ÑĞ¾Ğ·Ğ´Ğ°Ğ½. ĞŸĞ¾ÑĞ»Ğµ Ğ¿ĞµÑ€Ğ²Ğ¾Ğ³Ğ¾ ÑƒÑĞ¿ĞµÑˆĞ½Ğ¾Ğ³Ğ¾ GitHub Action Ğ¿Ğ¾ÑĞ²Ğ¸Ñ‚ÑÑ Ğ¿Ñ€Ğ¾Ğ³Ğ½Ğ¾Ğ·.</div>';
-      return;
-    }
-    box.innerHTML=list.slice(0,80).map(p=>`
-      <button class="archive-item ${p.actual?'settled':'waiting'}" data-archive-draw="${p.targetDraw}">
-        <div><b>â„–${p.targetDraw}</b> Â· Ğ¿Ğ¾ÑĞ»Ğµ â„–${p.sourceDraw}${p.actual?` Â· POOL ${(p.poolHits||[]).length}/20 Â· ANTI ${(p.antiHits||[]).length}/20`:' Â· â³ Ğ¾Ğ¶Ğ¸Ğ´Ğ°ĞµÑ‚'}</div>
-        <div class="small">${p.actual?'Ğ¿Ñ€Ğ¾Ğ²ĞµÑ€ĞµĞ½ Ğ¸ Ğ¾Ğ±ÑƒÑ‡ĞµĞ½':'Ğ·Ğ°Ñ„Ğ¸ĞºÑĞ¸Ñ€Ğ¾Ğ²Ğ°Ğ½'} Â· ${p.server?'SERVER':'ÑÑ‚Ğ°Ñ€Ñ‹Ğ¹ Ğ»Ğ¾ĞºĞ°Ğ»ÑŒĞ½Ñ‹Ğ¹ Ğ°Ñ€Ñ…Ğ¸Ğ²'} Â· ${new Date(p.createdAt).toLocaleString('ru-RU')}</div>
-        <div class="archive-chevron">âŒ„</div>
-      </button>
-      <div class="archive-detail" id="archive-${p.targetDraw}"></div>`).join('');
-    box.querySelectorAll('[data-archive-draw]').forEach(btn=>btn.addEventListener('click',()=>{
-      const target=Number(btn.dataset.archiveDraw),detail=$(`archive-${target}`);
-      const already=detail.innerHTML.trim();
-      box.querySelectorAll('.archive-detail').forEach(x=>{if(x!==detail)x.innerHTML=''});
-      box.querySelectorAll('.archive-item').forEach(x=>{if(x!==btn)x.classList.remove('expanded')});
-      if(already){detail.innerHTML='';btn.classList.remove('expanded');return}
-      const pred=archiveLookup.get(target);
-      detail.innerHTML=archiveDetail(pred);btn.classList.add('expanded');
-    }));
-  }
-
-  async function renderFingerprint(){
-    const box=$('fingerprintResult');
-    if(!draws.length){box.innerHTML='';return}
-    if(fpMode==='archive'){await renderArchive();return}
-    try{
-      const p=getServerForecast();
-      if(!p){
-        box.innerHTML='<div class="row small">â³ SERVER FINGERPRINT ĞµÑ‰Ñ‘ Ğ½Ğµ Ğ¸Ğ½Ğ¸Ñ†Ğ¸Ğ°Ğ»Ğ¸Ğ·Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½. ĞÑƒĞ¶ĞµĞ½ Ğ¾Ğ´Ğ¸Ğ½ ÑƒÑĞ¿ĞµÑˆĞ½Ñ‹Ğ¹ Ğ·Ğ°Ğ¿ÑƒÑĞº GitHub Action.</div>';
-        return;
-      }
-      const anti=fpMode==='antilogic',pool=anti?p.anti20:p.pool20,combos=anti?p.antiCombos:p.logicCombos;
-      const weights=serverState?.weights||p.weights||ENGINE?.DEFAULT_WEIGHTS||{};
-      const bootstrapCount=Number(serverState?.bootstrapCount||0),learningCount=Number(serverState?.settledCount||0);
-      box.innerHTML=`<div class="row"><strong>ğŸ¯ SERVER / â³âˆ’1 Â· Ğ¿Ğ¾ÑĞ»Ğµ â„–${p.sourceDraw} â†’ â„–${p.targetDraw}</strong>
-        <div class="small">ğŸ§  Ğ¾Ğ±ÑƒÑ‡ĞµĞ½Ğ¸Ğµ: Ğ°Ñ€Ñ…Ğ¸Ğ² ${bootstrapCount} + ÑĞµÑ€Ğ²ĞµÑ€Ğ½Ñ‹Ñ… ${learningCount} Â· ${serverFingerprintOnline?'GitHub SERVER':'ĞºÑÑˆ SERVER'}</div></div>
-        <div class="signal-grid">
-          <div class="signal"><b>${p.transition?.count||0}/20</b><span>Ğ¿ĞµÑ€ĞµÑ…Ğ¾Ğ´Ğ¾Ğ²</span></div>
-          <div class="signal"><b>${Number(p.matrix?.meanDistance||0).toFixed(2)}</b><span>ÑÑ€ĞµĞ´Ğ½Ğ¸Ğ¹ Manhattan</span></div>
-          <div class="signal"><b>${p.neighborsCount||0}</b><span>Ğ¸ÑÑ‚Ğ¾Ñ€Ğ¸Ñ‡ĞµÑĞºĞ¸Ñ… ÑĞ¾ÑÑ‚Ğ¾ÑĞ½Ğ¸Ğ¹</span></div>
-          <div class="signal"><b>${Number(weights.analog||0).toFixed(3)}</b><span>Ğ²ĞµÑ Ğ¸ÑÑ‚Ğ¾Ñ€Ğ¸Ğ¸ Ğ¿Ğ¾ÑĞ»Ğµ Ğ¾Ğ±ÑƒÑ‡ĞµĞ½Ğ¸Ñ</span></div>
-        </div>
-        <div class="label" style="margin-top:12px">${anti?'ANTILOGIC-20':'POOL-20'}</div>${poolHtml(pool)}
-        <div class="label" style="margin-top:12px">Ğš3 Â· Ğš4 Â· Ğš5</div>${combosHtml(combos)}`;
-    }catch(error){console.error(error);box.innerHTML=`<div class="row small">ĞÑˆĞ¸Ğ±ĞºĞ° SERVER FINGERPRINT: ${String(error?.message||error)}</div>`}
-  }
-
-  function renderMatrix(){
-    const r=ENGINE.matrixReport(draws),f=r.features,cur=draws.at(-1),set=new Set(cur.balls),tr=new Set(r.transition.numbers);
-    const phasePct=Math.max(5,Math.min(95,50-r.delta*14));
-    $('matrixResult').innerHTML=`<div class="row"><b>Ğ¢Ğ¸Ñ€Ğ°Ğ¶ â„–${r.draw}</b> Â· ${showDate(r.date)} ${r.time||''}</div>
-    <div class="signal-grid">
-      <div class="signal"><b>${r.phase}</b><span>Ñ„Ğ°Ğ·Ğ° Ğ¿Ğ¾Ğ»Ñ</span></div>
-      <div class="signal"><b>${r.arrow}</b><span>Ğ´Ğ²Ğ¸Ğ¶ĞµĞ½Ğ¸Ğµ Ñ†ĞµĞ½Ñ‚Ñ€Ğ°</span></div>
-      <div class="signal"><b>${f.density.toFixed(3)}</b><span>Ğ¿Ğ»Ğ¾Ñ‚Ğ½Ğ¾ÑÑ‚ÑŒ Dâ‰¤2</span></div>
-      <div class="signal"><b>${f.imbalance.toFixed(2)}</b><span>Ğ¿ĞµÑ€ĞµĞºĞ¾Ñ ĞºĞ²Ğ°Ğ´Ñ€Ğ°Ğ½Ñ‚Ğ¾Ğ²</span></div>
-    </div>
-    <div class="row"><strong>Ğ¡Ğ¶Ğ°Ñ‚Ğ¸Ğµ â†” Ñ€Ğ°Ğ·Ğ¶Ğ°Ñ‚Ğ¸Ğµ</strong><div class="meter"><span style="width:${phasePct}%"></span></div><div class="small">Î” ÑÑ€ĞµĞ´Ğ½ĞµĞ³Ğ¾ Manhattan: ${r.delta>=0?'+':''}${r.delta.toFixed(3)}</div></div>
-    <div class="matrix-grid">${Array.from({length:80},(_,i)=>i+1).map(n=>`<div class="cell ${set.has(n)?'on':''} ${tr.has(n)?'transition':''}">${n}</div>`).join('')}</div>`;
-  }
-  function listAssembly(title,items){
-    return `<div class="label" style="margin-top:11px">${title}</div>${items.slice(0,5).map(x=>`<div class="row"><b>${x.kind==='H'?'â†”':'â†•'} ${x.kind==='H'?`Ğœ${x.place}â€“Ğœ${x.place+x.length-1}`:`Ğœ${x.place}`}</b><div>${(x.numbers||[]).map(pad).join(' Â· ')}</div><div class="small">ÑĞ¸Ğ»Ğ° ${Number(x.score||0).toFixed(3)}</div></div>`).join('')||'<div class="row small">Ğ¡Ğ¸Ğ»ÑŒĞ½Ñ‹Ñ… ÑĞ¸Ğ³Ğ½Ğ°Ğ»Ğ¾Ğ² Ğ½ĞµÑ‚.</div>'}`;
-  }
-  function renderAssembly(){
-    const r=ENGINE.assemblyReport(draws);
-    $('assemblyResult').innerHTML=`<div class="row"><b>Ğ¢Ğ¸Ñ€Ğ°Ğ¶ â„–${r.draw}</b> Â· ${showDate(r.date)} ${r.time||''}<div class="small">ĞœĞµÑÑ‚Ğ° ÑÑ‡Ğ¸Ñ‚Ğ°ÑÑ‚ÑÑ Ğ¿Ğ¾ Ğ¿Ğ¾Ñ€ÑĞ´ĞºÑƒ Ğ²Ñ‹Ğ¿Ğ°Ğ´ĞµĞ½Ğ¸Ñ Ğœ1â€“Ğœ20.</div></div>${listAssembly('Ğ“ĞĞ Ğ˜Ğ—ĞĞĞ¢ĞĞ›Ğ˜',r.horizontal)}${listAssembly('Ğ’Ğ•Ğ Ğ¢Ğ˜ĞšĞĞ›Ğ˜',r.vertical)}`;
-  }
-
-  function updatePanelButtons(){
-    document.querySelectorAll('[data-panel],[data-open]').forEach(b=>{
-      const id=b.dataset.panel||b.dataset.open,open=$(id)?.classList.contains('show');
-      b.classList.toggle('tool-open',!!open);b.setAttribute('aria-expanded',open?'true':'false');
-    });
-    const fpOpen=$('fingerprintPanel').classList.contains('show');
-    const collapse=$('fingerprintCollapse');
-    if(collapse){collapse.textContent=fpOpen?'â–´ Ğ¡Ğ’Ğ•Ğ ĞĞ£Ğ¢Ğ¬':'â–¾ Ğ ĞĞ—Ğ’Ğ•Ğ ĞĞ£Ğ¢Ğ¬'}
+    const latest=draws.at(-1);if(!latest)return null;
+    return serverArchive.find(x=>!ıà¹…ÑÕ…°˜™9Õµ‰•È¡à¹Í½ÕÉ•É…Ü¤ôôõ9Õµ‰•È¡±…Ñ•ÍĞ¹‘É…Ü¤¥ññ¹Õ±°ì(€ô(€™Õ¹Ñ¥½¸Á½½±!Ñµ°¡Á½½°¥ì(€€€É•ÑÕÉ¸€ñ‘¥Ø±…ÍÌô‰™¥¹•ÉÁÉ¥¹ĞµÁ½½°ˆø‘íÁ½½°¹Í±¥” À°ÈÀ¤¹µ…À ¡¸±¤¤ôù€ñÍÁ…¸±…ÍÌô‰™Àµ‰…±°ˆøñ¤ø‘í¤¬Åôğ½¤ø‘íÁ…¡¸¥ôğ½ÍÁ…¸ù€¤¹©½¥¸ œœ¥ôğ½‘¥Øù€ì(€ô(€™Õ¹Ñ¥½¸½µ‰½Í!Ñµ°¡½µ‰½Ì¥ì(€€€É•ÑÕÉ¸ğ‘í½µ‰½Ì¹µ…À¡Œôù€ñ‘¥Ø±…ÍÌô‰™Àµ½µ‰¼ˆø‘íŒ¹ÑåÁ•ôè€‘íŒ¹¹Õµ‰•ÉÌ¹µ…À¡Á…¤¹©½¥¸ œ€œ¥ôğ½‘¥Øù€¤¹©½¥¸ œœ¥õ€ì(€ô(€…Íå¹Œ™Õ¹Ñ¥½¸É•¹‘•ÉÉ¡¥Ù” ¥ì(€€€½¹ÍĞ‰½àô ™¥¹•ÉÁÉ¥¹ÑI•ÍÕ±Ğœ¤ì(€€€¥˜ …‰½à¥É•ÑÕÉ¸ì(€€€±•Ğ¥Ñ•µÌõÍ•ÉÙ•ÉÉ¡¥Ù”¹Í±¥” ¤¹É•Ù•ÉÍ” ¤¹Í±¥” À°ÄÀÀ¤ì(€€€¥˜ …¥Ñ•µÌ¹±•¹Ñ ¥¥Ñ•µÌõ…İ…¥Ğ±•…åÉ¡¥Ù” ¤ì(€€€‰½à¹¥¹¹•É!Q50õ€ñ‘¥Ø±…ÍÌô‰É½ÜÍµ…±°ˆûB‡B×FBËB×FB÷F/BäƒBÃFFBãBÈƒBÿFB×BÓBãBëFBûBÈƒBÿBûBëBÃBßF/BËBÃB×FƒFBø°ƒFFBøƒBÇF/BïBøƒBßBÃBóBûFBûBÛB×B÷BøƒBÓBøƒFFBÃBëFBÀ¸ğ½‘¥Øø‘í¥Ñ•µÌ¹µ…À¡àôù€ñ‘•Ñ…¥±Ì±…ÍÌô‰…É µÉ½ÜˆøñÍÕµµ…ÉäøñÍÁ…¸ø‘íà¹…ÑÕ…°üq¸œèŸŠ>ÌôƒŠX‘íà¹Ñ…É•ÑÉ…İññà¹ÁÉ•‘¥Ñ¥½¸ü¹Ñ…É•ÑÉ…İñğŸŠPôğ½ÍÁ…¸øñÍÁ…¸±…ÍÌô‰Íµ…±°ˆø‘íà¹…ÑÕ…°ı€‘íà¹…ÑÕ…°¹‘…Ñ•ñğœô€‘íà¹…ÑÕ…°¹Ñ¥µ•ñğœõ€èŸBûBÛBãBÓBÃB×FƒBãFBûBÌƒÂ~R”ôğ½ÍÁ…¸øğ½ÍÕµµ…Éäøñ‘¥Ø±…ÍÌô‰…É µ‰½‘äˆøñÁÉ”ø‘í•ÍŒ ¡)M=8¹ÍÑÉ¥¹¥™äıà¹ÁÉ•‘¥Ñ¥½¹ññàé¹Õ±°±¹Õ±°°È¤¤¥ôğ½ÁÉ”øğ½‘¥Øøğ½‘•Ñ…¥±Ìù€¤¹©½¥¸ œœ¥õ€ì(€ô((€…Íå¹Œ™Õ¹Ñ¥½¸É•¹‘•É¥¹•ÉÁÉ¥¹Ğ ¥ì(€€€½¹ÍĞ‰½àô ™¥¹•ÉÁÉ¥¹ÑI•ÍÕ±Ğœ¤ì(€€€¥˜ …‘É…İÌ¹±•¹Ñ ¥í‰½à¹¥¹¹•É!Q50ôœœíÉ•ÑÕÉ¹ô(€€€¥˜¡™Á5½‘”ôôô…É¡¥Ù”œ¥í…İ…¥ĞÉ•¹‘•ÉÉ¡¥Ù” ¤íÉ•ÑÕÉ¹ô(€€€ÑÉåì(€€€€€½¹ÍĞÀõ•ÑM•ÉÙ•É½É•…ÍĞ ¤ì(€€€€€¥˜ …À¥ì(€€€€€€€‰½à¹¥¹¹•É!Q50ôœñ‘¥Ø±…ÍÌô‰É½ÜÍµ…±°ˆûŠ>ÌMIYH%9IAI%9PƒB×F'FDƒB÷BÔƒBãB÷BãFBãBÃBïBãBßBãFBûBËBÃBô¸ƒBwFBÛB×BôƒBûBÓBãBôƒFFBÿB×F#B÷F/BäƒBßBÃBÿFFBè¥Ñ!ÕˆÑ¥½¸¸ğ½‘¥Øøœì(€€€€€€€É•ÑÕÉ¸ì(€€€€€ô(€€€€€½¹ÍĞ…¹Ñ¤õ™Á5½‘”ôôô…¹Ñ¥±½¥Œœ±Á½½°õ…¹Ñ¤ıÀ¹…¹Ñ¤ÈÀéÀ¹Á½½°ÈÀ±½µ‰½Ìõ…¹Ñ¤ıÀ¹…¹Ñ¥½µ‰½ÌéÀ¹±½¥½µ‰½Ìì(€€€€€½¹ÍĞİ•¥¡ÑÌõÍ•ÉÙ•ÉMÑ…Ñ”ü¹İ•¥¡ÑÍññÀ¹İ•¥¡ÑÍññ9%9ü¹U1Q}]%!QMññíôì(€€€€€½¹ÍĞ‰½½ÑÍÑÉ…Á½Õ¹Ğõ9Õµ‰•È¡Í•ÉÙ•ÉMÑ…Ñ”ü¹‰½½ÑÍÑÉ…Á½Õ¹ÑñğÀ¤±±•…É¹¥¹½Õ¹Ğõ9Õµ‰•È¡Í•ÉÙ•ÉMÑ…Ñ”ü¹Í•ÑÑ±•‘½Õ¹ÑñğÀ¤ì(€€€€€‰½à¹¥¹¹•É!Q50õ€(€€€€€€€€ñ‘¥Ø±…ÍÌô‰É½ÜˆøñÍÑÉ½¹œûÂ~:´MIYH€¼ƒŠ>ÏŠ"HÄƒ
+ÜƒBÿBûFBïBÔƒŠX‘íÀ¹Í½ÕÉ•É…İôƒŠHƒŠX‘íÀ¹Ñ…É•ÑÉ…İôğ½ÍÑÉ½¹œø(€€€€€€€€ñ‘¥Ø±…ÍÌô‰Íµ…±°ˆûÂ~€ƒBûBÇFFB×B÷BãBÔèƒBÃFFBãBÈ€‘í‰½½ÑÍÑÉ…Á½Õ¹Ñô€¬ƒFB×FBËB×FB÷F/FƒBÁÉ¡¥Ù”€‘í±•…É¹¥¹½Õ¹Ñôƒ
+Ü€‘íÍ•ÉÙ•É¥¹•ÉÁÉ¥¹Ñ=¹±¥¹”ü¥Ñ!ÕˆMIYHœèŸBëF7F MIYHôğ½‘¥Øøğ½‘¥Øø(€€€€€€€€ñ‘¥Ø±…ÍÌô‰Í¥¹…°µÉ¥ˆø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Í¥¹…°ˆøñˆø‘íÀ¹ÑÉ…¹Í¥Ñ¥½¸ü¹½Õ¹ÑñğÁô¼ÈÀğ½ˆøñÍÁ…¸ûBÿB×FB×FBûBÓBûBÈğ½ÍÁ…¸øğ½‘¥Øø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Í¥¹…°ˆøñˆø‘í9Õµ‰•È¡À¹µ…ÑÉ¥àü¹µ•…¹¥ÍÑ…¹•ñğÀ¤¹Ñ½¥á• È¥ôğ½ˆøñÍÁ…¸ûFFB×BÓB÷BãBä5…¹¡…ÑÑ…¸ğ½ÍÁ…¸øğ½‘¥Øø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Í¥¹…°ˆøñˆø‘íÀ¹¹•¥¡‰½ÉÍ½Õ¹ÑñğÁôğ½ˆøñÍÁ…¸ûBãFFBûFBãFB×FBëBãFƒFBûFFBûF?B÷BãBäğ½ÍÁ…¸øğ½‘¥Øø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Í¥¹…°ˆøñˆø‘í9Õµ‰•È¡İ•¥¡ÑÌ¹…¹…±½ñğÀ¤¹Ñ½¥á• Ì¥ôğ½ˆøñÍÁ…¸ûBËB×FƒBãFFBûFBãBàƒBÿBûFBïBÔƒBûBÇFFB×B÷BãF<ğ½ÍÁ…¸øğ½‘¥Øø(€€€€€€€€ğ½‘¥Øø(€€€€€€€€ñ‘¥Ø±…ÍÌô‰±…‰•°ˆÍÑå±”ô‰µ…É¥¸µÑ½ÀèÄÉÁàˆø‘í…¹Ñ¤ü9Q%1=%´ÈÀœèA==0´ÈÀôğ½‘¥Øø‘íÁ½½±!Ñµ°¡Á½½°¥ô(€€€€€€€€ñ‘¥Ø±…ÍÌô‰±…‰•°ˆÍÑå±”ô‰µ…É¥¸µÑ½ÀèÄÉÁàˆûBhÌƒ
+ÜƒBhĞƒ
+ÜƒBhÔğ½‘¥Øø‘í½µ‰½Í!Ñµ°¡½µ‰½Ì¥õ€ì(€€€õ…Ñ ¡•ÉÉ½È¥í½¹Í½±”¹•ÉÉ½È¡•ÉÉ½È¤í‰½à¹¥¹¹•É!Q50õ€ñ‘¥Ø±…ÍÌô‰É½ÜÍµ…±°ˆûB{F#BãBÇBëBÀMIYH%9IAI%9Pè€‘íMÑÉ¥¹œ¡•ÉÉ½Èü¹µ•ÍÍ…•ññ•ÉÉ½È¥ôğ½‘¥Øùô(€ô((€™Õ¹Ñ¥½¸É•¹‘•É5…ÑÉ¥à ¥ì(€€€½¹ÍĞÈõ9%9¹µ…ÑÉ¥áI•Á½ÉĞ¡‘É…İÌ¤±˜õÈ¹™•…ÑÕÉ•Ì±ÕÈõ‘É…İÌ¹…Ğ ´Ä¤±Í•Ğõ¹•ÜM•Ğ¡ÕÈ¹‰…±±Ì¤±ÑÈõ¹•ÜM•Ğ¡È¹ÑÉ…¹Í¥Ñ¥½¸¹¹Õµ‰•ÉÌ¤ì(€€€½¹ÍĞÁ¡…Í•AĞõ5…Ñ ¹µ…à Ô±5…Ñ ¹µ¥¸ äÔ°ÔÀµÔ¹‘•±Ñ„¨ÄĞ¤¤ì(€€€€ µ…ÑÉ¥áI•ÍÕ±Ğœ¤¹¥¹¹•É!Q50õ€ñ‘¥Ø±…ÍÌô‰É½ÜˆøñˆûB‹BãFBÃBØƒŠX‘íÈ¹‘É…İôğ½ˆøƒ
+Ü€‘íÍ¡½İ…Ñ”¡È¹‘…Ñ”¥ô€‘íÈ¹Ñ¥µ•ñğœôğ½‘¥Øø(€€€€ñ‘¥Ø±…ÍÌô‰Í¥¹…°µÉ¥ˆø(€€€€€€ñ‘¥Ø±…ÍÌô‰Í¥¹…°ˆøñˆø‘íÈ¹Á¡…Í•ôğ½ˆøñÍÁ…¸ûFBÃBßBÀƒBÿBûBïF<ğ½ÍÁ…¸øğ½‘¥Øø(€€€€€€ñ‘¥Ø±…ÍÌô‰Í¥¹…°ˆøñˆø‘íÈ¹…ÉÉ½İôğ½ˆøñÍÁ…¸ûBÓBËBãBÛB×B÷BãBÔƒFB×B÷FFBÀğ½ÍÁ…¸øğ½‘¥Øø(€€€€€€ñ‘¥Ø±…ÍÌô‰Í¥¹…°ˆøñˆø‘í˜¹‘•¹Í¥Ñä¹Ñ½¥á• Ì¥ôğ½ˆøñÍÁ…¸ûBÿBïBûFB÷BûFFF0Š&Èğ½ÍÁ…¸øğ½‘¥Øø(€€€€€€ñ‘¥Ø±…ÍÌô‰Í¥¹…°ˆøñˆø‘í˜¹¥µ‰…±…¹”¹Ñ½¥á• È¥ôğ½ˆøñÍÁ…¸ûBÿB×FB×BëBûFƒBëBËBÃBÓFBÃB÷FBûBÈğ½ÍÁ…¸øğ½‘¥Øø(€€€€ğ½‘¥Øø(€€€€ñ‘¥Ø±…ÍÌô‰É½ÜˆøñÍÑÉ½¹œûB‡BÛBÃFBãBÔƒŠPƒFBÃBßBÛBÃFBãBÔğ½ÍÑÉ½¹œøñ‘¥Ø±…ÍÌô‰µ•Ñ•ÈˆøñÍÁ…¸ÍÑå±”ô‰İ¥‘Ñ è‘íÁ¡…Í•AÑô”ˆøğ½ÍÁ…¸øğ½‘¥Øøñ‘¥Ø±…ÍÌô‰Íµ…±°ˆû:PƒFFB×BÓB÷B×BÏBø5…¹¡…ÑÑ…¸è€‘íÈ¹‘•±Ñ„øôÀüœ¬œèœô‘íÈ¹‘•±Ñ„¹Ñ½¥á• Ì¥ôğ½‘¥Øøğ½‘¥Øø(€€€€ñ‘¥Ø±…ÍÌô‰µ…ÑÉ¥àµÉ¥ˆø‘íÉÉ…ä¹™É½´¡í±•¹Ñ èàÁô°¡|±¤¤ôù¤¬Ä¤¹µ…À¡¸ôù€ñ‘¥Ø±…ÍÌô‰•±°€‘íÍ•Ğ¹¡…Ì¡¸¤ü½¸œèœô€‘íÑÈ¹¡…Ì¡¸¤üÑÉ…¹Í¥Ñ¥½¸œèœôˆø‘í¹ôğ½‘¥Øù€¤¹©½¥¸ œœ¥ôğ½‘¥Øù€ì(€ô(€™Õ¹Ñ¥½¸±¥ÍÑÍÍ•µ‰±ä¡Ñ¥Ñ±”±¥Ñ•µÌ¥ì(€€€É•ÑÕÉ¸€ñ‘¥Ø±…ÍÌô‰±…‰•°ˆÍÑå±”ô‰µ…É¥¸µÑ½ÀèÄÅÁàˆø‘íÑ¥Ñ±•ôğ½‘¥Øø‘í¥Ñ•µÌ¹Í±¥” À°Ô¤¹µ…À¡àôù€ñ‘¥Ø±…ÍÌô‰É½Üˆøñˆø‘íà¹­¥¹ôôô œüŸŠHœèŸŠTô€‘íà¹­¥¹ôôô œıƒBp‘íà¹Á±…•÷ŠOBp‘íà¹Á±…”­à¹±•¹Ñ ´Åõ€éƒBp‘íà¹Á±…•õ€ğ½ˆøñ‘¥Øø‘íà¹à¹¹Õµ‰•ÉÍññmuô¹µ…À¡Á…¤¹©½¥¸ œƒ
+Ü€œ¥ôğ½‘¥Øøñ‘¥Ø±…ÍÌô‰Íµ…±°ˆûFBãBïBÀ€‘í9Õµ‰•È¡à¹Í½É•ñğÀ¤¹Ñ½¥á• Ì¥ôğ½‘¥Øøğ½‘¥Øù€¤¹©½¥¸ œœ¥ñğœñ‘¥Ø±…ÍÌô‰É½ÜÍµ…±°ˆûB‡BãBïF3B÷F/FƒFBãBÏB÷BÃBïBûBÈƒB÷B×F¸ğ½‘¥Øøõ€ì(€ô(€™Õ¹Ñ¥½¸É•¹‘•ÉÍÍ•µ‰±ä ¥ì(€€€½¹ÍĞÈõ9%9¹…ÍÍ•µ‰±åI•Á½ÉĞ¡‘É…İÌ¤ì(€€€€ …ÍÍ•µ‰±åI•ÍÕ±Ğœ¤¹¥¹¹•É!Q50õ€ñ‘¥Ø±…ÍÌô‰É½ÜˆøñˆûB‹BãFBÃBØƒŠX‘íÈ¹‘É…İôğ½ˆøƒ
+Ü€‘íÍ¡½İ…Ñ”¡È¹‘…Ñ”¥ô€‘íÈ¹Ñ¥µ•ñğœôñ‘¥Ø±…ÍÌô‰Íµ…±°ˆûBsB×FFBÀƒFFBãFBÃF;FFF<ƒBÿBøƒBÿBûFF?BÓBëFƒBËF/BÿBÃBÓB×B÷BãF<ƒBpÇŠOBpÈÀ¸ğ½‘¥Øøğ½‘¥Øø‘í±¥ÍÑÍÍ•µ‰±ä ŸBOB{BƒBcB_B{BwB‹BCBoB`œ±È¹¡½É¥é½¹Ñ…°¥ô‘í±¥ÍÑÍÍ•µ‰±ä ŸBKBWBƒB‹BcBkBCBoB`œ±È¹Ù•ÉÑ¥…°¥õ€ì(€ô((€™Õ¹Ñ¥½¸ÕÁ‘…Ñ•A…¹•±	ÕÑÑ½¹Ì ¥ì(€€€‘½Õµ•¹Ğ¹ÅÕ•ÉåM•±•Ñ½É±° m‘…Ñ„µÁ…¹•±t±m‘…Ñ„µ½Á•¹tœ¤¹™½É… ¡ˆôùì(€€€€€½¹ÍĞ¥õˆ¹‘…Ñ…Í•Ğ¹Á…¹•±ññˆ¹‘…Ñ…Í•Ğ¹½Á•¸±½Á•¸ô¡¥¤ü¹±…ÍÍ1¥ÍĞ¹½¹Ñ…¥¹Ì Í¡½Üœ¤ì(€€€€€ˆ¹±…ÍÍ1¥ÍĞ¹Ñ½±” Ñ½½°µ½Á•¸œ°„…½Á•¸¤íˆ¹Í•ÑÑÑÉ¥‰ÕÑ” …É¥„µ•áÁ…¹‘•œ±½Á•¸üÑÉÕ”œè™…±Í”œ¤ì(€€€ô¤ì(€€€½¹ÍĞ™Á=Á•¸ô ™¥¹•ÉÁÉ¥¹ÑA…¹•°œ¤¹±…ÍÍ1¥ÍĞ¹½¹Ñ…¥¹Ì Í¡½Üœ¤ì(€€€½¹ÍĞ½±±…ÁÍ”ô ™¥¹•ÉÁÉ¥¹Ñ½±±…ÁÍ”œ¤ì(€€€¥˜¡½±±…ÁÍ”¥í½±±…ÁÍ”¹Ñ•áÑ½¹Ñ•¹Ğõ™Á=Á•¸üŸŠZĞƒB‡BKBWBƒBwBB‹B°œèŸŠZøƒBƒBCB_BKBWBƒBwBB‹B°ô);
   }
   function closePanel(id){$(id)?.classList.remove('show');updatePanelButtons()}
   function openPanel(id){
@@ -364,6 +172,7 @@
     if(id==='fingerprintPanel')renderFingerprint().catch(console.error);
     if(id==='matrixPanel')renderMatrix();
     if(id==='assemblyPanel')renderAssembly();
+    if(id==='network80Panel')NETWORK80UI?.render(draws).catch(console.error);
     setTimeout(()=>p.scrollIntoView({behavior:'smooth',block:'start'}),30);
   }
 
@@ -407,6 +216,6 @@
 
   updatePanelButtons();startAuto();fetchFresh().catch(()=>{});
   if('serviceWorker' in navigator){
-    window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6600',{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{}));
+    window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6700',{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{}));
   }
 })();
