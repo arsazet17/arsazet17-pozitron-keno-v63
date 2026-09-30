@@ -9,6 +9,7 @@
 <link rel="icon" type="image/svg+xml" href="./icon.svg?v=6600">
 <link rel="stylesheet" href="./styles-v63.css?v=6600">
 <link rel="stylesheet" href="./archive-v63.css?v=6600">
+<link rel="stylesheet" href="./network80-v63.css?v=6700">
 </head>
 <body>
 <div class="app">
@@ -17,7 +18,7 @@
 <div class="legend">🔸 переходное число · зелёная линия — одинаковая позиция в выпадении и возрастании</div>
 <main id="cards"><section class="card loading-card"><div class="loading-title">Проверяю свежие данные…</div><div class="loading-bar"><span></span></div></section></main>
 <section class="section-title">Инструменты</section>
-<div class="tools"><button class="tool" data-panel="fingerprintPanel">🧭 FINGERPRINT <span class="panel-state">▾</span></button><button class="tool" data-panel="matrixPanel">🌐 МАТРИЦА</button><button class="tool tool-wide" data-panel="assemblyPanel">🧩 М1–М20</button></div>
+<div class="tools"><button class="tool" data-panel="fingerprintPanel">🧭 FINGERPRINT <span class="panel-state">▾</span></button><button class="tool" data-panel="matrixPanel">🌐 МАТРИЦА</button><button class="tool" data-panel="assemblyPanel">🧩 М1–М20</button><button class="tool" data-panel="network80Panel">🕸 СЕТЬ 80</button></div>
 
 <section id="fingerprintPanel" class="card panel">
 <div class="panel-head"><div><div class="label">🧭 FINGERPRINT 6.3 · LEARNING</div><div class="small">🎯 / ⏳−1 · переходы · Manhattan · состояние поля · М1–М20 · обучение весов</div></div><button id="fingerprintCollapse" class="panel-toggle">▴ СВЕРНУТЬ</button></div>
@@ -25,6 +26,7 @@
 
 <section id="matrixPanel" class="card panel"><div class="panel-head"><div><div class="label">🌐 МАТРИЦА 1–80</div><div class="small">сжатие / разжатие · плотность · центр массы · баланс поля</div></div><button class="panel-close" data-close="matrixPanel">✕</button></div><div id="matrixResult"></div></section>
 <section id="assemblyPanel" class="card panel"><div class="panel-head"><div><div class="label">🧩 М1–М20</div><div class="small">горизонтали · вертикали · движение сборок</div></div><button class="panel-close" data-close="assemblyPanel">✕</button></div><div id="assemblyResult"></div></section>
+<section id="network80Panel" class="card panel"><div class="n80-head"><div><div class="label">🕸 СЕТЬ 80</div><div class="small">80 карточек · рёбра · сцепки · лаги · активные сборки · frozen до следующего тиража</div></div><button class="panel-close" data-close="network80Panel">✕</button></div><div class="n80-tabs"><button class="n80-tab active" data-n80-mode="signal">Сигнал</button><button class="n80-tab" data-n80-mode="players">80 игроков</button><button class="n80-tab" data-n80-mode="links">Связи</button><button class="n80-tab" data-n80-mode="history">История</button></div><div id="network80Result"></div></section>
 </div>
 
 <footer class="footer"><div class="footerin"><button data-home><b>⌂</b>Главная</button><button data-open="fingerprintPanel"><b>◎</b>FINGERPRINT</button><button data-open="matrixPanel"><b>◉</b>Матрица</button><button id="syncBtn2"><b>↻</b>Обновить</button></div></footer>
@@ -39,5 +41,7 @@
 <script src="./sync-v63-client.js?v=6600"></script>
 <script src="./storage-v63.js?v=6600"></script>
 <script src="./engine-v63.js?v=6600"></script>
-<script src="./app-v63.js?v=6600"></script>
+<script src="./network80-engine-v63.js?v=6700"></script>
+<script src="./network80-ui-v63.js?v=6700"></script>
+<script src="./app-v63.js?v=6700"></script>
 </body></html>

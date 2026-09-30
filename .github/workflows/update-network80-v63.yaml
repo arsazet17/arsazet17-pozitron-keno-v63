@@ -1,0 +1,66 @@
+name: KENO v6.3 · СЕТЬ 80
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_run:
+    workflows: ["KENO v6.3 · Stoloto MAIN", "KENO v6.3 · Stoloto RESERVE"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: keno-v63-network80
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Получить актуальный main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Fresh main
+        run: |
+          git fetch origin main --prune
+          git reset --hard origin/main
+
+      - name: Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Проверить СЕТЬ 80
+        run: |
+          node --check network80-engine-v63.js
+          node --check network80-ui-v63.js
+          node --check scripts/network80-server-v63.js
+          node --check scripts/network80-update-v63.js
+          node --check scripts/test-network80-v63.js
+          node scripts/test-network80-v63.js
+
+      - name: Обновить frozen / архив СЕТЬ 80
+        run: node scripts/network80-update-v63.js
+
+      - name: Сохранить только состояние СЕТЬ 80
+        shell: bash
+        run: |
+          FILES="network80-state-v63.json network80-archive-v63.json"
+          if [ -z "$(git status --porcelain -- $FILES)" ]; then
+            echo "СЕТЬ 80: изменений нет"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add $FILES
+          git commit -m "KENO v6.3 · СЕТЬ 80 · frozen/settle"
+          git fetch origin main --prune
+          git rebase origin/main
+          git push origin HEAD:main
