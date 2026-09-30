@@ -31,9 +31,9 @@
   function candidateHtml(c,settled=false){
     const hs=new Set((c.hits||[]).map(Number));
     return `<div class="n80-candidate ${clsLevel(c.level)}">
-      <div class="n80-cand-head"><b>${esc(c.type)} · ${esc(c.id)}</b><span class="n80-level">${esc(c.level||'')}</span></div>
+      <div class="n80-cand-head"><b>${esc(c.type)} · ${esc(c.id)}</b><span class="n80-level">${esc(c.level||'')}${c.movement?` · ${esc(c.movement)}`:''}</span></div>
       <div class="n80-numbers">${(c.numbers||[]).map(n=>`<span class="n80-num ${settled?(hs.has(Number(n))?'hit':'miss'):''}">${pad(n)}</span>`).join('')}</div>
-      <div class="n80-meta"><span>рёбра ${c.strongEdges||0}/${c.totalEdges||0}</span><span>мосты ${c.bridges||0}</span><span>плотность ${Number(c.density||0).toFixed(2)}</span><span>сила ${Number(c.score||0).toFixed(2)}</span></div>
+      <div class="n80-meta"><span>рёбра ${c.strongEdges||0}/${c.totalEdges||0}</span><span>мосты ${c.bridges||0}</span><span>плотность ${Number(c.density||0).toFixed(2)}</span><span>сила ${Number(c.score||0).toFixed(2)}</span>${Number.isFinite(Number(c.triggerZ))?`<span>активация ${Number(c.triggerZ)>=0?'+':''}${Number(c.triggerZ).toFixed(2)}</span>`:''}${c.strengthenedEdges?`<span>усилилось рёбер +${c.strengthenedEdges}</span>`:''}${c.newEdges?`<span>новых рёбер +${c.newEdges}</span>`:''}${c.selectionMode==='BACKGROUND'?'<span>фон сети</span>':''}</div>
       ${settled?`<div style="margin-top:7px"><b>${c.hitCount||0}/${c.size}</b> ${c.win?`<span class="n80-win">🔥 ${rub(c.payout)}</span>`:'<span class="n80-miss">❌ MISS</span>'}</div>`:''}
       ${(c.keyEdges||[]).length?`<div class="n80-edge-list">${c.keyEdges.slice(0,4).map(e=>`<div class="n80-edge"><span>🔗 ${pad(e.a)}—${pad(e.b)} ${e.relations?.length?`<span class="n80-rel">${esc(e.relations.join('/'))}</span>`:''}</span><b>${Number(e.score||0).toFixed(2)}</b></div>`).join('')}</div>`:''}
     </div>`;
@@ -41,8 +41,9 @@
   function signalHtml(){
     const p=pending()||live;
     if(!p)return '<div class="n80-empty">Недостаточно данных для расчёта.</div>';
+    const versionNote=p?.version!==ENGINE?.VERSION?'<div class="n80-sub">Текущий frozen создан предыдущей версией и не переписывается. Новая логика начнёт действовать со следующего frozen.</div>':'';
     return `<div class="n80-summary"><div class="n80-kpi"><b>№${p.sourceDraw} → №${p.targetDraw}</b><span>frozen до следующего тиража</span></div><div class="n80-kpi"><b>${p.scopeDraws||live?.scopeDraws||0}</b><span>тиражей накоплено в режиме</span></div></div>
-      <div class="n80-sub">${serverOnline?'SERVER frozen':'локальный расчёт'} · полный 7/7 не обязателен: ниже показываются и активные фрагменты. Уровеѽь = сила структуры, не гарантия выигрыша.</div>
+      ${versionNote}<div class="n80-sub">${serverOnline?'SERVER frozen':'локальный расчёт'} · полный 7/7 не обязателен: показываются разные активные структуры — крупная сборка, фрагмент и отдельное ребро. Вложенные копии одной и той же группы больше не дублируются. Уровень = сила структуры, не гарантия выигрыша.</div>
       <div class="n80-section">Активные сборки</div>${(p.candidates||[]).map(c=>candidateHtml(c,false)).join('')||'<div class="n80-empty">Сильных сборок сейчас нет.</div>'}`;
   }
   function playerHeat(n){
