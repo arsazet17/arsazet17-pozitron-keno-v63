@@ -1,6 +1,6 @@
 'use strict';
 (() => {
-  const VERSION='6.3-network80-0100';
+  const VERSION='6.3-network80-0200';
   const RECENT=60;
   const MAX_GROUP=7;
   const PAYOUTS=Object.freeze({
@@ -155,17 +155,80 @@
     let bestPos=1,bestPosCount=0;for(let p=1;p<=20;p++){const c=stats.pos[n*21+p];if(c>bestPosCount){bestPos=p;bestPosCount=c;}}
     return {...staticInfo(n),appearAll:stats.freq[n],appear60:stats.rfreq[n],neighbors,bestFrame,bestPosition:bestPos};
   }
+  function liveNodePull(stats,n){
+    const latest=stats.draws.at(-1),prev=stats.draws.at(-2),parts=[];
+    const add=(src,mapAll,mapRecent,weight)=>{
+      if(Number(src)===Number(n))return;
+      const sup=directed(mapRecent,src,n);if(!sup)return;
+      const act=directedActivation(stats,mapAll,mapRecent,src,n);if(act<=0)return;
+      parts.push({src:Number(src),score:act*Math.min(1,sup/3)*weight,support:sup,lag:weight===1?1:2});
+    };
+    for(const src of (latest?.balls||[]))add(src,stats.lag1,stats.rlag1,1);
+    for(const src of (prev?.balls||[]))add(src,stats.lag2,stats.rlag2,.58);
+    parts.sort((a,b)=>b.score-a.score);
+    const top=parts.slice(0,5),score=top.length?top.reduce((s,x)=>s+x.score,0)/Math.min(3,top.length):0;
+    return {score:Number(score.toFixed(4)),sources:top};
+  }
+  function enrichAssembly(stats,c,emap,prevEmap,pullMean=0,pullSd=1){
+    const pulls=c.nodes.map(n=>({n,...liveNodePull(stats,n)})).sort((a,b)=>b.score-a.score),active=pulls.filter(x=>x.score>=.35);
+    const topPull=pulls.slice(0,Math.min(4,pulls.length));
+    const triggerScore=topPull.length?topPull.reduce((s,x)=>s+x.score,0)/topPull.length:0;
+    const triggerZ=(triggerScore-pullMean)/Math.max(.05,pullSd);
+    let strengthenedEdges=0,newEdges=0,deltaSum=0,edgeCount=0;
+    for(let i=0;i<c.nodes.length;i++)for(let j=i+1;j<c.nodes.length;j++){
+      const k=key(c.nodes[i],c.nodes[j]),cur=emap.get(k),old=prevEmap.get(k);if(!cur)continue;
+      const d=Number(cur.score||0)-Number(old?.score||0);deltaSum+=d;edgeCount++;
+      if(d>=.12)strengthenedEdges++;
+      if(Number(old?.score||0)<.55&&Number(cur.score||0)>=.55)newEdges++;
+    }
+    const edgeDelta=edgeCount?deltaSum/edgeCount:0;
+    const activity=Math.max(0,triggerZ)*.55+Math.max(0,Math.min(.35,edgeDelta))*2.2+strengthenedEdges/Math.max(1,c.totalEdges)*.7+newEdges/Math.max(1,c.totalEdges)*1.0;
+    const sizeWeight=.78+c.nodes.length*.055;
+    const liveScore=c.score*sizeWeight+activity;
+    let movement='СТАБИЛЬНА';
+    if(newEdges>0)movement='НОВАЯ';
+    else if(edgeDelta>=.025||strengthenedEdges>=2)movement='УСИЛИЛАСЬ';
+    else if(edgeDelta<=-.04)movement='ОСЛАБЛА';
+    return {...c,triggerScore:Number(triggerScore.toFixed(3)),triggerZ:Number(triggerZ.toFixed(3)),triggeredNodes:active.length,edgeDelta:Number(edgeDelta.toFixed(4)),strengthenedEdges,newEdges,movement,liveScore:Number(liveScore.toFixed(4)),pulls};
+  }
+  function overlapRatio(a,b){
+    const A=a.nodes||a,B=b.nodes||b,inter=A.filter(n=>B.includes(n)).length;
+    return inter/Math.max(1,Math.min(A.length,B.length));
+  }
+  function selectLiveAssemblies(stats,edges,asm,input){
+    const emap=new Map(edges.map(e=>[key(e.a,e.b),e]));
+    const prevStats=buildStats((input||[]).slice(0,-1)),prevEdges=prevStats?allEdges(prevStats):[],prevEmap=new Map(prevEdges.map(e=>[key(e.a,e.b),e]));
+    const nodePulls=Array.from({length:80},(_,i)=>liveNodePull(stats,i+1).score),pullMean=nodePulls.reduce((a,b)=>a+b,0)/nodePulls.length;
+    const pullSd=Math.sqrt(nodePulls.reduce((s,x)=>s+(x-pullMean)**2,0)/nodePulls.length)||1;
+    const enriched=asm.all.filter(c=>c.score>=1.05).map(c=>enrichAssembly(stats,c,emap,prevEmap,pullMean,pullSd));
+    enriched.sort((a,b)=>b.liveScore-a.liveScore||b.triggerZ-a.triggerZ||b.score-a.score);
+    const active=enriched.filter(c=>c.triggerZ>=.45||c.newEdges>0||c.strengthenedEdges>=2||c.edgeDelta>=.018);
+    const selected=[];
+    const take=(c,mode)=>{
+      if(!c||selected.some(x=>overlapRatio(c,x)>.60))return false;
+      selected.push({...c,type:c.nodes.length===7?'K7':`ФРАГМЕНТ-${c.nodes.length}`,level:c.liveScore>=2.2?'СИЛЬНАЯ':c.liveScore>=1.55?'СРЕДНЯЯ':'НАБЛЮДЕНИЕ',selectionMode:mode});
+      return true;
+    };
+    const best=pred=>active.find(c=>pred(c)&&!selected.includes(c)&&!selected.some(x=>overlapRatio(c,x)>.60));
+    // Разные уровни одной сети: крупная сборка, средний кусок и отдельное активное ребро.
+    take(best(c=>c.nodes.length>=5),'LIVE-GROUP');
+    take(best(c=>c.nodes.length>=3&&c.nodes.length<=4),'LIVE-FRAGMENT');
+    take(best(c=>c.nodes.length===2),'LIVE-EDGE');
+    for(const c of active){if(selected.length>=4)break;take(c,'LIVE');}
+    // Если живых изменений мало, допускаем только одну сильную фоновую структуру, а не четыре её вложенных копии.
+    if(selected.length<4){
+      for(const c of enriched){
+        if(selected.length>=4)break;
+        if(take(c,'BACKGROUND'))break;
+      }
+    }
+    return selected.slice(0,4);
+  }
   function forecast(input){
     const stats=buildStats(input);if(!stats||stats.N<120)return null;
     const edges=allEdges(stats),asm=generateAssemblies(stats,edges),latest=stats.draws.at(-1),cards=Array.from({length:80},(_,i)=>cardFor(stats,i+1,edges));
-    const selected=[];
-    for(const size of [7,6,5,4,3,2]){
-      const c=asm.all.find(x=>x.nodes.length===size&&x.score>=1.05);
-      if(!c)continue;
-      selected.push({...c,type:size===7?'K7':`ФРАГМЕНТ-${size}`,level:c.score>=2.0?'СИЛЬНАЯ':c.score>=1.45?'СРЕДНЯЯ':'НАБЛЮДЕНИЕ'});
-      if(selected.length>=4)break;
-    }
-    const candidates=selected.map((c,i)=>({id:`N80-${i+1}`,numbers:c.nodes,size:c.nodes.length,type:c.type,level:c.level,score:c.score,density:c.density,strongEdges:c.strongEdges,totalEdges:c.totalEdges,bridges:c.bridges,keyEdges:c.pairs.slice(0,5).map(e=>({a:e.a,b:e.b,score:e.score,support:e.support,relations:e.relations}))}));
+    const selected=selectLiveAssemblies(stats,edges,asm,input);
+    const candidates=selected.map((c,i)=>({id:`N80-${i+1}`,numbers:c.nodes,size:c.nodes.length,type:c.type,level:c.level,score:c.liveScore,density:c.density,strongEdges:c.strongEdges,totalEdges:c.totalEdges,bridges:c.bridges,movement:c.movement,selectionMode:c.selectionMode,triggerScore:c.triggerScore,triggerZ:c.triggerZ,triggeredNodes:c.triggeredNodes,edgeDelta:c.edgeDelta,strengthenedEdges:c.strengthenedEdges,newEdges:c.newEdges,keyEdges:c.pairs.slice(0,5).map(e=>({a:e.a,b:e.b,score:e.score,support:e.support,relations:e.relations}))}));
     return {version:VERSION,sourceDraw:Number(latest.draw),targetDraw:Number(latest.draw)+1,createdAt:new Date().toISOString(),scopeStartDraw:Number(stats.scope[0]?.draw||latest.draw),scopeDraws:stats.N,recentDraws:stats.W,candidates,cards,topEdges:edges.slice(0,120)};
   }
   function payout(size,hits){return Number(PAYOUTS[size]?.[hits]||0);}
