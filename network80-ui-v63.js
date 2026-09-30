@@ -6,6 +6,13 @@
   const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   let draws=[],mode='signal',live=null,state=null,archive=[],serverOnline=false,selectedPlayer=null,historyFilter='all';
   const $=id=>document.getElementById(id);
+  async function loadDraws(){
+    const r=await fetch(`./keno-history-v63.json?v=6700&t=${Date.now()}`,{cache:'no-store'});
+    if(!r.ok)throw new Error(`KENO history HTTP ${r.status}`);
+    const arr=await r.json();
+    if(!Array.isArray(arr))throw new Error('KENO history format');
+    return arr;
+  }
 
   async function fetchServer(){
     try{
@@ -35,7 +42,7 @@
     const p=pending()||live;
     if(!p)return '<div class="n80-empty">Недостаточно данных для расчёта.</div>';
     return `<div class="n80-summary"><div class="n80-kpi"><b>№${p.sourceDraw} → №${p.targetDraw}</b><span>frozen до следующего тиража</span></div><div class="n80-kpi"><b>${p.scopeDraws||live?.scopeDraws||0}</b><span>тиражей накоплено в режиме</span></div></div>
-      <div class="n80-sub">${serverOnline?'SERVER frozen':'локальный расчёт'} · полный 7/7 не обязателен: ниже показываются и активные фрагменты. Уровень = сила структуры, не гарантия выигрыша.</div>
+      <div class="n80-sub">${serverOnline?'SERVER frozen':'локальный расчёт'} · полный 7/7 не обязателен: ниже показываются и активные фрагменты. Уровеѽь = сила структуры, не гарантия выигрыша.</div>
       <div class="n80-section">Активные сборки</div>${(p.candidates||[]).map(c=>candidateHtml(c,false)).join('')||'<div class="n80-empty">Сильных сборок сейчас нет.</div>'}`;
   }
   function playerHeat(n){
@@ -89,8 +96,17 @@
     document.querySelectorAll('[data-n80-mode]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-n80-mode]').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.n80Mode;renderBody();});
   }
   async function render(input){
-    draws=(input||[]).slice();if(!ENGINE||draws.length<120){const b=$('network80Result');if(b)b.innerHTML='<div class="n80-empty">Недостаточно истории.</div>';return;}
-    live=ENGINE.forecast(draws);await fetchServer();bindTabs();renderBody();
+    try{
+      draws=(input&&input.length?input:await loadDraws()).slice();
+      if(!ENGINE||draws.length<120){const b=$('network80Result');if(b)b.innerHTML='<div class="n80-empty">Недостаточно истории.</div>';return;}
+      live=ENGINE.forecast(draws);await fetchServer();bindTabs();renderBody();
+    }catch(e){const b=$('network80Result');if(b)b.innerHTML=`<div class="n80-empty">СЕТЬ 80: ${esc(e?.message||e)}</div>`;console.error(e)}
+  }
+  function bootstrap(){
+    const tool=document.querySelector('[data-panel="network80Panel"]');
+    if(tool)tool.addEventListener('click',()=>setTimeout(()=>render(),0));
+    ['syncBtn','syncBtn2'].forEach(id=>$(id)?.addEventListener('click',()=>setTimeout(()=>{if($('network80Panel')?.classList.contains('show'))render()},1200)));
   }
   window.POZITRON_V63_NETWORK80_UI={render};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootstrap);else bootstrap();
 })();
