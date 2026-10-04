@@ -1,0 +1,56 @@
+name: KENO v6.3 · IRIS
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/update-iris-v63.yaml'
+      - 'iris-engine-v63.js'
+      - 'scripts/iris-update-v63.js'
+      - 'scripts/test-iris-v63.js'
+  schedule:
+    - cron: '9,24,39,54 * * * *'
+  workflow_run:
+    workflows: ["KENO v6.3 · Stoloto MAIN", "KENO v6.3 · Stoloto RESERVE"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: keno-v63-iris
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Проверить движок Iris
+        run: |
+          node --check iris-engine-v63.js
+          node --check iris-ui-v63.js
+          node scripts/test-iris-v63.js
+      - name: Записать серии и результаты Iris
+        run: node scripts/iris-update-v63.js
+      - name: Сохранить только архив Iris
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain -- iris-archive-v63.json)" ]; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add iris-archive-v63.json
+          git commit -m "KENO v6.3 · Iris · серии и проверки"
+          git pull --rebase origin main
+          git push origin HEAD:main

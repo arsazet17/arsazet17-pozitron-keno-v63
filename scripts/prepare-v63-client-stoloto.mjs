@@ -182,17 +182,18 @@ await write('sync-v63-client.js', sync);
 // Service Worker: никакой 6.2/Lucky логики, серверные JSON всегда свежие.
 const sw = `'use strict';
 
-const CACHE='pozitron-v63-stoloto-6600';
+const CACHE='pozitron-v63-iris-010';
 const REPO_RAW='https://raw.githubusercontent.com/arsazet17/arsazet17-pozitron-keno-v63/main/';
 
 const STATIC_ASSETS=[
   './','./index.html','./styles-v63.css','./archive-v63.css',
   './storage-v63.js','./engine-v63.js','./sync-v63-client.js','./app-v63.js',
+  './iris-engine-v63.js?v=iris010','./iris-ui-v63.js?v=iris010','./iris-v63.css?v=iris010',
   './manifest.webmanifest','./icon.svg'
 ];
 
 const SERVER_FILES=new Set([
-  'keno-history-v63.json','fingerprint-state-v63.json',
+  'iris-archive-v63.json','keno-history-v63.json','fingerprint-state-v63.json',
   'fingerprint-archive-v63.json','keno-status-v63.json'
 ]);
 

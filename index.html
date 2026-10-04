@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="./styles-v63.css?v=6600">
 <link rel="stylesheet" href="./archive-v63.css?v=6600">
 <link rel="stylesheet" href="./network80-v63.css?v=6700">
+<link rel="stylesheet" href="./iris-v63.css?v=iris010">
 </head>
 <body>
 <div class="app">
@@ -18,7 +19,9 @@
 <div class="legend">🔸 переходное число · зелёная линия — одинаковая позиция в выпадении и возрастании</div>
 <main id="cards"><section class="card loading-card"><div class="loading-title">Проверяю свежие данные…</div><div class="loading-bar"><span></span></div></section></main>
 <section class="section-title">Инструменты</section>
-<div class="tools"><button class="tool" data-panel="fingerprintPanel">🧭 FINGERPRINT <span class="panel-state">▾</span></button><button class="tool" data-panel="matrixPanel">🌐 МАТРИЦА</button><button class="tool" data-panel="assemblyPanel">🧩 М1–М20</button><button class="tool" data-panel="network80Panel">🕸 СЕТЬ 80</button></div>
+<div class="tools"><button class="tool tool-wide" data-panel="irisPanel">◈ IRIS · серии на 5 тиражей</button><button class="tool" data-panel="fingerprintPanel">🧭 FINGERPRINT <span class="panel-state">▾</span></button><button class="tool" data-panel="matrixPanel">🌐 МАТРИЦА</button><button class="tool" data-panel="assemblyPanel">🧩 М1–М20</button><button class="tool" data-panel="network80Panel">🕸 СЕТЬ 80</button></div>
+
+<section id="irisPanel" class="card panel"><div class="panel-head"><span class="label">IRIS · отдельный архив</span><button class="panel-close" data-close="irisPanel" aria-label="Свернуть Iris">▴ Свернуть</button></div><div id="irisRoot"></div></section>
 
 <section id="fingerprintPanel" class="card panel">
 <div class="panel-head"><div><div class="label">🧭 FINGERPRINT 6.3 · LEARNING</div><div class="small">🎯 / ⏳−1 · переходы · Manhattan · состояние поля · М1–М20 · обучение весов</div></div><button id="fingerprintCollapse" class="panel-toggle">▴ СВЕРНУТЬ</button></div>
@@ -29,7 +32,7 @@
 <section id="network80Panel" class="card panel"><div class="n80-head"><div><div class="label">🕸 СЕТЬ 80</div><div class="small">80 карточек · рёбра · сцепки · лаги · активные сборки · frozen до следующего тиража</div></div><button class="panel-close" data-close="network80Panel">✕</button></div><div class="n80-tabs"><button class="n80-tab active" data-n80-mode="signal">Сигнал</button><button class="n80-tab" data-n80-mode="players">80 игроков</button><button class="n80-tab" data-n80-mode="links">Связи</button><button class="n80-tab" data-n80-mode="history">История</button></div><div id="network80Result"></div></section>
 </div>
 
-<footer class="footer"><div class="footerin"><button data-home><b>⌂</b>Главная</button><button data-open="fingerprintPanel"><b>◎</b>FINGERPRINT</button><button data-open="matrixPanel"><b>◉</b>Матрица</button><button id="syncBtn2"><b>↻</b>Обновить</button></div></footer>
+<footer class="footer"><div class="footerin"><button data-home><b>⌂</b>Главная</button><button data-open="fingerprintPanel"><b>◎</b>FINGERPRINT</button><button data-open="matrixPanel"><b>◉</b>Матрица</button><button data-open="irisPanel"><b>◈</b>Iris</button><button id="syncBtn2"><b>↻</b>Обновить</button></div></footer>
 
 <dialog id="settings"><form method="dialog">
 <div class="dialog-head"><b>Настройки 6.3</b><button class="icon">✕</button></div>
@@ -44,4 +47,6 @@
 <script src="./network80-engine-v63.js?v=6700"></script>
 <script src="./network80-ui-v63.js?v=6700"></script>
 <script src="./app-v63.js?v=6700"></script>
+<script src="./iris-engine-v63.js?v=iris010"></script>
+<script src="./iris-ui-v63.js?v=iris010"></script>
 </body></html>
