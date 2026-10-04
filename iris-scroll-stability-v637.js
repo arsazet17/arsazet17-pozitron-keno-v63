@@ -1,17 +1,16 @@
 'use strict';
 (()=>{
  const host=document.getElementById('irisRoot');if(!host)return;
- let y=window.scrollY,lastUserScroll=0,restoring=false;
- const remember=()=>{if(restoring)return;y=window.scrollY;lastUserScroll=performance.now();};
- window.addEventListener('scroll',remember,{passive:true});
- const observer=new MutationObserver(muts=>{
-   const rebuilt=muts.some(m=>m.type==='childList'&&m.target===host);
-   if(!rebuilt)return;
-   const target=y;
-   requestAnimationFrame(()=>requestAnimationFrame(()=>{
-     if(performance.now()-lastUserScroll<120)return;
-     if(Math.abs(window.scrollY-target)>2){restoring=true;window.scrollTo({top:target,left:0,behavior:'instant'});requestAnimationFrame(()=>{restoring=false;y=window.scrollY;});}
-   }));
- });
- observer.observe(host,{childList:true});
+ // v6.3.11: do not fight the user's scroll. The previous MutationObserver
+ // restored an old window.scrollY after every IRIS DOM rebuild and caused
+ // visible repeated jumps upward during automatic refreshes.
+ let userScrolling=false,timer=0;
+ const markUser=()=>{userScrolling=true;clearTimeout(timer);timer=setTimeout(()=>{userScrolling=false},700)};
+ window.addEventListener('touchstart',markUser,{passive:true});
+ window.addEventListener('touchmove',markUser,{passive:true});
+ window.addEventListener('wheel',markUser,{passive:true});
+ window.addEventListener('scroll',markUser,{passive:true});
+ // Intentionally no MutationObserver and no automatic window.scrollTo().
+ // Scroll position is owned by the browser/user; archive overlay keeps its
+ // own scrollTop separately in iris-archive-beauty.js.
 })();
