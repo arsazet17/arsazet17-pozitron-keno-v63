@@ -20,8 +20,8 @@
       #irisRoot .iris-wave-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:8px}
       #irisRoot .iris-wave-cell{min-width:0;border:1px solid #173f60;border-radius:7px;background:#061728;padding:7px 8px}
       #irisRoot .iris-wave-cell small{display:block;color:#6285a5;font-size:8px;font-weight:800;letter-spacing:.3px}
-      #irisRoot .iris-wave-cell b{display:block;color:#e1f4ff;font-size:11px;margin-top:2px;white-space:nowrap}
-      #irisRoot .iris-wave-cell strong{color:#55dda9}
+      #irisRoot .iris-wave-cell b{display:block;color:#e1f4ff;font-size:11px;margin-top:2px}
+      #irisRoot .iris-wave-cell strong{display:block;color:#55dda9;font-size:10px;margin-top:2px}
       #irisRoot .iris-wave .iris-series{margin-left:8px;margin-right:8px}
       @media(max-width:560px){#irisRoot .iris-wave-grid{grid-template-columns:1fr 1fr}#irisRoot .iris-wave-cell b{font-size:10px}}
     `;document.head.appendChild(s);
@@ -79,7 +79,7 @@
       ordered.forEach((g,i)=>{
         const start=meta(g.start,g.source),stop=meta(g.stop,g.source),src=meta(g.source,g.source);
         const wrap=document.createElement('section');wrap.className='iris-wave'+(i===0?' latest':'');
-        wrap.innerHTML=`<div class="iris-wave-head"><div class="iris-wave-kicker"><span class="iris-wave-badge">${i===0?'НОВЫЙ ЗАПУСК A':'РАНЕЕ ЗАПУЩЕНО'}</span><b>ЗАПУСК ОТ №${g.source}</b><span>${fmt(src)}</span></div><div class="iris-wave-grid"><div class="iris-wave-cell"><small>СТАРТ</small><b>№${g.start??'—'}</b><strong>${start.time||'—'}</strong></div><div class="iris-wave-cell"><small>СТОП</small><b>№${g.stop??'—'}</b><strong>${stop.time||'—'}</strong></div><div class="iris-wave-cell"><small>ПЕРИОД</small><b>${start.date||'—'} → ${stop.date||'—'}</b></div><div class="iris-wave-cell"><small>ОТСЧЁТ</small><b>${progress(g.cards)}</b></div></div></div>`;
+        wrap.innerHTML=`<div class="iris-wave-head"><div class="iris-wave-kicker"><span class="iris-wave-badge">${i===0?'НОВЫЙ ЗАПУСК A':'РАНЕЕ ЗАПУЩЕНО'}</span><b>ЗАПУСК: тираж №${g.source}</b><span>время ${src.time||'—'} · ${src.date||'—'}</span></div><div class="iris-wave-grid"><div class="iris-wave-cell"><small>СТАРТ</small><b>тираж №${g.start??'—'}</b><strong>время ${start.time||'—'} · ${start.date||'—'}</strong></div><div class="iris-wave-cell"><small>СТОП</small><b>тираж №${g.stop??'—'}</b><strong>время ${stop.time||'—'} · ${stop.date||'—'}</strong></div><div class="iris-wave-cell"><small>ОТ — ДО</small><b>№${g.start??'—'} → №${g.stop??'—'}</b><strong>${start.time||'—'} → ${stop.time||'—'}</strong></div><div class="iris-wave-cell"><small>ОТСЧЁТ</small><b>${progress(g.cards)}</b><strong>ровно 5 тиражей</strong></div></div></div>`;
         anchor.after(wrap);anchor=wrap;
         g.cards.forEach(c=>wrap.appendChild(c));
       });
