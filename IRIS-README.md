@@ -1,30 +1,63 @@
-# Iris 0.1.0 inside KENO 6.3
+# IRIS inside KENO 6.3
 
-Separate panel, independent immutable five-draw series, MINI3/MINI4, dedicated archive and statistics. The baseline modules are unchanged. Iris data lives in iris-archive-v63.json (server) and a separate IndexedDB database poz itron_iris_v63 (name in code: pozitron_iris_v63). Local extra series are not uploaded to GitHub; export JSON is available. The server generates its own identical deterministic candidates and continues without the phone.
+IRIS is a separate full dashboard inside **ПОЗИТРОН КЕНО v6.3**. It keeps the original KENO 6.3 modules intact and has its own active series, archive, checks, statistics and local cache.
 
-## Provisional selection rules
+## Restored project principle
 
-The original Iris formula and A/B thresholds were not recovered. This release explicitly labels the following rules as research v0.1. They are not claimed to reproduce the original player exactly or outperform random selection.
+- Analysis history: up to the latest **700 draws**.
+- The live source window is the latest **5 consecutive draws**.
+- Every number 1–80 receives a five-step 0/1 rhythm. Priority rhythms: `01010`, `11010`, `10101`, `10100`.
+- The 1–80 field is treated as a 10×8 geometry. Structural links used by IRIS: row ±2, vertical +10/+20/+30 and diagonal ±9/11.
+- Numbers absent from all five source draws are not used to invent a missing cell.
+- IRIS creates several independent regular combinations. They may share numbers, but they are not one CORE/MAIN/FULL combination cut into several sizes.
+- MINI-3 and MINI-4 are separate searches with their own five-draw series and archive.
 
-Use five consecutive draws in chronological order. All must have 20 unique integers 1..80 and consecutive scheduled timestamps. A requires: next scheduled draw still in the future, last draw not in the future, at least five numbers with one of the strong patterns, and a geometric link between two of them. B is disabled pending its actual definition.
+## Permission A / B
 
-Strong pattern scores: 01010=5, 11010=4.8, 10101=4.6, 10100=4.4. Other seen numbers: 1 + 0.2 * frequency. Absent numbers are excluded. Geometry: column +0.8, row +0.6, same row step 2 +0.7, same column step 20 +0.7, adjacent diagonal +0.6. Greedy selection adds 1.5 * mean geometric connection; regular Iris penalizes previous combination reuse by 1.1 per use. Different strong seeds generate up to four nonnested combinations of 7,6,8,5. Reject overlaps >75% of the shorter combination. MINI3 and MINI4 use separate greedy searches, independent of regular Iris combinations. These are temporary explicit engineering choices for later correction.
+The project gate is evaluated on a structural FULL-9 service set.
 
-## Frozen series
+**A / PLAY** is allowed when:
+1. FULL-9 has no more than 2 numbers in any horizontal row;
+2. in the five source draws, no more than 8 numbers appeared 3 or more times.
 
-Stable ID = algorithm version + source cutoff + mode + numbers. Target range cutoff+1..cutoff+5. All checks must be later than the recorded creation timestamp. Same mode and numbers cannot start a duplicate active series. Missing draw remains pending, never replaced by the sixth draw. Existing results are immutable; altered source facts get a conflict marker. Wins do not stop a series. No retrospective forecasts: startup only evaluates the latest available window at current time. Stale windows cannot produce forecasts. Server script fails closed on malformed stored JSON.
+**B / PLAY+** requires A and additionally:
+1. FULL-9 occupies at least 7 of 8 rows;
+2. FULL-9 has at least 3 vertical +10 links.
+
+A and B are shown separately in the interface. MINI-3/MINI-4 start only when A is allowed.
+
+## Five-draw series
+
+Every generated combination is fixed **before** the next draw and then checked unchanged on the next five draw numbers. A win on draw 1–4 does not close the series early. After all five facts are recorded, the series moves to the archive.
+
+The archive stores: source cutoff, source window, fixation time, target draw range, immutable numbers, A/B state, selection trace, all five facts, hits, best single-draw result, known payout total and conflict markers. “Best 4/7” means the best result in one of the five checks; hits from different draws are never added together.
+
+## Persistence and closed-phone operation
+
+Server series live in `iris-archive-v63.json`. The server workflow reads the common `keno-history-v63.json`, settles existing series and can create new ones after A. Local state uses IndexedDB database `pozitron_iris_v63`. The server can continue checking series when the phone is closed as new draw facts arrive.
+
+The server and IRIS do not rewrite old KENO prediction archives.
 
 ## Payouts
 
-Only existing KENO 6.3 size 3,4,5 entries are reused; they are not reverified against current official prices. For size 6..10 the payout is unknown (null), not zero. The interface reports partial known totals and the count of checks without calculated payouts. Amounts are payouts, not net profit; stakes are not subtracted.
+KENO 6.3 already contains verified internal payout entries for 3–5 number combinations. Exact 6–10 number hit→rubles tables were not present in the recovered project data, so IRIS records hits for those sizes but leaves the ruble amount unknown instead of inventing a value.
 
-## Server
+## UI
 
-update-iris-v63.yaml runs after successful existing Stoloto workflows, on relevant code pushes, and at minutes 9,24,39,54 UTC. It reads the existing keno-history-v63.json and commits only iris-archive-v63.json. It does not acquire lottery results itself. If the source history is delayed, it settles existing series but waits before generating new ones. Old archives and other prediction engines are not touched.
+The IRIS dashboard contains:
+- Home / New / Archive / Statistics / Settings navigation;
+- next draw and countdown;
+- A and B status;
+- current regular, MINI-3 and MINI-4 series;
+- “Calculate new combinations” and fact checking;
+- number map 1–80;
+- draw history;
+- separate archives by mode;
+- statistics and full rules page.
 
 ## Verification
 
+```bash
 node scripts/test-iris-v63.js
 node scripts/iris-update-v63.js
-
-User interface: Iris tool / footer button, generate, check, series details, map, history, separated archives, statistics (all/20/50), local auto toggle, JSON export. Network timeout 15s; IndexedDB writes acknowledged only after transaction completion; concurrent local tabs merge within one transaction.
+```
