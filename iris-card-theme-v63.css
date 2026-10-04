@@ -1,0 +1,49 @@
+/* IRIS mobile card theme — visual only. Engine/archive logic untouched. */
+#irisPanel{background:#07111f!important}
+#irisRoot{background:linear-gradient(180deg,#07111f,#0a1728 48%,#07111f)!important;color:#f4f8ff!important}
+#irisRoot .iris-app{max-width:760px!important;margin:0 auto!important;padding:10px 10px 96px!important}
+#irisRoot .iris-header{border:1px solid #29415f!important;border-radius:15px!important;background:#0e1b2d!important;padding:11px!important;margin-bottom:9px!important;box-shadow:0 5px 18px rgba(0,0,0,.18)!important}
+#irisRoot .iris-eye{width:40px!important;height:40px!important;font-size:26px!important}
+#irisRoot .iris-logo{min-width:0!important}
+#irisRoot .iris-logo strong{font-size:22px!important;letter-spacing:1.5px!important}
+#irisRoot .iris-logo small{font-size:9px!important}
+#irisRoot .iris-version span{border-color:#29415f!important;background:#13243a!important}
+#irisRoot .iris-dashboard{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important;margin:9px 0!important}
+#irisRoot .iris-dash-card,#irisRoot .iris-calc{min-height:0!important;border:1px solid #29415f!important;border-radius:12px!important;background:#0e1b2d!important;padding:10px!important;box-shadow:none!important}
+#irisRoot .iris-calc{border-color:#b345d5!important;background:#24152e!important}
+#irisRoot .iris-subnav{gap:6px!important;border:0!important;padding:0 0 9px!important}
+#irisRoot .iris-subnav button{min-width:118px!important;border:1px solid #29415f!important;border-radius:10px!important;background:#13243a!important;padding:10px 8px!important;color:#bccbdb!important;font-size:10px!important}
+#irisRoot .iris-subnav button.selected{background:#254b78!important;border-color:#5b8fc9!important;color:#fff!important;box-shadow:none!important}
+#irisRoot .iris-layout{display:block!important}
+#irisRoot .iris-section-head{margin:12px 2px 7px!important}
+#irisRoot .iris-section-head h2,#irisRoot h2{font-size:22px!important;font-weight:950!important}
+#irisRoot .iris-series{border:1px solid #29415f!important;border-left:1px solid #29415f!important;border-radius:15px!important;background:#0e1b2d!important;padding:11px!important;margin:9px 0!important;box-shadow:0 5px 18px rgba(0,0,0,.18)!important}
+#irisRoot .iris-series:before{display:none!important}
+#irisRoot .iris-series-title b{font-size:20px!important;font-weight:950!important}
+#irisRoot .iris-series-head small{font-size:12px!important;color:#96a9c1!important}
+#irisRoot .iris-pill{font-size:11px!important;padding:3px 8px!important;border-radius:999px!important}
+#irisRoot .iris-progress{min-width:78px!important}
+#irisRoot .iris-progress>b{font-size:18px!important}
+#irisRoot .iris-progress i{width:12px!important;height:12px!important}
+#irisRoot .iris-balls{gap:6px!important;margin:10px 0!important}
+#irisRoot .iris-balls span{min-width:0!important;height:auto!important;padding:9px 11px!important;border:1px solid #304b6d!important;background:#172a43!important;border-radius:9px!important;font-size:17px!important;font-weight:950!important;color:#f4f8ff!important}
+#irisRoot .iris-balls span.hit{border-color:#43d77b!important;background:#123a28!important;color:#d9ffe5!important;box-shadow:inset 0 -3px 0 #43d77b!important}
+#irisRoot .iris-result{font-size:13px!important;color:#96a9c1!important;border-top:1px solid #29415f!important;padding-top:9px!important}
+#irisRoot .iris-series details{border-top:1px solid #29415f!important;margin-top:8px!important}
+#irisRoot .iris-series summary{font-size:13px!important;color:#e28aff!important;padding:10px 2px 1px!important}
+#irisRoot .iris-box,#irisRoot .iris-side-card{border:1px solid #29415f!important;border-radius:15px!important;background:#0e1b2d!important;padding:11px!important;margin:9px 0!important;box-shadow:0 5px 18px rgba(0,0,0,.18)!important}
+#irisRoot .iris-side{display:grid!important;grid-template-columns:1fr!important;gap:0!important}
+#irisRoot .iris-history details{border-top:1px solid #29415f!important}
+#irisRoot .iris-history summary{min-height:44px!important;font-size:12px!important}
+#irisRoot .iris-gate>div{border:1px solid #29415f!important;border-radius:10px!important;background:#13243a!important}
+#irisRoot .iris-toolbar button,#irisRoot .iris-actions button,#irisRoot .iris-box-head button{border:1px solid #29415f!important;background:#13243a!important;border-radius:10px!important;color:#f4f8ff!important}
+@media(max-width:620px){
+ #irisRoot .iris-app{padding:6px 10px 96px!important}
+ #irisRoot .iris-header{grid-template-columns:1fr auto!important;gap:8px!important}
+ #irisRoot .iris-topnav{grid-column:1/-1!important;justify-content:flex-start!important;overflow-x:auto!important}
+ #irisRoot .iris-topnav button{min-width:68px!important}
+ #irisRoot .iris-dashboard{grid-template-columns:1fr 1fr!important}
+ #irisRoot .iris-series-title b{font-size:19px!important}
+ #irisRoot .iris-balls span{font-size:16px!important;padding:8px 10px!important}
+}
+@media(max-width:390px){#irisRoot .iris-balls span{padding:8px 8px!important}.iris-version span{display:none!important}}
