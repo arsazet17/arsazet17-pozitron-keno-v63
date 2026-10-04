@@ -11,11 +11,16 @@
 <link rel="stylesheet" href="./archive-v63.css?v=6600">
 <link rel="stylesheet" href="./network80-v63.css?v=6700">
 <link rel="stylesheet" href="./iris-v63.css?v=iris032">
-<link rel="stylesheet" href="./iris-archive-beauty.css?v=iris1004a">
+<link rel="stylesheet" href="./iris-archive-beauty.css?v=iris1004b">
 <style>
 #irisRoot .iris-gate-details{display:none!important}
 #irisRoot .iris-gate>div:nth-child(2){display:none!important}
 #irisRoot .iris-gate{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+/* Убрано с главного экрана IRIS: перегруженная карта 1–80 и общая история всех серий. Архив серий остаётся отдельным и чистым. */
+#irisRoot .iris-map-box,
+#irisRoot .iris-history{display:none!important}
+#irisRoot .iris-box:has(>.iris-box-head .iris-history),
+#irisRoot .iris-box:has(.iris-history){display:none!important}
 </style>
 </head>
 <body>
@@ -34,5 +39,5 @@
 </div>
 <footer class="footer"><div class="footerin"><button data-home><b>⌂</b>Главная</button><button data-open="fingerprintPanel"><b>◎</b>FINGERPRINT</button><button data-open="matrixPanel"><b>◉</b>Матрица</button><button data-open="irisPanel"><b>◈</b>Iris</button><button id="syncBtn2"><b>↻</b>Обновить</button></div></footer>
 <dialog id="settings"><form method="dialog"><div class="dialog-head"><b>Настройки 6.3</b><button class="icon">✕</button></div><label class="small">Источник истории</label><input id="sourceUrl" value="./keno-history-v63.json" readonly><div class="gap"></div><label class="small">Автообновление</label><select id="interval"><option value="300000">5 минут</option><option value="600000">10 минут</option><option value="900000">15 минут</option><option value="0">Выключено</option></select><div class="gap"></div><button id="saveSettings" class="tool full">Сохранить</button></form></dialog>
-<script src="./sync-v63-client.js?v=6600"></script><script src="./storage-v63.js?v=6600"></script><script src="./engine-v63.js?v=6600"></script><script src="./network80-engine-v63.js?v=6700"></script><script src="./network80-ui-v63.js?v=6700"></script><script src="./app-v63.js?v=6700"></script><script src="./iris-engine-v63.js?v=iris030"></script><script src="./iris-ui-v63.js?v=iris030"></script><script src="./iris-waves-v63.js?v=iris032"></script><script src="./iris-archive-beauty.js?v=iris1004a"></script>
+<script src="./sync-v63-client.js?v=6600"></script><script src="./storage-v63.js?v=6600"></script><script src="./engine-v63.js?v=6600"></script><script src="./network80-engine-v63.js?v=6700"></script><script src="./network80-ui-v63.js?v=6700"></script><script src="./app-v63.js?v=6700"></script><script src="./iris-engine-v63.js?v=iris030"></script><script src="./iris-ui-v63.js?v=iris030"></script><script src="./iris-waves-v63.js?v=iris032"></script><script src="./iris-archive-beauty.js?v=iris1004b"></script>
 </body></html>
