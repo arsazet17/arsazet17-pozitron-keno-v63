@@ -1,0 +1,38 @@
+name: KENO v6.3 · IRIS UI TEST
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'iris-engine-v63.js'
+      - 'iris-ui-v63.js'
+      - 'iris-v63.css'
+      - 'index.html'
+      - 'scripts/test-iris-ui-v63.cjs'
+      - '.github/workflows/test-iris-v63.yaml'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Установить браузер тестирования
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Проверить Iris и мобильный интерфейс
+        run: |
+          node scripts/test-iris-v63.js
+          node scripts/test-iris-ui-v63.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: iris-ui-screenshots
+          path: iris-*.png
+          retention-days: 7
+          if-no-files-found: ignore
