@@ -19,10 +19,12 @@ for(let i=0;i<12;i++){
 }
 const before=new Date(E.timestamp(draws[4])+60000).toISOString();
 const plan=E.evaluate(draws.slice(0,5),before);
+assert.equal(plan.state,'allowed');
 assert.equal(plan.permissionA,true);
-assert.equal(plan.gate.maxPerRow<=2,true);
-assert.equal(plan.gate.repeat3Count<=8,true);
+assert.ok(plan.structure.anchorCount>=2);
+assert.ok(plan.structure.connectedCount>=1);
 assert.ok(plan.candidates.filter(x=>x.mode==='IRIS').length>=2);
+assert.ok(plan.candidates.filter(x=>x.mode==='IRIS').every(x=>E.connected(x.reason)));
 assert.equal(plan.candidates.find(x=>x.mode==='MINI3').numbers.length,3);
 assert.equal(plan.candidates.find(x=>x.mode==='MINI4').numbers.length,4);
 const first=E.process(draws.slice(0,5),[],before);assert.ok(first.created>=4);
@@ -33,13 +35,14 @@ checked.series.forEach((s,i)=>{assert.equal(s.results.length,5);assert.equal(s.s
 assert.deepEqual(E.settle(checked.series,draws),checked.series);
 const gap=E.settle(first.series,draws.filter(d=>d.draw!==106));assert.equal(gap[0].results.length,4);assert.equal(gap[0].status,'active');assert.equal(E.settle(gap,draws)[0].status,'closed');
 const changed=JSON.parse(JSON.stringify(draws));changed[5].balls=Array.from({length:20},(_,i)=>i+50);const conflict=E.settle(checked.series,changed);assert.ok(conflict[0].conflicts.includes(105));assert.deepEqual(conflict[0].results,checked.series[0].results);
-assert.equal(E.evaluate(draws.slice(0,5),new Date(E.timestamp(draws[5])+1).toISOString()).permissionA,false);
-assert.equal(E.evaluate(draws.slice(0,5),new Date(E.timestamp(draws[4])-1).toISOString()).permissionA,false);
+const waiting=E.evaluate(draws.slice(0,5),new Date(E.timestamp(draws[5])+1).toISOString());assert.equal(waiting.state,'waiting_fact');assert.equal(waiting.permissionA,false);
+assert.equal(E.evaluate(draws.slice(0,5),new Date(E.timestamp(draws[4])-1).toISOString()).state,'invalid');
 assert.equal(E.evaluate(draws.slice(0,5).filter(d=>d.draw!==102),before).permissionA,false);
+const flat=[];for(let i=0;i<5;i++){const next=i?E.nextDraw(flat.at(-1)):{draw:500,date:'2026-10-04',time:'12:02'};flat.push({...next,balls:Array.from({length:20},(_,j)=>j+1)});}const denied=E.evaluate(flat,new Date(E.timestamp(flat.at(-1))+60000).toISOString());assert.equal(denied.state,'denied');assert.equal(denied.structure.anchorCount,0);assert.equal(denied.candidates.length,0);
 assert.equal(E.payout(7,7),null);assert.equal(E.payout(3,3),1500);assert.equal(E.payout(3,0),0);
 const s=E.stats(checked.series,'MINI3');assert.equal(s.series,1);assert.equal(s.checks,5);
 const future=E.evaluate(draws,before);assert.equal(future.permissionA,false);
 const full=JSON.parse(JSON.stringify(first.series[0]));full.numbers=[1,2,3,4,5,6,7];const fullChecked=E.settle([full],draws)[0];assert.ok(fullChecked.bestHits>=0&&fullChecked.bestHits<=7);
 const late=JSON.parse(JSON.stringify(first.series[0]));late.createdAt=new Date(E.timestamp(draws[5])+1).toISOString();const lateResult=E.settle([late],draws)[0];assert.ok(lateResult.conflicts.includes(105));assert.equal(lateResult.results.length,4);
 assert.deepEqual(E.nextDraw({draw:1,date:'31.12.26',time:'23:32'}),{draw:2,date:'2027-01-01',time:'00:02'});
-console.log('IRIS PASS: project A/B gate, independent combinations, separate MINI, immutable five-draw series, deduplication, gaps, conflicts and no future use.');
+console.log('IRIS PASS: structural A, priority rhythm anchors, connected tetris figures, separate MINI, immutable 5-draw series, dedup, gaps, conflicts, waiting-state and no future use.');
