@@ -1,0 +1,25 @@
+/* v6.3.7 — mobile IRIS: 20 fact numbers = exactly 2 rows × 10 */
+#irisRoot .iris-check>.iris-balls{
+  display:grid!important;
+  grid-template-columns:repeat(10,minmax(0,1fr))!important;
+  gap:3px!important;
+  width:100%!important;
+  margin:7px 0 2px!important;
+}
+#irisRoot .iris-check>.iris-balls span{
+  min-width:0!important;
+  width:100%!important;
+  height:29px!important;
+  padding:0!important;
+  border-radius:6px!important;
+  font-size:11px!important;
+  line-height:29px!important;
+}
+#irisRoot .iris-check{padding:9px 0!important}
+#irisRoot .iris-check .iris-note{margin:2px 0 4px!important;font-size:10px!important;line-height:1.25!important}
+#irisRoot .iris-series details{overflow-anchor:none!important}
+#irisRoot .iris-content{overflow-anchor:none!important}
+@media(max-width:390px){
+ #irisRoot .iris-check>.iris-balls{gap:2px!important}
+ #irisRoot .iris-check>.iris-balls span{height:27px!important;font-size:10px!important;line-height:27px!important}
+}
