@@ -1,6 +1,8 @@
 name: KENO v6.3 · Stoloto MAIN
 
 on:
+  schedule:
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 permissions:
