@@ -4,6 +4,13 @@ on:
   schedule:
     - cron: '*/5 * * * *'
   workflow_dispatch:
+  # Только для обслуживания самого reader/workflow. Коммиты с данными сюда
+  # не попадают, поэтому рекурсивного запуска не будет.
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/update-keno-v63.yaml'
+      - 'scripts/stoloto-keno-update-v63-fast.mjs'
 
 permissions:
   contents: write
