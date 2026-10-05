@@ -1,29 +1,976 @@
 {
   "version": "iris-0.3.0",
-  "updatedAt": "2026-10-05T04:09:07.275Z",
-  "sourceCutoff": 328887,
+  "updatedAt": "2026-10-05T04:11:31.719Z",
+  "sourceCutoff": 328888,
   "evaluation": {
     "version": "iris-0.3.0",
-    "state": "waiting_fact",
-    "sourceCutoff": 328887,
+    "state": "allowed",
+    "sourceCutoff": 328888,
     "next": {
-      "draw": 328888,
+      "draw": 328889,
       "date": "2026-10-05",
-      "time": "07:02"
+      "time": "07:32"
     },
-    "permissionA": false,
+    "permissionA": true,
     "permissionB": null,
-    "candidates": [],
-    "observedCandidates": [],
+    "candidates": [
+      {
+        "mode": "IRIS",
+        "numbers": [
+          7,
+          17,
+          27,
+          37,
+          47,
+          57,
+          67
+        ],
+        "reason": [
+          {
+            "n": 7,
+            "code": "11010",
+            "count": 3,
+            "strong": true,
+            "strongRank": 1,
+            "historyCount": 8,
+            "degree": 6,
+            "role": "ритм-якорь"
+          },
+          {
+            "n": 37,
+            "code": "10000",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 51,
+            "degree": 11,
+            "role": "связь"
+          },
+          {
+            "n": 17,
+            "code": "00100",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 57,
+            "degree": 9,
+            "role": "связь"
+          },
+          {
+            "n": 27,
+            "code": "00010",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 62,
+            "degree": 8,
+            "role": "связь"
+          },
+          {
+            "n": 47,
+            "code": "00011",
+            "count": 2,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 19,
+            "degree": 10,
+            "role": "связь"
+          },
+          {
+            "n": 57,
+            "code": "01000",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 51,
+            "degree": 10,
+            "role": "связь"
+          },
+          {
+            "n": 67,
+            "code": "10100",
+            "count": 2,
+            "strong": true,
+            "strongRank": 3,
+            "historyCount": 25,
+            "degree": 7,
+            "role": "связь"
+          }
+        ],
+        "seed": 7,
+        "metrics": {
+          "links": 15,
+          "vertical": 15,
+          "diagonal": 0,
+          "horizontal": 0,
+          "strong": 2,
+          "degree": 61,
+          "history": 273,
+          "connected": true
+        }
+      },
+      {
+        "mode": "IRIS",
+        "numbers": [
+          22,
+          32,
+          42,
+          52,
+          62,
+          72
+        ],
+        "reason": [
+          {
+            "n": 42,
+            "code": "01010",
+            "count": 2,
+            "strong": true,
+            "strongRank": 0,
+            "historyCount": 17,
+            "degree": 8,
+            "role": "ритм-якорь"
+          },
+          {
+            "n": 72,
+            "code": "01010",
+            "count": 2,
+            "strong": true,
+            "strongRank": 0,
+            "historyCount": 11,
+            "degree": 5,
+            "role": "связь"
+          },
+          {
+            "n": 52,
+            "code": "10100",
+            "count": 2,
+            "strong": true,
+            "strongRank": 3,
+            "historyCount": 20,
+            "degree": 9,
+            "role": "связь"
+          },
+          {
+            "n": 62,
+            "code": "00110",
+            "count": 2,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 23,
+            "degree": 8,
+            "role": "связь"
+          },
+          {
+            "n": 32,
+            "code": "11000",
+            "count": 2,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 15,
+            "degree": 8,
+            "role": "связь"
+          },
+          {
+            "n": 22,
+            "code": "00100",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 48,
+            "degree": 6,
+            "role": "связь"
+          }
+        ],
+        "seed": 42,
+        "metrics": {
+          "links": 12,
+          "vertical": 12,
+          "diagonal": 0,
+          "horizontal": 0,
+          "strong": 3,
+          "degree": 44,
+          "history": 134,
+          "connected": true
+        }
+      },
+      {
+        "mode": "IRIS",
+        "numbers": [
+          28,
+          37,
+          39,
+          48,
+          50,
+          57,
+          59,
+          68
+        ],
+        "reason": [
+          {
+            "n": 39,
+            "code": "01010",
+            "count": 2,
+            "strong": true,
+            "strongRank": 0,
+            "historyCount": 26,
+            "degree": 9,
+            "role": "ритм-якорь"
+          },
+          {
+            "n": 37,
+            "code": "10000",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 51,
+            "degree": 11,
+            "role": "связь"
+          },
+          {
+            "n": 48,
+            "code": "00110",
+            "count": 2,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 16,
+            "degree": 10,
+            "role": "связь"
+          },
+          {
+            "n": 28,
+            "code": "00100",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 48,
+            "degree": 9,
+            "role": "связь"
+          },
+          {
+            "n": 57,
+            "code": "01000",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 51,
+            "degree": 10,
+            "role": "связь"
+          },
+          {
+            "n": 59,
+            "code": "00011",
+            "count": 2,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 18,
+            "degree": 8,
+            "role": "связь"
+          },
+          {
+            "n": 50,
+            "code": "01000",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 57,
+            "degree": 9,
+            "role": "связь"
+          },
+          {
+            "n": 68,
+            "code": "01000",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 59,
+            "degree": 8,
+            "role": "связь"
+          }
+        ],
+        "seed": 39,
+        "metrics": {
+          "links": 17,
+          "vertical": 4,
+          "diagonal": 10,
+          "horizontal": 3,
+          "strong": 1,
+          "degree": 74,
+          "history": 326,
+          "connected": true
+        }
+      },
+      {
+        "mode": "IRIS",
+        "numbers": [
+          8,
+          17,
+          19,
+          28,
+          39
+        ],
+        "reason": [
+          {
+            "n": 8,
+            "code": "10100",
+            "count": 2,
+            "strong": true,
+            "strongRank": 3,
+            "historyCount": 20,
+            "degree": 5,
+            "role": "ритм-якорь"
+          },
+          {
+            "n": 17,
+            "code": "00100",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 57,
+            "degree": 9,
+            "role": "связь"
+          },
+          {
+            "n": 28,
+            "code": "00100",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 48,
+            "degree": 9,
+            "role": "связь"
+          },
+          {
+            "n": 19,
+            "code": "00001",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 44,
+            "degree": 7,
+            "role": "связь"
+          },
+          {
+            "n": 39,
+            "code": "01010",
+            "count": 2,
+            "strong": true,
+            "strongRank": 0,
+            "historyCount": 26,
+            "degree": 9,
+            "role": "связь"
+          }
+        ],
+        "seed": 8,
+        "metrics": {
+          "links": 8,
+          "vertical": 2,
+          "diagonal": 5,
+          "horizontal": 1,
+          "strong": 2,
+          "degree": 39,
+          "history": 195,
+          "connected": true
+        }
+      },
+      {
+        "mode": "MINI3",
+        "numbers": [
+          42,
+          52,
+          72
+        ],
+        "reason": [
+          {
+            "n": 42,
+            "code": "01010",
+            "count": 2,
+            "strong": true,
+            "strongRank": 0,
+            "historyCount": 17,
+            "degree": 8,
+            "role": "mini-связь"
+          },
+          {
+            "n": 72,
+            "code": "01010",
+            "count": 2,
+            "strong": true,
+            "strongRank": 0,
+            "historyCount": 11,
+            "degree": 5,
+            "role": "mini-связь"
+          },
+          {
+            "n": 52,
+            "code": "10100",
+            "count": 2,
+            "strong": true,
+            "strongRank": 3,
+            "historyCount": 20,
+            "degree": 9,
+            "role": "mini-связь"
+          }
+        ],
+        "metrics": {
+          "links": 3,
+          "vertical": 3,
+          "diagonal": 0,
+          "horizontal": 0,
+          "strong": 3,
+          "degree": 22,
+          "history": 48,
+          "connected": true
+        }
+      },
+      {
+        "mode": "MINI4",
+        "numbers": [
+          28,
+          37,
+          39,
+          48
+        ],
+        "reason": [
+          {
+            "n": 39,
+            "code": "01010",
+            "count": 2,
+            "strong": true,
+            "strongRank": 0,
+            "historyCount": 26,
+            "degree": 9,
+            "role": "mini-связь"
+          },
+          {
+            "n": 37,
+            "code": "10000",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 51,
+            "degree": 11,
+            "role": "mini-связь"
+          },
+          {
+            "n": 48,
+            "code": "00110",
+            "count": 2,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 16,
+            "degree": 10,
+            "role": "mini-связь"
+          },
+          {
+            "n": 28,
+            "code": "00100",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 48,
+            "degree": 9,
+            "role": "mini-связь"
+          }
+        ],
+        "metrics": {
+          "links": 6,
+          "vertical": 1,
+          "diagonal": 4,
+          "horizontal": 1,
+          "strong": 1,
+          "degree": 39,
+          "history": 141,
+          "connected": true
+        }
+      }
+    ],
+    "observedCandidates": [
+      {
+        "mode": "IRIS",
+        "numbers": [
+          7,
+          17,
+          27,
+          37,
+          47,
+          57,
+          67
+        ],
+        "reason": [
+          {
+            "n": 7,
+            "code": "11010",
+            "count": 3,
+            "strong": true,
+            "strongRank": 1,
+            "historyCount": 8,
+            "degree": 6,
+            "role": "ритм-якорь"
+          },
+          {
+            "n": 37,
+            "code": "10000",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 51,
+            "degree": 11,
+            "role": "связь"
+          },
+          {
+            "n": 17,
+            "code": "00100",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 57,
+            "degree": 9,
+            "role": "связь"
+          },
+          {
+            "n": 27,
+            "code": "00010",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 62,
+            "degree": 8,
+            "role": "связь"
+          },
+          {
+            "n": 47,
+            "code": "00011",
+            "count": 2,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 19,
+            "degree": 10,
+            "role": "связь"
+          },
+          {
+            "n": 57,
+            "code": "01000",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 51,
+            "degree": 10,
+            "role": "связь"
+          },
+          {
+            "n": 67,
+            "code": "10100",
+            "count": 2,
+            "strong": true,
+            "strongRank": 3,
+            "historyCount": 25,
+            "degree": 7,
+            "role": "связь"
+          }
+        ],
+        "seed": 7,
+        "metrics": {
+          "links": 15,
+          "vertical": 15,
+          "diagonal": 0,
+          "horizontal": 0,
+          "strong": 2,
+          "degree": 61,
+          "history": 273,
+          "connected": true
+        }
+      },
+      {
+        "mode": "IRIS",
+        "numbers": [
+          22,
+          32,
+          42,
+          52,
+          62,
+          72
+        ],
+        "reason": [
+          {
+            "n": 42,
+            "code": "01010",
+            "count": 2,
+            "strong": true,
+            "strongRank": 0,
+            "historyCount": 17,
+            "degree": 8,
+            "role": "ритм-якорь"
+          },
+          {
+            "n": 72,
+            "code": "01010",
+            "count": 2,
+            "strong": true,
+            "strongRank": 0,
+            "historyCount": 11,
+            "degree": 5,
+            "role": "связь"
+          },
+          {
+            "n": 52,
+            "code": "10100",
+            "count": 2,
+            "strong": true,
+            "strongRank": 3,
+            "historyCount": 20,
+            "degree": 9,
+            "role": "связь"
+          },
+          {
+            "n": 62,
+            "code": "00110",
+            "count": 2,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 23,
+            "degree": 8,
+            "role": "связь"
+          },
+          {
+            "n": 32,
+            "code": "11000",
+            "count": 2,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 15,
+            "degree": 8,
+            "role": "связь"
+          },
+          {
+            "n": 22,
+            "code": "00100",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 48,
+            "degree": 6,
+            "role": "связь"
+          }
+        ],
+        "seed": 42,
+        "metrics": {
+          "links": 12,
+          "vertical": 12,
+          "diagonal": 0,
+          "horizontal": 0,
+          "strong": 3,
+          "degree": 44,
+          "history": 134,
+          "connected": true
+        }
+      },
+      {
+        "mode": "IRIS",
+        "numbers": [
+          28,
+          37,
+          39,
+          48,
+          50,
+          57,
+          59,
+          68
+        ],
+        "reason": [
+          {
+            "n": 39,
+            "code": "01010",
+            "count": 2,
+            "strong": true,
+            "strongRank": 0,
+            "historyCount": 26,
+            "degree": 9,
+            "role": "ритм-якорь"
+          },
+          {
+            "n": 37,
+            "code": "10000",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 51,
+            "degree": 11,
+            "role": "связь"
+          },
+          {
+            "n": 48,
+            "code": "00110",
+            "count": 2,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 16,
+            "degree": 10,
+            "role": "связь"
+          },
+          {
+            "n": 28,
+            "code": "00100",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 48,
+            "degree": 9,
+            "role": "связь"
+          },
+          {
+            "n": 57,
+            "code": "01000",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 51,
+            "degree": 10,
+            "role": "связь"
+          },
+          {
+            "n": 59,
+            "code": "00011",
+            "count": 2,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 18,
+            "degree": 8,
+            "role": "связь"
+          },
+          {
+            "n": 50,
+            "code": "01000",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 57,
+            "degree": 9,
+            "role": "связь"
+          },
+          {
+            "n": 68,
+            "code": "01000",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 59,
+            "degree": 8,
+            "role": "связь"
+          }
+        ],
+        "seed": 39,
+        "metrics": {
+          "links": 17,
+          "vertical": 4,
+          "diagonal": 10,
+          "horizontal": 3,
+          "strong": 1,
+          "degree": 74,
+          "history": 326,
+          "connected": true
+        }
+      },
+      {
+        "mode": "IRIS",
+        "numbers": [
+          8,
+          17,
+          19,
+          28,
+          39
+        ],
+        "reason": [
+          {
+            "n": 8,
+            "code": "10100",
+            "count": 2,
+            "strong": true,
+            "strongRank": 3,
+            "historyCount": 20,
+            "degree": 5,
+            "role": "ритм-якорь"
+          },
+          {
+            "n": 17,
+            "code": "00100",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 57,
+            "degree": 9,
+            "role": "связь"
+          },
+          {
+            "n": 28,
+            "code": "00100",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 48,
+            "degree": 9,
+            "role": "связь"
+          },
+          {
+            "n": 19,
+            "code": "00001",
+            "count": 1,
+            "strong": false,
+            "strongRank": 99,
+            "historyCount": 44,
+            "degree": 7,
+            "role": "связь"
+          },
+          {
+            "n": 39,
+            "code": "01010",
+            "count": 2,
+            "strong": true,
+            "strongRank": 0,
+            "historyCount": 26,
+            "degree": 9,
+            "role": "связь"
+          }
+        ],
+        "seed": 8,
+        "metrics": {
+          "links": 8,
+          "vertical": 2,
+          "diagonal": 5,
+          "horizontal": 1,
+          "strong": 2,
+          "degree": 39,
+          "history": 195,
+          "connected": true
+        }
+      }
+    ],
     "historyUsed": 700,
     "sourceWindow": [
-      328883,
       328884,
       328885,
       328886,
-      328887
+      328887,
+      328888
     ],
-    "message": "Ждём факт тиража №328888 (07:02 МСК). Допуск A пока НЕ ПРОВЕРЕН."
+    "structure": {
+      "searchRun": true,
+      "anchors": [
+        {
+          "n": 39,
+          "code": "01010",
+          "degree": 9,
+          "historyCount": 26
+        },
+        {
+          "n": 42,
+          "code": "01010",
+          "degree": 8,
+          "historyCount": 17
+        },
+        {
+          "n": 72,
+          "code": "01010",
+          "degree": 5,
+          "historyCount": 11
+        },
+        {
+          "n": 7,
+          "code": "11010",
+          "degree": 6,
+          "historyCount": 8
+        },
+        {
+          "n": 52,
+          "code": "10100",
+          "degree": 9,
+          "historyCount": 20
+        },
+        {
+          "n": 67,
+          "code": "10100",
+          "degree": 7,
+          "historyCount": 25
+        },
+        {
+          "n": 8,
+          "code": "10100",
+          "degree": 5,
+          "historyCount": 20
+        }
+      ],
+      "anchorCount": 7,
+      "codeCounts": {
+        "10100": 3,
+        "10101": 0,
+        "11010": 1,
+        "01010": 3
+      },
+      "regularCount": 4,
+      "connectedCount": 4,
+      "rowsUsed": 8,
+      "repeat3Count": 5,
+      "rule": "priority-rhythm + connected 10x8 geometry"
+    },
+    "gate": {
+      "searchRun": true,
+      "anchors": [
+        {
+          "n": 39,
+          "code": "01010",
+          "degree": 9,
+          "historyCount": 26
+        },
+        {
+          "n": 42,
+          "code": "01010",
+          "degree": 8,
+          "historyCount": 17
+        },
+        {
+          "n": 72,
+          "code": "01010",
+          "degree": 5,
+          "historyCount": 11
+        },
+        {
+          "n": 7,
+          "code": "11010",
+          "degree": 6,
+          "historyCount": 8
+        },
+        {
+          "n": 52,
+          "code": "10100",
+          "degree": 9,
+          "historyCount": 20
+        },
+        {
+          "n": 67,
+          "code": "10100",
+          "degree": 7,
+          "historyCount": 25
+        },
+        {
+          "n": 8,
+          "code": "10100",
+          "degree": 5,
+          "historyCount": 20
+        }
+      ],
+      "anchorCount": 7,
+      "codeCounts": {
+        "10100": 3,
+        "10101": 0,
+        "11010": 1,
+        "01010": 3
+      },
+      "regularCount": 4,
+      "connectedCount": 4,
+      "rowsUsed": 8,
+      "repeat3Count": 5,
+      "rule": "priority-rhythm + connected 10x8 geometry"
+    },
+    "message": "A: ЕСТЬ · найдено 4 связных IRIS-фигур · якорей приоритетного ритма 7 · серии можно фиксировать до №328889."
   },
   "series": [
     {
@@ -34068,9 +35015,42 @@
           ],
           "hitCount": 3,
           "payout": null
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            59,
+            80
+          ],
+          "hitCount": 2,
+          "payout": null
         }
       ],
-      "status": "active",
+      "status": "closed",
       "conflicts": [],
       "bestHits": 4,
       "knownPayout": 0,
@@ -34364,9 +35344,42 @@
           ],
           "hitCount": 2,
           "payout": null
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            43,
+            53
+          ],
+          "hitCount": 2,
+          "payout": null
         }
       ],
-      "status": "active",
+      "status": "closed",
       "conflicts": [],
       "bestHits": 3,
       "knownPayout": 0,
@@ -34685,9 +35698,42 @@
           ],
           "hitCount": 3,
           "payout": null
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            14,
+            53
+          ],
+          "hitCount": 2,
+          "payout": null
         }
       ],
-      "status": "active",
+      "status": "closed",
       "conflicts": [],
       "bestHits": 3,
       "knownPayout": 0,
@@ -34965,11 +36011,44 @@
           ],
           "hitCount": 1,
           "payout": 0
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            19,
+            59
+          ],
+          "hitCount": 2,
+          "payout": 0
         }
       ],
-      "status": "active",
+      "status": "closed",
       "conflicts": [],
-      "bestHits": 1,
+      "bestHits": 2,
       "knownPayout": 0,
       "hasUnknownPayout": false
     },
@@ -35225,9 +36304,41 @@
           ],
           "hitCount": 1,
           "payout": 0
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            36
+          ],
+          "hitCount": 1,
+          "payout": 0
         }
       ],
-      "status": "active",
+      "status": "closed",
       "conflicts": [],
       "bestHits": 1,
       "knownPayout": 0,
@@ -35494,9 +36605,41 @@
           ],
           "hitCount": 1,
           "payout": 0
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            53
+          ],
+          "hitCount": 1,
+          "payout": 0
         }
       ],
-      "status": "active",
+      "status": "closed",
       "conflicts": [],
       "bestHits": 1,
       "knownPayout": 0,
@@ -35778,6 +36921,38 @@
           "hits": [],
           "hitCount": 0,
           "payout": null
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            14
+          ],
+          "hitCount": 1,
+          "payout": null
         }
       ],
       "status": "active",
@@ -36047,11 +37222,44 @@
           ],
           "hitCount": 1,
           "payout": null
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            36,
+            46
+          ],
+          "hitCount": 2,
+          "payout": null
         }
       ],
       "status": "active",
       "conflicts": [],
-      "bestHits": 1,
+      "bestHits": 2,
       "knownPayout": 0,
       "hasUnknownPayout": true
     },
@@ -36345,6 +37553,38 @@
           ],
           "hitCount": 1,
           "payout": null
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            14
+          ],
+          "hitCount": 1,
+          "payout": null
         }
       ],
       "status": "active",
@@ -36605,11 +37845,44 @@
           ],
           "hitCount": 1,
           "payout": 0
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            46,
+            53
+          ],
+          "hitCount": 2,
+          "payout": 0
         }
       ],
       "status": "active",
       "conflicts": [],
-      "bestHits": 1,
+      "bestHits": 2,
       "knownPayout": 0,
       "hasUnknownPayout": false
     },
@@ -36839,6 +38112,36 @@
             6,
             60,
             35
+          ],
+          "hits": [],
+          "hitCount": 0,
+          "payout": 0
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
           ],
           "hits": [],
           "hitCount": 0,
@@ -37090,6 +38393,38 @@
           ],
           "hitCount": 1,
           "payout": 0
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            36
+          ],
+          "hitCount": 1,
+          "payout": 0
         }
       ],
       "status": "active",
@@ -37334,6 +38669,36 @@
             72
           ],
           "hitCount": 4,
+          "payout": null
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [],
+          "hitCount": 0,
           "payout": null
         }
       ],
@@ -37589,6 +38954,38 @@
           ],
           "hitCount": 3,
           "payout": null
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            43
+          ],
+          "hitCount": 1,
+          "payout": null
         }
       ],
       "status": "active",
@@ -37803,12 +39200,46 @@
           "hits": [],
           "hitCount": 0,
           "payout": 0
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            36,
+            46,
+            76
+          ],
+          "hitCount": 3,
+          "payout": 400
         }
       ],
       "status": "active",
       "conflicts": [],
-      "bestHits": 0,
-      "knownPayout": 0,
+      "bestHits": 3,
+      "knownPayout": 400,
       "hasUnknownPayout": false
     },
     {
@@ -37994,6 +39425,36 @@
             6,
             60,
             35
+          ],
+          "hits": [],
+          "hitCount": 0,
+          "payout": 0
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
           ],
           "hits": [],
           "hitCount": 0,
@@ -38205,6 +39666,38 @@
           ],
           "hitCount": 1,
           "payout": 0
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            36
+          ],
+          "hitCount": 1,
+          "payout": 0
         }
       ],
       "status": "active",
@@ -38401,11 +39894,45 @@
           ],
           "hitCount": 1,
           "payout": null
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            36,
+            46,
+            76
+          ],
+          "hitCount": 3,
+          "payout": null
         }
       ],
       "status": "active",
       "conflicts": [],
-      "bestHits": 1,
+      "bestHits": 3,
       "knownPayout": 0,
       "hasUnknownPayout": true
     },
@@ -38587,6 +40114,39 @@
             59
           ],
           "hitCount": 3,
+          "payout": null
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            59,
+            80
+          ],
+          "hitCount": 2,
           "payout": null
         }
       ],
@@ -38795,11 +40355,44 @@
           ],
           "hitCount": 1,
           "payout": null
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            46,
+            53
+          ],
+          "hitCount": 2,
+          "payout": null
         }
       ],
       "status": "active",
       "conflicts": [],
-      "bestHits": 1,
+      "bestHits": 2,
       "knownPayout": 0,
       "hasUnknownPayout": true
     },
@@ -38970,12 +40563,46 @@
           ],
           "hitCount": 2,
           "payout": 0
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            53,
+            71,
+            73
+          ],
+          "hitCount": 3,
+          "payout": 400
         }
       ],
       "status": "active",
       "conflicts": [],
-      "bestHits": 2,
-      "knownPayout": 0,
+      "bestHits": 3,
+      "knownPayout": 400,
       "hasUnknownPayout": false
     },
     {
@@ -39120,12 +40747,45 @@
           "hits": [],
           "hitCount": 0,
           "payout": 0
+        },
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            46,
+            76
+          ],
+          "hitCount": 2,
+          "payout": 300
         }
       ],
       "status": "active",
       "conflicts": [],
-      "bestHits": 0,
-      "knownPayout": 0,
+      "bestHits": 2,
+      "knownPayout": 300,
       "hasUnknownPayout": false
     },
     {
@@ -39284,12 +40944,43 @@
         "history": 314,
         "connected": true
       },
-      "results": [],
+      "results": [
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [],
+          "hitCount": 0,
+          "payout": null
+        }
+      ],
       "status": "active",
       "conflicts": [],
-      "bestHits": null,
+      "bestHits": 0,
       "knownPayout": 0,
-      "hasUnknownPayout": false
+      "hasUnknownPayout": true
     },
     {
       "id": "iris-0.3.0:328887:IRIS:17-27-37-47-57-67",
@@ -39436,12 +41127,45 @@
         "history": 229,
         "connected": true
       },
-      "results": [],
+      "results": [
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            47
+          ],
+          "hitCount": 1,
+          "payout": null
+        }
+      ],
       "status": "active",
       "conflicts": [],
-      "bestHits": null,
+      "bestHits": 1,
       "knownPayout": 0,
-      "hasUnknownPayout": false
+      "hasUnknownPayout": true
     },
     {
       "id": "iris-0.3.0:328887:IRIS:43-45-52-54-63-65-72-74",
@@ -39610,12 +41334,47 @@
         "history": 217,
         "connected": true
       },
-      "results": [],
+      "results": [
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            43,
+            63,
+            74
+          ],
+          "hitCount": 3,
+          "payout": null
+        }
+      ],
       "status": "active",
       "conflicts": [],
-      "bestHits": null,
+      "bestHits": 3,
       "knownPayout": 0,
-      "hasUnknownPayout": false
+      "hasUnknownPayout": true
     },
     {
       "id": "iris-0.3.0:328887:IRIS:50-59-60-70-80",
@@ -39751,10 +41510,44 @@
         "history": 190,
         "connected": true
       },
-      "results": [],
+      "results": [
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            59,
+            80
+          ],
+          "hitCount": 2,
+          "payout": 0
+        }
+      ],
       "status": "active",
       "conflicts": [],
-      "bestHits": null,
+      "bestHits": 2,
       "knownPayout": 0,
       "hasUnknownPayout": false
     },
@@ -39870,10 +41663,43 @@
         "history": 132,
         "connected": true
       },
-      "results": [],
+      "results": [
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [
+            47
+          ],
+          "hitCount": 1,
+          "payout": 0
+        }
+      ],
       "status": "active",
       "conflicts": [],
-      "bestHits": null,
+      "bestHits": 1,
       "knownPayout": 0,
       "hasUnknownPayout": false
     },
@@ -40000,12 +41826,970 @@
         "history": 195,
         "connected": true
       },
-      "results": [],
+      "results": [
+        {
+          "draw": 328888,
+          "date": "2026-10-05",
+          "time": "07:02",
+          "fact": [
+            76,
+            15,
+            71,
+            40,
+            73,
+            14,
+            46,
+            80,
+            19,
+            77,
+            36,
+            63,
+            53,
+            64,
+            9,
+            59,
+            5,
+            47,
+            43,
+            74
+          ],
+          "hits": [],
+          "hitCount": 0,
+          "payout": 0
+        }
+      ],
       "status": "active",
       "conflicts": [],
-      "bestHits": null,
+      "bestHits": 0,
       "knownPayout": 0,
       "hasUnknownPayout": false
+    },
+    {
+      "id": "iris-0.3.0:328888:IRIS:7-17-27-37-47-57-67",
+      "version": "iris-0.3.0",
+      "mode": "IRIS",
+      "origin": "server",
+      "createdAt": "2026-10-05T04:11:31.719Z",
+      "sourceCutoff": 328888,
+      "sourceWindow": [
+        328884,
+        328885,
+        328886,
+        328887,
+        328888
+      ],
+      "targetStart": 328889,
+      "targetEnd": 328893,
+      "numbers": [
+        7,
+        17,
+        27,
+        37,
+        47,
+        57,
+        67
+      ],
+      "permissionA": true,
+      "permissionB": null,
+      "gate": {
+        "searchRun": true,
+        "anchors": [
+          {
+            "n": 39,
+            "code": "01010",
+            "degree": 9,
+            "historyCount": 26
+          },
+          {
+            "n": 42,
+            "code": "01010",
+            "degree": 8,
+            "historyCount": 17
+          },
+          {
+            "n": 72,
+            "code": "01010",
+            "degree": 5,
+            "historyCount": 11
+          },
+          {
+            "n": 7,
+            "code": "11010",
+            "degree": 6,
+            "historyCount": 8
+          },
+          {
+            "n": 52,
+            "code": "10100",
+            "degree": 9,
+            "historyCount": 20
+          },
+          {
+            "n": 67,
+            "code": "10100",
+            "degree": 7,
+            "historyCount": 25
+          },
+          {
+            "n": 8,
+            "code": "10100",
+            "degree": 5,
+            "historyCount": 20
+          }
+        ],
+        "anchorCount": 7,
+        "codeCounts": {
+          "10100": 3,
+          "10101": 0,
+          "11010": 1,
+          "01010": 3
+        },
+        "regularCount": 4,
+        "connectedCount": 4,
+        "rowsUsed": 8,
+        "repeat3Count": 5,
+        "rule": "priority-rhythm + connected 10x8 geometry"
+      },
+      "reason": [
+        {
+          "n": 7,
+          "code": "11010",
+          "count": 3,
+          "strong": true,
+          "strongRank": 1,
+          "historyCount": 8,
+          "degree": 6,
+          "role": "ритм-якорь"
+        },
+        {
+          "n": 37,
+          "code": "10000",
+          "count": 1,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 51,
+          "degree": 11,
+          "role": "связь"
+        },
+        {
+          "n": 17,
+          "code": "00100",
+          "count": 1,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 57,
+          "degree": 9,
+          "role": "связь"
+        },
+        {
+          "n": 27,
+          "code": "00010",
+          "count": 1,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 62,
+          "degree": 8,
+          "role": "связь"
+        },
+        {
+          "n": 47,
+          "code": "00011",
+          "count": 2,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 19,
+          "degree": 10,
+          "role": "связь"
+        },
+        {
+          "n": 57,
+          "code": "01000",
+          "count": 1,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 51,
+          "degree": 10,
+          "role": "связь"
+        },
+        {
+          "n": 67,
+          "code": "10100",
+          "count": 2,
+          "strong": true,
+          "strongRank": 3,
+          "historyCount": 25,
+          "degree": 7,
+          "role": "связь"
+        }
+      ],
+      "metrics": {
+        "links": 15,
+        "vertical": 15,
+        "diagonal": 0,
+        "horizontal": 0,
+        "strong": 2,
+        "degree": 61,
+        "history": 273,
+        "connected": true
+      },
+      "results": [],
+      "status": "active"
+    },
+    {
+      "id": "iris-0.3.0:328888:IRIS:22-32-42-52-62-72",
+      "version": "iris-0.3.0",
+      "mode": "IRIS",
+      "origin": "server",
+      "createdAt": "2026-10-05T04:11:31.719Z",
+      "sourceCutoff": 328888,
+      "sourceWindow": [
+        328884,
+        328885,
+        328886,
+        328887,
+        328888
+      ],
+      "targetStart": 328889,
+      "targetEnd": 328893,
+      "numbers": [
+        22,
+        32,
+        42,
+        52,
+        62,
+        72
+      ],
+      "permissionA": true,
+      "permissionB": null,
+      "gate": {
+        "searchRun": true,
+        "anchors": [
+          {
+            "n": 39,
+            "code": "01010",
+            "degree": 9,
+            "historyCount": 26
+          },
+          {
+            "n": 42,
+            "code": "01010",
+            "degree": 8,
+            "historyCount": 17
+          },
+          {
+            "n": 72,
+            "code": "01010",
+            "degree": 5,
+            "historyCount": 11
+          },
+          {
+            "n": 7,
+            "code": "11010",
+            "degree": 6,
+            "historyCount": 8
+          },
+          {
+            "n": 52,
+            "code": "10100",
+            "degree": 9,
+            "historyCount": 20
+          },
+          {
+            "n": 67,
+            "code": "10100",
+            "degree": 7,
+            "historyCount": 25
+          },
+          {
+            "n": 8,
+            "code": "10100",
+            "degree": 5,
+            "historyCount": 20
+          }
+        ],
+        "anchorCount": 7,
+        "codeCounts": {
+          "10100": 3,
+          "10101": 0,
+          "11010": 1,
+          "01010": 3
+        },
+        "regularCount": 4,
+        "connectedCount": 4,
+        "rowsUsed": 8,
+        "repeat3Count": 5,
+        "rule": "priority-rhythm + connected 10x8 geometry"
+      },
+      "reason": [
+        {
+          "n": 42,
+          "code": "01010",
+          "count": 2,
+          "strong": true,
+          "strongRank": 0,
+          "historyCount": 17,
+          "degree": 8,
+          "role": "ритм-якорь"
+        },
+        {
+          "n": 72,
+          "code": "01010",
+          "count": 2,
+          "strong": true,
+          "strongRank": 0,
+          "historyCount": 11,
+          "degree": 5,
+          "role": "связь"
+        },
+        {
+          "n": 52,
+          "code": "10100",
+          "count": 2,
+          "strong": true,
+          "strongRank": 3,
+          "historyCount": 20,
+          "degree": 9,
+          "role": "связь"
+        },
+        {
+          "n": 62,
+          "code": "00110",
+          "count": 2,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 23,
+          "degree": 8,
+          "role": "связь"
+        },
+        {
+          "n": 32,
+          "code": "11000",
+          "count": 2,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 15,
+          "degree": 8,
+          "role": "связь"
+        },
+        {
+          "n": 22,
+          "code": "00100",
+          "count": 1,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 48,
+          "degree": 6,
+          "role": "связь"
+        }
+      ],
+      "metrics": {
+        "links": 12,
+        "vertical": 12,
+        "diagonal": 0,
+        "horizontal": 0,
+        "strong": 3,
+        "degree": 44,
+        "history": 134,
+        "connected": true
+      },
+      "results": [],
+      "status": "active"
+    },
+    {
+      "id": "iris-0.3.0:328888:IRIS:28-37-39-48-50-57-59-68",
+      "version": "iris-0.3.0",
+      "mode": "IRIS",
+      "origin": "server",
+      "createdAt": "2026-10-05T04:11:31.719Z",
+      "sourceCutoff": 328888,
+      "sourceWindow": [
+        328884,
+        328885,
+        328886,
+        328887,
+        328888
+      ],
+      "targetStart": 328889,
+      "targetEnd": 328893,
+      "numbers": [
+        28,
+        37,
+        39,
+        48,
+        50,
+        57,
+        59,
+        68
+      ],
+      "permissionA": true,
+      "permissionB": null,
+      "gate": {
+        "searchRun": true,
+        "anchors": [
+          {
+            "n": 39,
+            "code": "01010",
+            "degree": 9,
+            "historyCount": 26
+          },
+          {
+            "n": 42,
+            "code": "01010",
+            "degree": 8,
+            "historyCount": 17
+          },
+          {
+            "n": 72,
+            "code": "01010",
+            "degree": 5,
+            "historyCount": 11
+          },
+          {
+            "n": 7,
+            "code": "11010",
+            "degree": 6,
+            "historyCount": 8
+          },
+          {
+            "n": 52,
+            "code": "10100",
+            "degree": 9,
+            "historyCount": 20
+          },
+          {
+            "n": 67,
+            "code": "10100",
+            "degree": 7,
+            "historyCount": 25
+          },
+          {
+            "n": 8,
+            "code": "10100",
+            "degree": 5,
+            "historyCount": 20
+          }
+        ],
+        "anchorCount": 7,
+        "codeCounts": {
+          "10100": 3,
+          "10101": 0,
+          "11010": 1,
+          "01010": 3
+        },
+        "regularCount": 4,
+        "connectedCount": 4,
+        "rowsUsed": 8,
+        "repeat3Count": 5,
+        "rule": "priority-rhythm + connected 10x8 geometry"
+      },
+      "reason": [
+        {
+          "n": 39,
+          "code": "01010",
+          "count": 2,
+          "strong": true,
+          "strongRank": 0,
+          "historyCount": 26,
+          "degree": 9,
+          "role": "ритм-якорь"
+        },
+        {
+          "n": 37,
+          "code": "10000",
+          "count": 1,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 51,
+          "degree": 11,
+          "role": "связь"
+        },
+        {
+          "n": 48,
+          "code": "00110",
+          "count": 2,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 16,
+          "degree": 10,
+          "role": "связь"
+        },
+        {
+          "n": 28,
+          "code": "00100",
+          "count": 1,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 48,
+          "degree": 9,
+          "role": "связь"
+        },
+        {
+          "n": 57,
+          "code": "01000",
+          "count": 1,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 51,
+          "degree": 10,
+          "role": "связь"
+        },
+        {
+          "n": 59,
+          "code": "00011",
+          "count": 2,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 18,
+          "degree": 8,
+          "role": "связь"
+        },
+        {
+          "n": 50,
+          "code": "01000",
+          "count": 1,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 57,
+          "degree": 9,
+          "role": "связь"
+        },
+        {
+          "n": 68,
+          "code": "01000",
+          "count": 1,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 59,
+          "degree": 8,
+          "role": "связь"
+        }
+      ],
+      "metrics": {
+        "links": 17,
+        "vertical": 4,
+        "diagonal": 10,
+        "horizontal": 3,
+        "strong": 1,
+        "degree": 74,
+        "history": 326,
+        "connected": true
+      },
+      "results": [],
+      "status": "active"
+    },
+    {
+      "id": "iris-0.3.0:328888:IRIS:8-17-19-28-39",
+      "version": "iris-0.3.0",
+      "mode": "IRIS",
+      "origin": "server",
+      "createdAt": "2026-10-05T04:11:31.719Z",
+      "sourceCutoff": 328888,
+      "sourceWindow": [
+        328884,
+        328885,
+        328886,
+        328887,
+        328888
+      ],
+      "targetStart": 328889,
+      "targetEnd": 328893,
+      "numbers": [
+        8,
+        17,
+        19,
+        28,
+        39
+      ],
+      "permissionA": true,
+      "permissionB": null,
+      "gate": {
+        "searchRun": true,
+        "anchors": [
+          {
+            "n": 39,
+            "code": "01010",
+            "degree": 9,
+            "historyCount": 26
+          },
+          {
+            "n": 42,
+            "code": "01010",
+            "degree": 8,
+            "historyCount": 17
+          },
+          {
+            "n": 72,
+            "code": "01010",
+            "degree": 5,
+            "historyCount": 11
+          },
+          {
+            "n": 7,
+            "code": "11010",
+            "degree": 6,
+            "historyCount": 8
+          },
+          {
+            "n": 52,
+            "code": "10100",
+            "degree": 9,
+            "historyCount": 20
+          },
+          {
+            "n": 67,
+            "code": "10100",
+            "degree": 7,
+            "historyCount": 25
+          },
+          {
+            "n": 8,
+            "code": "10100",
+            "degree": 5,
+            "historyCount": 20
+          }
+        ],
+        "anchorCount": 7,
+        "codeCounts": {
+          "10100": 3,
+          "10101": 0,
+          "11010": 1,
+          "01010": 3
+        },
+        "regularCount": 4,
+        "connectedCount": 4,
+        "rowsUsed": 8,
+        "repeat3Count": 5,
+        "rule": "priority-rhythm + connected 10x8 geometry"
+      },
+      "reason": [
+        {
+          "n": 8,
+          "code": "10100",
+          "count": 2,
+          "strong": true,
+          "strongRank": 3,
+          "historyCount": 20,
+          "degree": 5,
+          "role": "ритм-якорь"
+        },
+        {
+          "n": 17,
+          "code": "00100",
+          "count": 1,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 57,
+          "degree": 9,
+          "role": "связь"
+        },
+        {
+          "n": 28,
+          "code": "00100",
+          "count": 1,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 48,
+          "degree": 9,
+          "role": "связь"
+        },
+        {
+          "n": 19,
+          "code": "00001",
+          "count": 1,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 44,
+          "degree": 7,
+          "role": "связь"
+        },
+        {
+          "n": 39,
+          "code": "01010",
+          "count": 2,
+          "strong": true,
+          "strongRank": 0,
+          "historyCount": 26,
+          "degree": 9,
+          "role": "связь"
+        }
+      ],
+      "metrics": {
+        "links": 8,
+        "vertical": 2,
+        "diagonal": 5,
+        "horizontal": 1,
+        "strong": 2,
+        "degree": 39,
+        "history": 195,
+        "connected": true
+      },
+      "results": [],
+      "status": "active"
+    },
+    {
+      "id": "iris-0.3.0:328888:MINI3:42-52-72",
+      "version": "iris-0.3.0",
+      "mode": "MINI3",
+      "origin": "server",
+      "createdAt": "2026-10-05T04:11:31.719Z",
+      "sourceCutoff": 328888,
+      "sourceWindow": [
+        328884,
+        328885,
+        328886,
+        328887,
+        328888
+      ],
+      "targetStart": 328889,
+      "targetEnd": 328893,
+      "numbers": [
+        42,
+        52,
+        72
+      ],
+      "permissionA": true,
+      "permissionB": null,
+      "gate": {
+        "searchRun": true,
+        "anchors": [
+          {
+            "n": 39,
+            "code": "01010",
+            "degree": 9,
+            "historyCount": 26
+          },
+          {
+            "n": 42,
+            "code": "01010",
+            "degree": 8,
+            "historyCount": 17
+          },
+          {
+            "n": 72,
+            "code": "01010",
+            "degree": 5,
+            "historyCount": 11
+          },
+          {
+            "n": 7,
+            "code": "11010",
+            "degree": 6,
+            "historyCount": 8
+          },
+          {
+            "n": 52,
+            "code": "10100",
+            "degree": 9,
+            "historyCount": 20
+          },
+          {
+            "n": 67,
+            "code": "10100",
+            "degree": 7,
+            "historyCount": 25
+          },
+          {
+            "n": 8,
+            "code": "10100",
+            "degree": 5,
+            "historyCount": 20
+          }
+        ],
+        "anchorCount": 7,
+        "codeCounts": {
+          "10100": 3,
+          "10101": 0,
+          "11010": 1,
+          "01010": 3
+        },
+        "regularCount": 4,
+        "connectedCount": 4,
+        "rowsUsed": 8,
+        "repeat3Count": 5,
+        "rule": "priority-rhythm + connected 10x8 geometry"
+      },
+      "reason": [
+        {
+          "n": 42,
+          "code": "01010",
+          "count": 2,
+          "strong": true,
+          "strongRank": 0,
+          "historyCount": 17,
+          "degree": 8,
+          "role": "mini-связь"
+        },
+        {
+          "n": 72,
+          "code": "01010",
+          "count": 2,
+          "strong": true,
+          "strongRank": 0,
+          "historyCount": 11,
+          "degree": 5,
+          "role": "mini-связь"
+        },
+        {
+          "n": 52,
+          "code": "10100",
+          "count": 2,
+          "strong": true,
+          "strongRank": 3,
+          "historyCount": 20,
+          "degree": 9,
+          "role": "mini-связь"
+        }
+      ],
+      "metrics": {
+        "links": 3,
+        "vertical": 3,
+        "diagonal": 0,
+        "horizontal": 0,
+        "strong": 3,
+        "degree": 22,
+        "history": 48,
+        "connected": true
+      },
+      "results": [],
+      "status": "active"
+    },
+    {
+      "id": "iris-0.3.0:328888:MINI4:28-37-39-48",
+      "version": "iris-0.3.0",
+      "mode": "MINI4",
+      "origin": "server",
+      "createdAt": "2026-10-05T04:11:31.719Z",
+      "sourceCutoff": 328888,
+      "sourceWindow": [
+        328884,
+        328885,
+        328886,
+        328887,
+        328888
+      ],
+      "targetStart": 328889,
+      "targetEnd": 328893,
+      "numbers": [
+        28,
+        37,
+        39,
+        48
+      ],
+      "permissionA": true,
+      "permissionB": null,
+      "gate": {
+        "searchRun": true,
+        "anchors": [
+          {
+            "n": 39,
+            "code": "01010",
+            "degree": 9,
+            "historyCount": 26
+          },
+          {
+            "n": 42,
+            "code": "01010",
+            "degree": 8,
+            "historyCount": 17
+          },
+          {
+            "n": 72,
+            "code": "01010",
+            "degree": 5,
+            "historyCount": 11
+          },
+          {
+            "n": 7,
+            "code": "11010",
+            "degree": 6,
+            "historyCount": 8
+          },
+          {
+            "n": 52,
+            "code": "10100",
+            "degree": 9,
+            "historyCount": 20
+          },
+          {
+            "n": 67,
+            "code": "10100",
+            "degree": 7,
+            "historyCount": 25
+          },
+          {
+            "n": 8,
+            "code": "10100",
+            "degree": 5,
+            "historyCount": 20
+          }
+        ],
+        "anchorCount": 7,
+        "codeCounts": {
+          "10100": 3,
+          "10101": 0,
+          "11010": 1,
+          "01010": 3
+        },
+        "regularCount": 4,
+        "connectedCount": 4,
+        "rowsUsed": 8,
+        "repeat3Count": 5,
+        "rule": "priority-rhythm + connected 10x8 geometry"
+      },
+      "reason": [
+        {
+          "n": 39,
+          "code": "01010",
+          "count": 2,
+          "strong": true,
+          "strongRank": 0,
+          "historyCount": 26,
+          "degree": 9,
+          "role": "mini-связь"
+        },
+        {
+          "n": 37,
+          "code": "10000",
+          "count": 1,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 51,
+          "degree": 11,
+          "role": "mini-связь"
+        },
+        {
+          "n": 48,
+          "code": "00110",
+          "count": 2,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 16,
+          "degree": 10,
+          "role": "mini-связь"
+        },
+        {
+          "n": 28,
+          "code": "00100",
+          "count": 1,
+          "strong": false,
+          "strongRank": 99,
+          "historyCount": 48,
+          "degree": 9,
+          "role": "mini-связь"
+        }
+      ],
+      "metrics": {
+        "links": 6,
+        "vertical": 1,
+        "diagonal": 4,
+        "horizontal": 1,
+        "strong": 1,
+        "degree": 39,
+        "history": 141,
+        "connected": true
+      },
+      "results": [],
+      "status": "active"
     }
   ]
 }
