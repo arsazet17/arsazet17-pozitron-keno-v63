@@ -15,11 +15,12 @@ on:
 permissions:
   contents: write
 
-# Для тиражей важен самый свежий запуск. Старый зависший запуск не должен
-# держать очередь и блокировать новый факт.
+# Автоматические и ручные запуски разделены. Новый cron не должен отменять
+# уже начавшийся сбор факта, а ручной запуск пользователя — тем более.
+# GitHub concurrency сам держит максимум один running + один pending на группу.
 concurrency:
-  group: keno-v63-stoloto-auto
-  cancel-in-progress: true
+  group: ${{ github.event_name == 'workflow_dispatch' && 'keno-v63-stoloto-manual' || 'keno-v63-stoloto-auto' }}
+  cancel-in-progress: false
 
 jobs:
   update:
