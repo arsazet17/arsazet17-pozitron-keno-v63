@@ -1,16 +1,16 @@
 {
   "version": "iris-1.0.0",
-  "updatedAt": "2026-10-05T18:44:04.166Z",
-  "sourceCutoff": 328928,
+  "updatedAt": "2026-10-05T19:12:40.929Z",
+  "sourceCutoff": 328929,
   "evaluation": {
     "version": "iris-1.0.0",
     "state": "denied",
     "signal": "WATCH",
-    "sourceCutoff": 328928,
+    "sourceCutoff": 328929,
     "next": {
-      "draw": 328929,
+      "draw": 328930,
       "date": "2026-10-05",
-      "time": "22:02"
+      "time": "22:17"
     },
     "permissionA": false,
     "permissionB": false,
@@ -19,61 +19,65 @@
       {
         "mode": "IRIS",
         "numbers": [
+          23,
           43,
-          55,
+          45,
           63,
-          64,
           73
         ],
-        "motif": "один вертикальный столбец + диагональная цепь",
+        "motif": "один вертикальный столбец + горизонталь +2",
         "metrics": {
-          "links": 5,
-          "vertical": 3,
-          "horizontal": 0,
-          "diagonal": 2,
+          "links": 7,
+          "vertical": 6,
+          "horizontal": 1,
+          "diagonal": 0,
           "rowCounts": [
             0,
             0,
-            0,
-            0,
             1,
-            1,
+            0,
             2,
+            0,
+            1,
             1
           ],
           "maxPerRow": 2,
           "rowsUsed": 4,
-          "strong": 3,
+          "strong": 2,
           "connected": true
         },
         "reason": [
           {
-            "n": 43,
-            "row": 4,
+            "n": 23,
+            "row": 2,
             "col": 2,
-            "code": "01010",
-            "code4": "1010",
-            "count": 2,
-            "count4": 2,
-            "gap": 1,
-            "strong": true,
+            "code": "00111",
+            "code4": "0111",
+            "count": 3,
+            "count4": 3,
+            "gap": 0,
+            "strong": false,
             "temporalAllowed": true,
             "links": [
               {
-                "n": 63,
+                "n": 43,
                 "type": "вертикаль +20"
               },
               {
+                "n": 63,
+                "type": "вертикаль +40"
+              },
+              {
                 "n": 73,
-                "type": "вертикаль +30"
+                "type": "вертикаль +50"
               }
             ],
-            "permissionReason": "сильный временной рисунок + геометрическая связь"
+            "permissionReason": "повторный ритм последних 4 + геометрическая связь"
           },
           {
-            "n": 55,
-            "row": 5,
-            "col": 4,
+            "n": 43,
+            "row": 4,
+            "col": 2,
             "code": "10100",
             "code4": "0100",
             "count": 2,
@@ -83,222 +87,86 @@
             "temporalAllowed": true,
             "links": [
               {
-                "n": 64,
-                "type": "диагональ 9/11"
+                "n": 23,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 45,
+                "type": "горизонталь +2"
+              },
+              {
+                "n": 63,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 73,
+                "type": "вертикаль +30"
               }
             ],
             "permissionReason": "сильный временной рисунок + геометрическая связь"
+          },
+          {
+            "n": 45,
+            "row": 4,
+            "col": 4,
+            "code": "00101",
+            "code4": "0101",
+            "count": 2,
+            "count4": 2,
+            "gap": 0,
+            "strong": false,
+            "temporalAllowed": true,
+            "links": [
+              {
+                "n": 43,
+                "type": "горизонталь +2"
+              }
+            ],
+            "permissionReason": "повторный ритм последних 4 + геометрическая связь"
           },
           {
             "n": 63,
             "row": 6,
             "col": 2,
-            "code": "01101",
-            "code4": "1101",
-            "count": 3,
-            "count4": 3,
-            "gap": 0,
-            "strong": false,
-            "temporalAllowed": true,
-            "links": [
-              {
-                "n": 43,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 73,
-                "type": "вертикаль +10"
-              }
-            ],
-            "permissionReason": "повторный ритм последних 4 + геометрическая связь"
-          },
-          {
-            "n": 64,
-            "row": 6,
-            "col": 3,
-            "code": "01111",
-            "code4": "1111",
-            "count": 4,
-            "count4": 4,
-            "gap": 0,
-            "strong": true,
-            "temporalAllowed": true,
-            "links": [
-              {
-                "n": 55,
-                "type": "диагональ 9/11"
-              },
-              {
-                "n": 73,
-                "type": "диагональ 9/11"
-              }
-            ],
-            "permissionReason": "сильный временной рисунок + геометрическая связь"
-          },
-          {
-            "n": 73,
-            "row": 7,
-            "col": 2,
-            "code": "01011",
-            "code4": "1011",
-            "count": 3,
-            "count4": 3,
-            "gap": 0,
-            "strong": false,
-            "temporalAllowed": true,
-            "links": [
-              {
-                "n": 43,
-                "type": "вертикаль +30"
-              },
-              {
-                "n": 63,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 64,
-                "type": "диагональ 9/11"
-              }
-            ],
-            "permissionReason": "повторный ритм последних 4 + геометрическая связь"
-          }
-        ]
-      },
-      {
-        "mode": "IRIS",
-        "numbers": [
-          43,
-          51,
-          61,
-          63,
-          73
-        ],
-        "motif": "один вертикальный столбец + компактная фигура 2×3",
-        "metrics": {
-          "links": 5,
-          "vertical": 4,
-          "horizontal": 1,
-          "diagonal": 0,
-          "rowCounts": [
-            0,
-            0,
-            0,
-            0,
-            1,
-            1,
-            2,
-            1
-          ],
-          "maxPerRow": 2,
-          "rowsUsed": 4,
-          "strong": 1,
-          "connected": true
-        },
-        "reason": [
-          {
-            "n": 43,
-            "row": 4,
-            "col": 2,
-            "code": "01010",
+            "code": "11010",
             "code4": "1010",
-            "count": 2,
+            "count": 3,
             "count4": 2,
             "gap": 1,
             "strong": true,
             "temporalAllowed": true,
             "links": [
               {
-                "n": 63,
-                "type": "вертикаль +20"
+                "n": 23,
+                "type": "вертикаль +40"
               },
-              {
-                "n": 73,
-                "type": "вертикаль +30"
-              }
-            ],
-            "permissionReason": "сильный временной рисунок + геометрическая связь"
-          },
-          {
-            "n": 51,
-            "row": 5,
-            "col": 0,
-            "code": "01011",
-            "code4": "1011",
-            "count": 3,
-            "count4": 3,
-            "gap": 0,
-            "strong": false,
-            "temporalAllowed": true,
-            "links": [
-              {
-                "n": 61,
-                "type": "вертикаль +10"
-              }
-            ],
-            "permissionReason": "повторный ритм последних 4 + геометрическая связь"
-          },
-          {
-            "n": 61,
-            "row": 6,
-            "col": 0,
-            "code": "01110",
-            "code4": "1110",
-            "count": 3,
-            "count4": 3,
-            "gap": 1,
-            "strong": false,
-            "temporalAllowed": true,
-            "links": [
-              {
-                "n": 51,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 63,
-                "type": "горизонталь +2"
-              }
-            ],
-            "permissionReason": "повторный ритм последних 4 + геометрическая связь"
-          },
-          {
-            "n": 63,
-            "row": 6,
-            "col": 2,
-            "code": "01101",
-            "code4": "1101",
-            "count": 3,
-            "count4": 3,
-            "gap": 0,
-            "strong": false,
-            "temporalAllowed": true,
-            "links": [
               {
                 "n": 43,
                 "type": "вертикаль +20"
               },
               {
-                "n": 61,
-                "type": "горизонталь +2"
-              },
-              {
                 "n": 73,
                 "type": "вертикаль +10"
               }
             ],
-            "permissionReason": "повторный ритм последних 4 + геометрическая связь"
+            "permissionReason": "сильный временной рисунок + геометрическая связь"
           },
           {
             "n": 73,
             "row": 7,
             "col": 2,
-            "code": "01011",
-            "code4": "1011",
+            "code": "10110",
+            "code4": "0110",
             "count": 3,
-            "count4": 3,
-            "gap": 0,
+            "count4": 2,
+            "gap": 1,
             "strong": false,
             "temporalAllowed": true,
             "links": [
+              {
+                "n": 23,
+                "type": "вертикаль +50"
+              },
               {
                 "n": 43,
                 "type": "вертикаль +30"
@@ -342,11 +210,11 @@
         "n": 3,
         "row": 0,
         "col": 2,
-        "code": "01000",
-        "code4": "1000",
-        "count": 1,
+        "code": "10001",
+        "code4": "0001",
+        "count": 2,
         "count4": 1,
-        "gap": 3,
+        "gap": 0,
         "strong": false,
         "temporalAllowed": false
       },
@@ -366,10 +234,10 @@
         "n": 5,
         "row": 0,
         "col": 4,
-        "code": "00001",
-        "code4": "0001",
-        "count": 1,
-        "count4": 1,
+        "code": "00011",
+        "code4": "0011",
+        "count": 2,
+        "count4": 2,
         "gap": 0,
         "strong": false,
         "temporalAllowed": false
@@ -378,11 +246,11 @@
         "n": 6,
         "row": 0,
         "col": 5,
-        "code": "10000",
+        "code": "00000",
         "code4": "0000",
-        "count": 1,
+        "count": 0,
         "count4": 0,
-        "gap": 4,
+        "gap": null,
         "strong": false,
         "temporalAllowed": false
       },
@@ -390,11 +258,11 @@
         "n": 7,
         "row": 0,
         "col": 6,
-        "code": "01100",
-        "code4": "1100",
+        "code": "11000",
+        "code4": "1000",
         "count": 2,
-        "count4": 2,
-        "gap": 2,
+        "count4": 1,
+        "gap": 3,
         "strong": false,
         "temporalAllowed": false
       },
@@ -414,11 +282,11 @@
         "n": 9,
         "row": 0,
         "col": 8,
-        "code": "00010",
-        "code4": "0010",
+        "code": "00100",
+        "code4": "0100",
         "count": 1,
         "count4": 1,
-        "gap": 1,
+        "gap": 2,
         "strong": false,
         "temporalAllowed": false
       },
@@ -438,23 +306,23 @@
         "n": 11,
         "row": 1,
         "col": 0,
-        "code": "00101",
-        "code4": "0101",
+        "code": "01010",
+        "code4": "1010",
         "count": 2,
         "count4": 2,
-        "gap": 0,
-        "strong": false,
+        "gap": 1,
+        "strong": true,
         "temporalAllowed": true
       },
       {
         "n": 12,
         "row": 1,
         "col": 1,
-        "code": "00100",
-        "code4": "0100",
-        "count": 1,
-        "count4": 1,
-        "gap": 2,
+        "code": "01001",
+        "code4": "1001",
+        "count": 2,
+        "count4": 2,
+        "gap": 0,
         "strong": false,
         "temporalAllowed": false
       },
@@ -462,11 +330,11 @@
         "n": 13,
         "row": 1,
         "col": 2,
-        "code": "10000",
+        "code": "00000",
         "code4": "0000",
-        "count": 1,
+        "count": 0,
         "count4": 0,
-        "gap": 4,
+        "gap": null,
         "strong": false,
         "temporalAllowed": false
       },
@@ -474,11 +342,11 @@
         "n": 14,
         "row": 1,
         "col": 3,
-        "code": "00000",
-        "code4": "0000",
-        "count": 0,
-        "count4": 0,
-        "gap": null,
+        "code": "00001",
+        "code4": "0001",
+        "count": 1,
+        "count4": 1,
+        "gap": 0,
         "strong": false,
         "temporalAllowed": false
       },
@@ -498,10 +366,10 @@
         "n": 16,
         "row": 1,
         "col": 5,
-        "code": "00001",
-        "code4": "0001",
-        "count": 1,
-        "count4": 1,
+        "code": "00011",
+        "code4": "0011",
+        "count": 2,
+        "count4": 2,
         "gap": 0,
         "strong": false,
         "temporalAllowed": false
@@ -510,11 +378,11 @@
         "n": 17,
         "row": 1,
         "col": 6,
-        "code": "00100",
-        "code4": "0100",
+        "code": "01000",
+        "code4": "1000",
         "count": 1,
         "count4": 1,
-        "gap": 2,
+        "gap": 3,
         "strong": false,
         "temporalAllowed": false
       },
@@ -522,11 +390,11 @@
         "n": 18,
         "row": 1,
         "col": 7,
-        "code": "10000",
+        "code": "00000",
         "code4": "0000",
-        "count": 1,
+        "count": 0,
         "count4": 0,
-        "gap": 4,
+        "gap": null,
         "strong": false,
         "temporalAllowed": false
       },
@@ -534,11 +402,11 @@
         "n": 19,
         "row": 1,
         "col": 8,
-        "code": "00001",
-        "code4": "0001",
+        "code": "00010",
+        "code4": "0010",
         "count": 1,
         "count4": 1,
-        "gap": 0,
+        "gap": 1,
         "strong": false,
         "temporalAllowed": false
       },
@@ -546,23 +414,23 @@
         "n": 20,
         "row": 1,
         "col": 9,
-        "code": "00110",
-        "code4": "0110",
+        "code": "01100",
+        "code4": "1100",
         "count": 2,
         "count4": 2,
-        "gap": 1,
+        "gap": 2,
         "strong": false,
-        "temporalAllowed": true
+        "temporalAllowed": false
       },
       {
         "n": 21,
         "row": 2,
         "col": 0,
-        "code": "00100",
-        "code4": "0100",
+        "code": "01000",
+        "code4": "1000",
         "count": 1,
         "count4": 1,
-        "gap": 2,
+        "gap": 3,
         "strong": false,
         "temporalAllowed": false
       },
@@ -570,11 +438,11 @@
         "n": 22,
         "row": 2,
         "col": 1,
-        "code": "11001",
-        "code4": "1001",
-        "count": 3,
-        "count4": 2,
-        "gap": 0,
+        "code": "10010",
+        "code4": "0010",
+        "count": 2,
+        "count4": 1,
+        "gap": 1,
         "strong": false,
         "temporalAllowed": false
       },
@@ -582,13 +450,13 @@
         "n": 23,
         "row": 2,
         "col": 2,
-        "code": "10011",
-        "code4": "0011",
+        "code": "00111",
+        "code4": "0111",
         "count": 3,
-        "count4": 2,
+        "count4": 3,
         "gap": 0,
         "strong": false,
-        "temporalAllowed": false
+        "temporalAllowed": true
       },
       {
         "n": 24,
@@ -606,11 +474,11 @@
         "n": 25,
         "row": 2,
         "col": 4,
-        "code": "00100",
-        "code4": "0100",
+        "code": "01000",
+        "code4": "1000",
         "count": 1,
         "count4": 1,
-        "gap": 2,
+        "gap": 3,
         "strong": false,
         "temporalAllowed": false
       },
@@ -618,11 +486,11 @@
         "n": 26,
         "row": 2,
         "col": 5,
-        "code": "11100",
-        "code4": "1100",
+        "code": "11001",
+        "code4": "1001",
         "count": 3,
         "count4": 2,
-        "gap": 2,
+        "gap": 0,
         "strong": false,
         "temporalAllowed": false
       },
@@ -642,11 +510,11 @@
         "n": 28,
         "row": 2,
         "col": 7,
-        "code": "00010",
-        "code4": "0010",
+        "code": "00100",
+        "code4": "0100",
         "count": 1,
         "count4": 1,
-        "gap": 1,
+        "gap": 2,
         "strong": false,
         "temporalAllowed": false
       },
@@ -666,11 +534,11 @@
         "n": 30,
         "row": 2,
         "col": 9,
-        "code": "00010",
-        "code4": "0010",
+        "code": "00100",
+        "code4": "0100",
         "count": 1,
         "count4": 1,
-        "gap": 1,
+        "gap": 2,
         "strong": false,
         "temporalAllowed": false
       },
@@ -678,11 +546,11 @@
         "n": 31,
         "row": 3,
         "col": 0,
-        "code": "01000",
-        "code4": "1000",
-        "count": 1,
+        "code": "10001",
+        "code4": "0001",
+        "count": 2,
         "count4": 1,
-        "gap": 3,
+        "gap": 0,
         "strong": false,
         "temporalAllowed": false
       },
@@ -702,11 +570,11 @@
         "n": 33,
         "row": 3,
         "col": 2,
-        "code": "10000",
+        "code": "00000",
         "code4": "0000",
-        "count": 1,
+        "count": 0,
         "count4": 0,
-        "gap": 4,
+        "gap": null,
         "strong": false,
         "temporalAllowed": false
       },
@@ -726,54 +594,6 @@
         "n": 35,
         "row": 3,
         "col": 4,
-        "code": "00010",
-        "code4": "0010",
-        "count": 1,
-        "count4": 1,
-        "gap": 1,
-        "strong": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 36,
-        "row": 3,
-        "col": 5,
-        "code": "10000",
-        "code4": "0000",
-        "count": 1,
-        "count4": 0,
-        "gap": 4,
-        "strong": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 37,
-        "row": 3,
-        "col": 6,
-        "code": "00000",
-        "code4": "0000",
-        "count": 0,
-        "count4": 0,
-        "gap": null,
-        "strong": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 38,
-        "row": 3,
-        "col": 7,
-        "code": "00010",
-        "code4": "0010",
-        "count": 1,
-        "count4": 1,
-        "gap": 1,
-        "strong": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 39,
-        "row": 3,
-        "col": 8,
         "code": "00100",
         "code4": "0100",
         "count": 1,
@@ -783,13 +603,61 @@
         "temporalAllowed": false
       },
       {
+        "n": 36,
+        "row": 3,
+        "col": 5,
+        "code": "00001",
+        "code4": "0001",
+        "count": 1,
+        "count4": 1,
+        "gap": 0,
+        "strong": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 37,
+        "row": 3,
+        "col": 6,
+        "code": "00001",
+        "code4": "0001",
+        "count": 1,
+        "count4": 1,
+        "gap": 0,
+        "strong": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 38,
+        "row": 3,
+        "col": 7,
+        "code": "00100",
+        "code4": "0100",
+        "count": 1,
+        "count4": 1,
+        "gap": 2,
+        "strong": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 39,
+        "row": 3,
+        "col": 8,
+        "code": "01000",
+        "code4": "1000",
+        "count": 1,
+        "count4": 1,
+        "gap": 3,
+        "strong": false,
+        "temporalAllowed": false
+      },
+      {
         "n": 40,
         "row": 3,
         "col": 9,
-        "code": "00101",
-        "code4": "0101",
-        "count": 2,
-        "count4": 2,
+        "code": "01011",
+        "code4": "1011",
+        "count": 3,
+        "count4": 3,
         "gap": 0,
         "strong": false,
         "temporalAllowed": true
@@ -810,11 +678,11 @@
         "n": 42,
         "row": 4,
         "col": 1,
-        "code": "11000",
-        "code4": "1000",
+        "code": "10001",
+        "code4": "0001",
         "count": 2,
         "count4": 1,
-        "gap": 3,
+        "gap": 0,
         "strong": false,
         "temporalAllowed": false
       },
@@ -822,150 +690,6 @@
         "n": 43,
         "row": 4,
         "col": 2,
-        "code": "01010",
-        "code4": "1010",
-        "count": 2,
-        "count4": 2,
-        "gap": 1,
-        "strong": true,
-        "temporalAllowed": true
-      },
-      {
-        "n": 44,
-        "row": 4,
-        "col": 3,
-        "code": "00000",
-        "code4": "0000",
-        "count": 0,
-        "count4": 0,
-        "gap": null,
-        "strong": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 45,
-        "row": 4,
-        "col": 4,
-        "code": "10010",
-        "code4": "0010",
-        "count": 2,
-        "count4": 1,
-        "gap": 1,
-        "strong": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 46,
-        "row": 4,
-        "col": 5,
-        "code": "10010",
-        "code4": "0010",
-        "count": 2,
-        "count4": 1,
-        "gap": 1,
-        "strong": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 47,
-        "row": 4,
-        "col": 6,
-        "code": "00001",
-        "code4": "0001",
-        "count": 1,
-        "count4": 1,
-        "gap": 0,
-        "strong": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 48,
-        "row": 4,
-        "col": 7,
-        "code": "00011",
-        "code4": "0011",
-        "count": 2,
-        "count4": 2,
-        "gap": 0,
-        "strong": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 49,
-        "row": 4,
-        "col": 8,
-        "code": "10010",
-        "code4": "0010",
-        "count": 2,
-        "count4": 1,
-        "gap": 1,
-        "strong": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 50,
-        "row": 4,
-        "col": 9,
-        "code": "10110",
-        "code4": "0110",
-        "count": 3,
-        "count4": 2,
-        "gap": 1,
-        "strong": false,
-        "temporalAllowed": true
-      },
-      {
-        "n": 51,
-        "row": 5,
-        "col": 0,
-        "code": "01011",
-        "code4": "1011",
-        "count": 3,
-        "count4": 3,
-        "gap": 0,
-        "strong": false,
-        "temporalAllowed": true
-      },
-      {
-        "n": 52,
-        "row": 5,
-        "col": 1,
-        "code": "01001",
-        "code4": "1001",
-        "count": 2,
-        "count4": 2,
-        "gap": 0,
-        "strong": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 53,
-        "row": 5,
-        "col": 2,
-        "code": "01001",
-        "code4": "1001",
-        "count": 2,
-        "count4": 2,
-        "gap": 0,
-        "strong": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 54,
-        "row": 5,
-        "col": 3,
-        "code": "01000",
-        "code4": "1000",
-        "count": 1,
-        "count4": 1,
-        "gap": 3,
-        "strong": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 55,
-        "row": 5,
-        "col": 4,
         "code": "10100",
         "code4": "0100",
         "count": 2,
@@ -975,14 +699,158 @@
         "temporalAllowed": true
       },
       {
-        "n": 56,
-        "row": 5,
+        "n": 44,
+        "row": 4,
+        "col": 3,
+        "code": "00001",
+        "code4": "0001",
+        "count": 1,
+        "count4": 1,
+        "gap": 0,
+        "strong": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 45,
+        "row": 4,
+        "col": 4,
+        "code": "00101",
+        "code4": "0101",
+        "count": 2,
+        "count4": 2,
+        "gap": 0,
+        "strong": false,
+        "temporalAllowed": true
+      },
+      {
+        "n": 46,
+        "row": 4,
         "col": 5,
+        "code": "00100",
+        "code4": "0100",
+        "count": 1,
+        "count4": 1,
+        "gap": 2,
+        "strong": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 47,
+        "row": 4,
+        "col": 6,
+        "code": "00011",
+        "code4": "0011",
+        "count": 2,
+        "count4": 2,
+        "gap": 0,
+        "strong": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 48,
+        "row": 4,
+        "col": 7,
+        "code": "00110",
+        "code4": "0110",
+        "count": 2,
+        "count4": 2,
+        "gap": 1,
+        "strong": false,
+        "temporalAllowed": true
+      },
+      {
+        "n": 49,
+        "row": 4,
+        "col": 8,
+        "code": "00100",
+        "code4": "0100",
+        "count": 1,
+        "count4": 1,
+        "gap": 2,
+        "strong": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 50,
+        "row": 4,
+        "col": 9,
+        "code": "01101",
+        "code4": "1101",
+        "count": 3,
+        "count4": 3,
+        "gap": 0,
+        "strong": false,
+        "temporalAllowed": true
+      },
+      {
+        "n": 51,
+        "row": 5,
+        "col": 0,
+        "code": "10110",
+        "code4": "0110",
+        "count": 3,
+        "count4": 2,
+        "gap": 1,
+        "strong": false,
+        "temporalAllowed": true
+      },
+      {
+        "n": 52,
+        "row": 5,
+        "col": 1,
+        "code": "10010",
+        "code4": "0010",
+        "count": 2,
+        "count4": 1,
+        "gap": 1,
+        "strong": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 53,
+        "row": 5,
+        "col": 2,
+        "code": "10010",
+        "code4": "0010",
+        "count": 2,
+        "count4": 1,
+        "gap": 1,
+        "strong": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 54,
+        "row": 5,
+        "col": 3,
+        "code": "10000",
+        "code4": "0000",
+        "count": 1,
+        "count4": 0,
+        "gap": 4,
+        "strong": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 55,
+        "row": 5,
+        "col": 4,
         "code": "01000",
         "code4": "1000",
         "count": 1,
         "count4": 1,
         "gap": 3,
+        "strong": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 56,
+        "row": 5,
+        "col": 5,
+        "code": "10000",
+        "code4": "0000",
+        "count": 1,
+        "count4": 0,
+        "gap": 4,
         "strong": false,
         "temporalAllowed": false
       },
@@ -1002,11 +870,11 @@
         "n": 58,
         "row": 5,
         "col": 7,
-        "code": "00001",
-        "code4": "0001",
+        "code": "00010",
+        "code4": "0010",
         "count": 1,
         "count4": 1,
-        "gap": 0,
+        "gap": 1,
         "strong": false,
         "temporalAllowed": false
       },
@@ -1014,11 +882,11 @@
         "n": 59,
         "row": 5,
         "col": 8,
-        "code": "01100",
-        "code4": "1100",
+        "code": "11000",
+        "code4": "1000",
         "count": 2,
-        "count4": 2,
-        "gap": 2,
+        "count4": 1,
+        "gap": 3,
         "strong": false,
         "temporalAllowed": false
       },
@@ -1026,11 +894,11 @@
         "n": 60,
         "row": 5,
         "col": 9,
-        "code": "01001",
-        "code4": "1001",
+        "code": "10010",
+        "code4": "0010",
         "count": 2,
-        "count4": 2,
-        "gap": 0,
+        "count4": 1,
+        "gap": 1,
         "strong": false,
         "temporalAllowed": false
       },
@@ -1038,66 +906,18 @@
         "n": 61,
         "row": 6,
         "col": 0,
-        "code": "01110",
-        "code4": "1110",
+        "code": "11100",
+        "code4": "1100",
         "count": 3,
-        "count4": 3,
-        "gap": 1,
-        "strong": false,
-        "temporalAllowed": true
-      },
-      {
-        "n": 62,
-        "row": 6,
-        "col": 1,
-        "code": "10000",
-        "code4": "0000",
-        "count": 1,
-        "count4": 0,
-        "gap": 4,
-        "strong": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 63,
-        "row": 6,
-        "col": 2,
-        "code": "01101",
-        "code4": "1101",
-        "count": 3,
-        "count4": 3,
-        "gap": 0,
-        "strong": false,
-        "temporalAllowed": true
-      },
-      {
-        "n": 64,
-        "row": 6,
-        "col": 3,
-        "code": "01111",
-        "code4": "1111",
-        "count": 4,
-        "count4": 4,
-        "gap": 0,
-        "strong": true,
-        "temporalAllowed": true
-      },
-      {
-        "n": 65,
-        "row": 6,
-        "col": 4,
-        "code": "00100",
-        "code4": "0100",
-        "count": 1,
-        "count4": 1,
+        "count4": 2,
         "gap": 2,
         "strong": false,
         "temporalAllowed": false
       },
       {
-        "n": 66,
+        "n": 62,
         "row": 6,
-        "col": 5,
+        "col": 1,
         "code": "00000",
         "code4": "0000",
         "count": 0,
@@ -1107,21 +927,21 @@
         "temporalAllowed": false
       },
       {
-        "n": 67,
+        "n": 63,
         "row": 6,
-        "col": 6,
-        "code": "10110",
-        "code4": "0110",
+        "col": 2,
+        "code": "11010",
+        "code4": "1010",
         "count": 3,
         "count4": 2,
         "gap": 1,
-        "strong": false,
+        "strong": true,
         "temporalAllowed": true
       },
       {
-        "n": 68,
+        "n": 64,
         "row": 6,
-        "col": 7,
+        "col": 3,
         "code": "11110",
         "code4": "1110",
         "count": 4,
@@ -1131,13 +951,61 @@
         "temporalAllowed": true
       },
       {
-        "n": 69,
+        "n": 65,
         "row": 6,
-        "col": 8,
+        "col": 4,
+        "code": "01000",
+        "code4": "1000",
+        "count": 1,
+        "count4": 1,
+        "gap": 3,
+        "strong": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 66,
+        "row": 6,
+        "col": 5,
         "code": "00001",
         "code4": "0001",
         "count": 1,
         "count4": 1,
+        "gap": 0,
+        "strong": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 67,
+        "row": 6,
+        "col": 6,
+        "code": "01101",
+        "code4": "1101",
+        "count": 3,
+        "count4": 3,
+        "gap": 0,
+        "strong": false,
+        "temporalAllowed": true
+      },
+      {
+        "n": 68,
+        "row": 6,
+        "col": 7,
+        "code": "11100",
+        "code4": "1100",
+        "count": 3,
+        "count4": 2,
+        "gap": 2,
+        "strong": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 69,
+        "row": 6,
+        "col": 8,
+        "code": "00011",
+        "code4": "0011",
+        "count": 2,
+        "count4": 2,
         "gap": 0,
         "strong": false,
         "temporalAllowed": false
@@ -1146,11 +1014,11 @@
         "n": 70,
         "row": 6,
         "col": 9,
-        "code": "00001",
-        "code4": "0001",
+        "code": "00010",
+        "code4": "0010",
         "count": 1,
         "count4": 1,
-        "gap": 0,
+        "gap": 1,
         "strong": false,
         "temporalAllowed": false
       },
@@ -1158,11 +1026,11 @@
         "n": 71,
         "row": 7,
         "col": 0,
-        "code": "00010",
-        "code4": "0010",
+        "code": "00100",
+        "code4": "0100",
         "count": 1,
         "count4": 1,
-        "gap": 1,
+        "gap": 2,
         "strong": false,
         "temporalAllowed": false
       },
@@ -1182,11 +1050,11 @@
         "n": 73,
         "row": 7,
         "col": 2,
-        "code": "01011",
-        "code4": "1011",
+        "code": "10110",
+        "code4": "0110",
         "count": 3,
-        "count4": 3,
-        "gap": 0,
+        "count4": 2,
+        "gap": 1,
         "strong": false,
         "temporalAllowed": true
       },
@@ -1194,11 +1062,11 @@
         "n": 74,
         "row": 7,
         "col": 3,
-        "code": "01000",
-        "code4": "1000",
-        "count": 1,
+        "code": "10001",
+        "code4": "0001",
+        "count": 2,
         "count4": 1,
-        "gap": 3,
+        "gap": 0,
         "strong": false,
         "temporalAllowed": false
       },
@@ -1206,11 +1074,11 @@
         "n": 75,
         "row": 7,
         "col": 4,
-        "code": "10001",
-        "code4": "0001",
-        "count": 2,
+        "code": "00010",
+        "code4": "0010",
+        "count": 1,
         "count4": 1,
-        "gap": 0,
+        "gap": 1,
         "strong": false,
         "temporalAllowed": false
       },
@@ -1242,11 +1110,11 @@
         "n": 78,
         "row": 7,
         "col": 7,
-        "code": "10000",
+        "code": "00000",
         "code4": "0000",
-        "count": 1,
+        "count": 0,
         "count4": 0,
-        "gap": 4,
+        "gap": null,
         "strong": false,
         "temporalAllowed": false
       },
@@ -1254,11 +1122,11 @@
         "n": 79,
         "row": 7,
         "col": 8,
-        "code": "00100",
-        "code4": "0100",
+        "code": "01000",
+        "code4": "1000",
         "count": 1,
         "count4": 1,
-        "gap": 2,
+        "gap": 3,
         "strong": false,
         "temporalAllowed": false
       },
@@ -1266,30 +1134,30 @@
         "n": 80,
         "row": 7,
         "col": 9,
-        "code": "10000",
+        "code": "00000",
         "code4": "0000",
-        "count": 1,
+        "count": 0,
         "count4": 0,
-        "gap": 4,
+        "gap": null,
         "strong": false,
         "temporalAllowed": false
       }
     ],
     "historyUsed": 5,
     "sourceWindow": [
-      328924,
       328925,
       328926,
       328927,
-      328928
+      328928,
+      328929
     ],
     "gate": {
       "repeat3Count": 11,
       "heatAllowed": false,
       "rowLimit": 2,
       "heatLimit": 8,
-      "observed": 2,
-      "eligible": 2,
+      "observed": 1,
+      "eligible": 1,
       "rule": "≤2 в ряду каждой фигуры; ≤8 чисел с повтором 3+ во всём окне"
     },
     "structure": {
@@ -1297,8 +1165,8 @@
       "heatAllowed": false,
       "rowLimit": 2,
       "heatLimit": 8,
-      "observed": 2,
-      "eligible": 2,
+      "observed": 1,
+      "eligible": 1,
       "rule": "≤2 в ряду каждой фигуры; ≤8 чисел с повтором 3+ во всём окне"
     },
     "message": "A нет: 11 чисел с повтором 3+, предел 8."
@@ -1456,6 +1324,32 @@
         "heatLimit": 8,
         "observed": 2,
         "eligible": 2,
+        "rule": "≤2 в ряду каждой фигуры; ≤8 чисел с повтором 3+ во всём окне"
+      },
+      "message": "A нет: 11 чисел с повтором 3+, предел 8."
+    },
+    {
+      "id": "iris-1.0.0:328929",
+      "version": "iris-1.0.0",
+      "createdAt": "2026-10-05T19:12:40.929Z",
+      "sourceCutoff": 328929,
+      "sourceWindow": [
+        328925,
+        328926,
+        328927,
+        328928,
+        328929
+      ],
+      "permissionA": false,
+      "permissionB": false,
+      "signal": "WATCH",
+      "gate": {
+        "repeat3Count": 11,
+        "heatAllowed": false,
+        "rowLimit": 2,
+        "heatLimit": 8,
+        "observed": 1,
+        "eligible": 1,
         "rule": "≤2 в ряду каждой фигуры; ≤8 чисел с повтором 3+ во всём окне"
       },
       "message": "A нет: 11 чисел с повтором 3+, предел 8."
@@ -104915,6 +104809,40 @@
           "hitCount": 2,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328929,
+          "date": "2026-10-05",
+          "time": "22:02",
+          "fact": [
+            12,
+            50,
+            5,
+            31,
+            74,
+            36,
+            3,
+            16,
+            23,
+            69,
+            67,
+            45,
+            42,
+            37,
+            26,
+            40,
+            44,
+            47,
+            14,
+            66
+          ],
+          "hits": [
+            3,
+            23
+          ],
+          "hitCount": 2,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -104923,10 +104851,11 @@
       "bestHits": 2,
       "bestSteps": [
         2,
-        3
+        3,
+        4
       ],
       "bestStep": 2,
-      "averageHits": 1.6666666666666667,
+      "averageHits": 1.75,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
@@ -105183,6 +105112,39 @@
           "hitCount": 1,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328929,
+          "date": "2026-10-05",
+          "time": "22:02",
+          "fact": [
+            12,
+            50,
+            5,
+            31,
+            74,
+            36,
+            3,
+            16,
+            23,
+            69,
+            67,
+            45,
+            42,
+            37,
+            26,
+            40,
+            44,
+            47,
+            14,
+            66
+          ],
+          "hits": [
+            66
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -105191,10 +105153,11 @@
       "bestHits": 1,
       "bestSteps": [
         1,
-        3
+        3,
+        4
       ],
       "bestStep": 1,
-      "averageHits": 0.6666666666666666,
+      "averageHits": 0.75,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
@@ -105476,6 +105439,40 @@
           "hitCount": 1,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328929,
+          "date": "2026-10-05",
+          "time": "22:02",
+          "fact": [
+            12,
+            50,
+            5,
+            31,
+            74,
+            36,
+            3,
+            16,
+            23,
+            69,
+            67,
+            45,
+            42,
+            37,
+            26,
+            40,
+            44,
+            47,
+            14,
+            66
+          ],
+          "hits": [
+            26,
+            66
+          ],
+          "hitCount": 2,
+          "payout": 100,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -105483,16 +105480,17 @@
       "conflicts": [],
       "bestHits": 2,
       "bestSteps": [
-        1
+        1,
+        4
       ],
       "bestStep": 1,
-      "averageHits": 1,
-      "winCount": 1,
+      "averageHits": 1.25,
+      "winCount": 2,
       "firstWinStep": 1,
-      "totalPayout": 100,
+      "totalPayout": 200,
       "hasUnknownPayout": false,
       "noWin": null,
-      "knownPayout": 100
+      "knownPayout": 200
     }
   ]
 }
