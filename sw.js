@@ -1,15 +1,16 @@
 'use strict';
 
-const CACHE='pozitron-v63-iris-6313';
+const CACHE='pozitron-v63-iris-6317';
 const REPO_RAW='https://raw.githubusercontent.com/arsazet17/arsazet17-pozitron-keno-v63/main/';
 
 const STATIC_ASSETS=[
   './','./index.html','./styles-v63.css','./archive-v63.css',
   './storage-v63.js','./engine-v63.js','./sync-v63-client.js','./app-v63.js',
-  './iris-engine-v63.js?v=6313','./iris-ui-v63.js?v=6313','./iris-v63.css?v=6313',
+  './iris-engine-v63.js?v=6317','./iris-ui-v63.js?v=6317','./iris-v63.css?v=6317',
+  './iris-render-guard-v6314.js?v=6317',
   './network80-engine-v63.js?v=6313','./network80-ui-v63.js?v=6313','./network80-v63.css?v=6313',
-  './iris-archive-beauty.js?v=6313','./iris-archive-beauty.css?v=6313','./iris-waves-v63.js?v=6313',
-  './iris-scroll-stability-v637.js?v=6313','./iris-mobile-fix-v637.css?v=6313',
+  './iris-archive-beauty.js?v=6317','./iris-archive-beauty.css?v=6317','./iris-waves-v63.js?v=6317',
+  './iris-scroll-stability-v637.js?v=6317','./iris-mobile-fix-v637.css?v=6317',
   './manifest.webmanifest','./icon.svg'
 ];
 
@@ -18,7 +19,7 @@ const SERVER_FILES=new Set([
   'fingerprint-archive-v63.json','keno-status-v63.json'
 ]);
 
-function freshRaw(file){return REPO_RAW+file+'?v=6600&t='+Date.now()}
+function freshRaw(file){return REPO_RAW+file+'?v=6717&t='+Date.now()}
 async function fetchFreshRaw(file,fallbackRequest){
   try{
     const response=await fetch(freshRaw(file),{cache:'no-store',headers:{'cache-control':'no-cache'}});
