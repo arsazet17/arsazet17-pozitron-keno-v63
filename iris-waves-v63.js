@@ -86,8 +86,10 @@
     }finally{working=false;}
   }
   let timer=0;
+  // Watch only replacement of the IRIS root. Watching the whole subtree made
+  // apply() observe its own card moves and rebuild itself again every ~80 ms.
   const observer=new MutationObserver(()=>{clearTimeout(timer);timer=setTimeout(apply,80);});
-  observer.observe(host,{childList:true,subtree:true});
+  observer.observe(host,{childList:true});
   window.addEventListener('online',()=>{historyLoaded=false;historyMap.clear();setTimeout(apply,100)});
   setTimeout(apply,200);
 })();
