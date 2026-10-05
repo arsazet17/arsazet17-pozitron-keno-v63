@@ -407,6 +407,6 @@
 
   updatePanelButtons();startAuto();fetchFresh().catch(()=>{});
   if('serviceWorker' in navigator){
-    window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6312',{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{}));
+    window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6313',{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{}));
   }
 })();
