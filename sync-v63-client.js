@@ -4,12 +4,13 @@
   const RAW='https://raw.githubusercontent.com/arsazet17/arsazet17-pozitron-keno-v63/main/';
   const SERVER_FILES=new Set([
     'keno-history-v63.json',
+    'iris-archive-v63.json',
     'fingerprint-state-v63.json',
     'fingerprint-archive-v63.json',
     'keno-status-v63.json'
   ]);
   function fileOf(url){try{return new URL(url,location.href).pathname.split('/').filter(Boolean).pop()||''}catch{return ''}}
-  function fresh(file){return `${RAW}${file}?v=6600&t=${Date.now()}`}
+  function fresh(file){return `${RAW}${file}?v=6717&t=${Date.now()}`}
   try{localStorage.removeItem('pozitron_v63_source')}catch{}
   window.fetch=(input,init={})=>{
     const raw=typeof input==='string'?input:(input?.url||'');
