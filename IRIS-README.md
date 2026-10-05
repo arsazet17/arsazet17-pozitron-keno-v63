@@ -1,63 +1,51 @@
-# IRIS inside KENO 6.3
+# Iris · ПОЗИТРОН KENO v6.3.12
 
-IRIS is a separate full dashboard inside **ПОЗИТРОН КЕНО v6.3**. It keeps the original KENO 6.3 modules intact and has its own active series, archive, checks, statistics and local cache.
+Движок `iris-1.0.0`, реализованный по переносу от 05.10.2026.
 
-## Restored project principle
+## Поиск
 
-- Analysis history: up to the latest **700 draws**.
-- The live source window is the latest **5 consecutive draws**.
-- Every number 1–80 receives a five-step 0/1 rhythm. Priority rhythms: `01010`, `11010`, `10101`, `10100`.
-- The 1–80 field is treated as a 10×8 geometry. Structural links used by IRIS: row ±2, vertical +10/+20/+30 and diagonal ±9/11.
-- Numbers absent from all five source draws are not used to invent a missing cell.
-- IRIS creates several independent regular combinations. They may share numbers, but they are not one CORE/MAIN/FULL combination cut into several sizes.
-- MINI-3 and MINI-4 are separate searches with their own five-draw series and archive.
+Окно — 5 последовательных фактов. Основной рисунок — последние 4 (слева старые, справа новые); пятый даёт поддержку. Для всех 80 чисел сохраняются координаты, рисунки 4/5, число появлений 4/5, gap (0 = последний тираж), временной допуск.
 
-## Permission A / B
+Приоритетные рисунки: 1010 в последних четырёх; 01010, 11010, 10101, 10100, 01111 в пяти. Близкие разрешённые четырёхзначные рисунки: 0101, 1101, 0110, 0111, 1110, 1011. Каждое число должно иметь выход в последних четырёх и пройти один из этих рисунков. Это явные исследовательские правила версии, а не восстановленная секретная формула игрока и не доказанное преимущество над случайным выбором.
 
-The project gate is evaluated on a structural FULL-9 service set.
+Геометрия: горизонталь +2 без перехода на другой ряд, одинаковое окончание с вертикальными расстояниями +10…+70, соседние диагонали ±9/11. Формируются целые вертикальные столбцы, максимальные цепи +2/+20/диагонали, компактные связные фигуры 2×3 и однократные объединения пересекающихся целых элементов. Размер определяется составом фигуры; допускаются 5–10 чисел. Большие фигуры не режутся. Для фигуры нужен хотя бы один сильный рисунок, а временной допуск обязателен у всех участников.
 
-**A / PLAY** is allowed when:
-1. FULL-9 has no more than 2 numbers in any horizontal row;
-2. in the five source draws, no more than 8 numbers appeared 3 or more times.
+Сначала по приоритету рассматриваются фигуры с ≤2 числами в ряду; затем качество = 2 × число сильных ритмов + число связей / размер + 0,15 × вертикальные связи. Это фиксированная эвристика, не коэффициенты, подобранные по будущим результатам. Дубликаты исключаются при пересечении ≥80% меньшего набора. Никаких CORE/MAIN/FULL и обязательных размеров по очереди нет.
 
-**B / PLAY+** requires A and additionally:
-1. FULL-9 occupies at least 7 of 8 rows;
-2. FULL-9 has at least 3 vertical +10 links.
+## Допуски и режимы
 
-A and B are shown separately in the interface. MINI-3/MINI-4 start only when A is allowed.
+A: во всём окне ≤8 чисел с 3+ появлениями; каждая запускаемая фигура содержит ≤2 чисел в одном ряду. Нужна хотя бы одна законченная основная фигура. Если A нет, новые основные серии и MINI не запускаются; прежние продолжаются.
 
-## Five-draw series
+B: исследовательская выборка основных серий с A, ≥7 занятых рядов и ≥3 вертикальных связей. Сохраняется отметка у серии; архив и статистика B отдельные. Одна и та же B-серия не дублируется как вторая ставка.
 
-Every generated combination is fixed **before** the next draw and then checked unchanged on the next five draw numbers. A win on draw 1–4 does not close the series early. After all five facts are recorded, the series moves to the archive.
+MINI-3 и MINI-4 независимо перебирают связные наборы своего размера из всех чисел с временным допуском. Они не используют результат основной IRIS или другого MINI. Для каждого набора ≤2 в ряду и минимум один сильный ритм. Приоритет: 3 × сильные ритмы + связи + 0,25 × вертикали. Совпадение MINI с частью основной фигуры возможно как результат независимого поиска; это не нарезка.
 
-The archive stores: source cutoff, source window, fixation time, target draw range, immutable numbers, A/B state, selection trace, all five facts, hits, best single-draw result, known payout total and conflict markers. “Best 4/7” means the best result in one of the five checks; hits from different draws are never added together.
+OFF: данных/сигнала нет. WATCH: ритм есть, но запуск не допущен. PLAY: можно зафиксировать новые серии. Устаревшее окно после наступления следующего тиража не используется для запуска.
 
-## Persistence and closed-phone operation
+## Пять тиражей и деньги
 
-Server series live in `iris-archive-v63.json`. The server workflow reads the common `keno-history-v63.json`, settles existing series and can create new ones after A. Local state uses IndexedDB database `pozitron_iris_v63`. The server can continue checking series when the phone is closed as new draw facts arrive.
+Каждая серия имеет собственный ID, момент фиксации, cutoff, причины по каждому числу, A/B и 5 целевых тиражей с датами/временем. Числа, исходная причина и ранее сохранённые факты не переписываются. Промах/выигрыш не закрывает серию до пяти фактов. Пропущенный факт оставляет серию незавершённой до восстановления.
 
-The server and IRIS do not rewrite old KENO prediction archives.
+Выплаты берутся из существующего `POZITRON_V63_NETWORK80.PAYOUTS`, включая 6–10 чисел и предусмотренные таблицей выплаты за 0 попаданий. Это та же таблица, что уже была в приложении; отдельная внешняя проверка актуальных тарифов в эту работу не входила. В интерфейсе таблица не показывается. 🔥 означает положительную выплату. Сумма — валовая выплата, без стоимости ставок.
 
-## Payouts
+Для старых результатов с `payout:null` сумма рассчитывается при отображении/агрегации; исходный результат остаётся неизменным. Итоги: максимум и все его шаги, среднее, число выигрышей, первый выигрыш, сумма, серия без выигрыша. Статистика — по завершённым сериям, отдельно по размеру. При одинаковом максимуме таблица распределения шагов учитывает первое достижение; в карточке видны все шаги.
 
-KENO 6.3 already contains verified internal payout entries for 3–5 number combinations. Exact 6–10 number hit→rubles tables were not present in the recovered project data, so IRIS records hits for those sizes but leaves the ruble amount unknown instead of inventing a value.
+## Сохранение и переход со старой версии
 
-## UI
+IndexedDB и серверный файл остаются прежними. Прежние серии продолжают проверяться, но показываются отдельно от новой статистики. Слияние архивов дополняет записи, не заменяя исходную комбинацию. При конфликте сохраняется первая запись и предупреждение. Не используйте прежнюю кнопку удаления: новый интерфейс её не содержит, скрывавшиеся старым интерфейсом записи снова доступны.
 
-The IRIS dashboard contains:
-- Home / New / Archive / Statistics / Settings navigation;
-- next draw and countdown;
-- A and B status;
-- current regular, MINI-3 and MINI-4 series;
-- “Calculate new combinations” and fact checking;
-- number map 1–80;
-- draw history;
-- separate archives by mode;
-- statistics and full rules page.
+Новый `gateLog` хранит как допуски, так и отказы A. Серверный скрипт больше не создаёт «восстановленные» прогнозы задним числом. Если запуск сервера пропустил окно, прогноз за это окно не выдумывается.
 
-## Verification
+Работа при закрытом телефоне обеспечивается существующим GitHub Actions workflow. Локальный переключатель автоматического запуска не отключает workflow на сервере.
 
-```bash
-node scripts/test-iris-v63.js
-node scripts/iris-update-v63.js
-```
+## Историческая проверка
+
+Кнопка «Проверка 700» запускает Web Worker, чтобы не блокировать телефон. У каждого окна cutoff ограничивает данные выбора; затем та же комбинация проверяется на пяти следующих фактах. Результаты помечены `research:true`, не объединяются с живым архивом и выгружаются отдельно. Они не доказывают, что прогноз существовал в прошлом, и не меняют алгоритм автоматически.
+
+## Проверки
+
+- `node scripts/test-iris-v63.js`
+- `node scripts/test-iris-dom.cjs` (jsdom, fake-indexeddb)
+- `node scripts/test-iris-ui-v63.cjs` (Playwright / Chromium)
+
+Тесты покрывают A/B, размеры 5–10, MINI, неизменность пяти шагов, выплаты, сохранение старого архива, конфликты, anti-leakage с изменением будущих результатов, мобильные ширины и worker.

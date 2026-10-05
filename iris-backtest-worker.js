@@ -1,0 +1,4 @@
+'use strict';
+self.window=self;
+importScripts('./network80-engine-v63.js?v=6312','./iris-engine-v63.js?v=6312');
+self.onmessage=event=>{try{const E=self.IRIS_V63,draws=E.normalize(event.data.draws),start=Math.max(4,draws.length-5-(event.data.limit||700)),end=draws.length-5;let series=[],gateLog=[];for(let i=start;i<end;i++){const out=E.process(draws.slice(Math.max(0,i-E.HISTORY_LIMIT+1),i+1),series,new Date(E.timestamp(draws[i])+1000).toISOString(),{origin:'backtest',gateLog});series=out.series;gateLog=out.gateLog;if((i-start)%20===0)self.postMessage({type:'progress',done:i-start,total:end-start});}self.postMessage({type:'done',result:{version:E.VERSION,research:true,label:'Историческая проверка — не реальные прогнозы',windows:Math.max(0,end-start),series:E.settle(series,draws),gateLog}});}catch(err){self.postMessage({type:'error',message:err.message});}};

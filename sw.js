@@ -1,13 +1,14 @@
 'use strict';
 
-const CACHE='pozitron-v63-iris-010';
+const CACHE='pozitron-v63-iris-100';
 const REPO_RAW='https://raw.githubusercontent.com/arsazet17/arsazet17-pozitron-keno-v63/main/';
 
 const STATIC_ASSETS=[
   './','./index.html','./styles-v63.css','./archive-v63.css',
   './storage-v63.js','./engine-v63.js','./sync-v63-client.js','./app-v63.js',
-  './iris-engine-v63.js?v=iris010','./iris-ui-v63.js?v=iris010','./iris-v63.css?v=iris010',
-  './manifest.webmanifest','./icon.svg'
+  './iris-engine-v63.js?v=6312','./iris-ui-v63.js?v=6312','./iris-v63.css?v=6312',
+  './network80-engine-v63.js?v=6312','./network80-ui-v63.js?v=6312','./network80-v63.css?v=6312',
+  './iris-backtest-worker.js?v=6312','./manifest.webmanifest','./icon.svg'
 ];
 
 const SERVER_FILES=new Set([
@@ -15,7 +16,7 @@ const SERVER_FILES=new Set([
   'fingerprint-archive-v63.json','keno-status-v63.json'
 ]);
 
-function freshRaw(file){return REPO_RAW+file+'?v=6600&t='+Date.now()}
+function freshRaw(file){return REPO_RAW+file+'?v=6312&t='+Date.now()}
 async function fetchFreshRaw(file,fallbackRequest){
   try{
     const response=await fetch(freshRaw(file),{cache:'no-store',headers:{'cache-control':'no-cache'}});

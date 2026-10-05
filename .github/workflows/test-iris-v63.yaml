@@ -7,6 +7,9 @@ on:
       - 'iris-engine-v63.js'
       - 'iris-ui-v63.js'
       - 'iris-v63.css'
+      - 'iris-backtest-worker.js'
+      - 'scripts/test-iris-v63.js'
+      - 'scripts/test-iris-dom.cjs'
       - 'index.html'
       - 'scripts/test-iris-ui-v63.cjs'
       - '.github/workflows/test-iris-v63.yaml'
@@ -23,11 +26,12 @@ jobs:
           node-version: '20'
       - name: Установить браузер тестирования
         run: |
-          npm install --no-save playwright
+          npm install --no-save playwright jsdom fake-indexeddb
           npx playwright install --with-deps chromium
       - name: Проверить Iris и мобильный интерфейс
         run: |
           node scripts/test-iris-v63.js
+          node scripts/test-iris-dom.cjs
           node scripts/test-iris-ui-v63.cjs
       - uses: actions/upload-artifact@v4
         if: always()
