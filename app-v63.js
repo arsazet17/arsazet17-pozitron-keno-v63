@@ -182,7 +182,7 @@
         saveLocal();networkReady=true;
         if(DBSTORE)await DBSTORE.saveDraws(draws).catch(()=>{});
         await fetchFingerprintServer();
-        $('status').textContent=`v${APP_VERSION} STOLOTO SERVER · база: ${draws.length.toLocaleString('ru-RU')} · последний №${draws.at(-1).draw}`;
+        $('status').textContent=`v6.3 STOLOTO SERVER · база: ${draws.length.toLocaleString('ru-RU')} · последний №${draws.at(-1).draw}`;
         renderAll();return true;
       }
       throw new Error('Локальная серверная история пуста');
