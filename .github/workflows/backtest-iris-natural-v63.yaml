@@ -1,0 +1,54 @@
+name: IRIS 1.2 · FULL ARCHIVE BACKTEST
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'iris-engine-v63.js'
+      - 'scripts/backtest-iris-natural-v63.js'
+      - '.github/workflows/backtest-iris-natural-v63.yaml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: iris-natural-backtest-v63
+  cancel-in-progress: true
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Проверить код IRIS
+        run: |
+          node --check iris-engine-v63.js
+          node --check scripts/backtest-iris-natural-v63.js
+          node scripts/test-iris-v63.js
+
+      - name: Полный walk-forward архива
+        run: node scripts/backtest-iris-natural-v63.js
+
+      - name: Сохранить исследовательский отчёт
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add iris-natural-backtest-v63.json IRIS_NATURAL_BACKTEST.md
+          if git diff --cached --quiet; then
+            echo "Отчёт не изменился"
+            exit 0
+          fi
+          git commit -m "[research] IRIS 1.2 full archive natural-size backtest"
+          git pull --rebase origin main
+          git push origin HEAD:main
