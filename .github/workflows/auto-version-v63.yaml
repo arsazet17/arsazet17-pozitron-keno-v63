@@ -1,0 +1,78 @@
+name: KENO v6.3 · AUTO VERSION
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'app-v63.js'
+      - 'storage-v63.js'
+      - 'sync-v63-client.js'
+      - 'engine-v63.js'
+      - 'styles-v63.css'
+      - 'archive-v63.css'
+      - 'manifest.webmanifest'
+      - 'sw.js'
+      - 'network80-engine-v63.js'
+      - 'network80-ui-v63.js'
+      - 'network80-v63.css'
+      - 'iris-engine-v63.js'
+      - 'iris-ui-v63.js'
+      - 'iris-v63.css'
+      - 'iris-archive-beauty.js'
+      - 'iris-archive-beauty.css'
+      - 'iris-waves-v63.js'
+      - 'iris-scroll-stability-v637.js'
+      - 'iris-mobile-fix-v637.css'
+      - 'scripts/prepare-v63-client-stoloto.mjs'
+      - 'scripts/iris-update-v63.js'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: keno-v63-auto-version
+  cancel-in-progress: false
+
+jobs:
+  bump:
+    if: ${{ github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, '[auto-version]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Проверить клиентский код
+        run: |
+          node --check app-v63.js
+          node --check iris-engine-v63.js
+          node --check iris-ui-v63.js
+          node --check scripts/prepare-v63-client-stoloto.mjs
+          node --check scripts/bump-app-version-v63.mjs
+
+      - name: Поднять общую версию приложения
+        run: node scripts/bump-app-version-v63.mjs
+
+      - name: Сохранить новую версию
+        shell: bash
+        run: |
+          FILES="version-v63.js index.html sw.js manifest.webmanifest README.md"
+          if [ -z "$(git status --porcelain -- $FILES)" ]; then
+            echo "Версия уже синхронизирована"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add $FILES
+          git commit -m "[auto-version] KENO v6.3 · whole-app version bump"
+          git fetch origin main --prune
+          git rebase origin/main
+          git push origin HEAD:main
