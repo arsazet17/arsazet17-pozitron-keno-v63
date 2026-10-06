@@ -1,2 +1,2 @@
 'use strict';
-window.POZITRON_V63_VERSION=Object.freeze({version:'6.3.26',build:'6326'});
+window.POZITRON_V63_VERSION=Object.freeze({version:'6.3.27',build:'6327'});
