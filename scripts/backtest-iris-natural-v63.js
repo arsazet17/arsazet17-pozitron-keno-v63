@@ -71,6 +71,7 @@ function simulate(label,candidateFn){
   const sizeSeries=blankBySize(),sizePayout=blankBySize(),sizePositiveChecks=blankBySize(),sizePerfect=blankBySize();
   const hitDistribution={},active=new Map();
   let validWindows=0,signalWindows=0,createdSeries=0,checks=0,totalHits=0,totalPayout=0,positivePayoutChecks=0,zeroHitPayoutChecks=0,seriesWithPayout=0,perfectChecks=0;
+  const bestBySize={},perfectExamples=[];
   let best={hits:-1,size:0,draw:null,source:null,numbers:[]};
   for(let i=4;i<history.length-5;i++){
     if(!usableSource(i))continue;
@@ -89,11 +90,12 @@ function simulate(label,candidateFn){
       let seriesPay=0;
       for(let j=1;j<=5;j++){
         const fact=history[i+j],hits=c.numbers.filter(n=>fact.balls.includes(n)).length,pay=Number(E.payout(size,hits)||0);
-        checks++;totalHits+=hits;totalPayout+=pay;seriesPay+=pay;
+        checks++;totalHits+=hits;totalPayout+=pay;sizePayout[size]+=pay;seriesPay+=pay;
         hitDistribution[`${size}:${hits}`]=(hitDistribution[`${size}:${hits}`]||0)+1;
         if(pay>0){positivePayoutChecks++;sizePositiveChecks[size]++;if(hits===0)zeroHitPayoutChecks++;}
-        if(hits===size){perfectChecks++;sizePerfect[size]++;}
-        if(hits>best.hits||hits===best.hits&&size<best.size)best={hits,size,draw:fact.draw,source,numbers:c.numbers.slice()};
+        if(hits===size){perfectChecks++;sizePerfect[size]++;if(perfectExamples.length<20)perfectExamples.push({size,draw:fact.draw,source,numbers:c.numbers.slice(),payout:pay});}
+        const bs=bestBySize[size];if(!bs||hits>bs.hits)bestBySize[size]={hits,draw:fact.draw,source,numbers:c.numbers.slice(),payout:pay};
+        if(hits>best.hits||hits===best.hits&&size<best.size)best={hits,size,draw:fact.draw,source,numbers:c.numbers.slice(),payout:pay};
       }
       if(seriesPay>0)seriesWithPayout++;
     }
@@ -103,8 +105,8 @@ function simulate(label,candidateFn){
     label,
     validWindows,signalWindows,createdSeries,sizeSeries,
     checks,averageHitsPerCheck:Number((totalHits/Math.max(1,checks)).toFixed(4)),
-    positivePayoutChecks,zeroHitPayoutChecks,seriesWithPayout,perfectChecks,best,
-    grossPayoutRub:totalPayout,sizePayout,sizePositiveChecks,sizePerfect,
+    positivePayoutChecks,positivePayoutRate:Number((positivePayoutChecks/Math.max(1,checks)).toFixed(6)),zeroHitPayoutChecks,seriesWithPayout,perfectChecks,best,bestBySize,perfectExamples,
+    grossPayoutRub:totalPayout,payoutPerCheckRub:Number((totalPayout/Math.max(1,checks)).toFixed(4)),payoutPerSeriesRub:Number((totalPayout/Math.max(1,createdSeries)).toFixed(4)),sizePayout,sizePositiveChecks,sizePerfect,
     hitDistribution
   };
 }
@@ -138,9 +140,9 @@ const md=`# IRIS 1.2 · полный walk-forward архива
 |---:|---:|---:|---:|---:|
 ${rows}
 
-**Старая схема:** ${legacy.createdSeries} серий, ${legacy.positivePayoutChecks} проверок с выплатой, всего **${legacy.grossPayoutRub.toLocaleString('ru-RU')} ₽**.
+**Старая схема:** ${legacy.createdSeries} серий, ${legacy.positivePayoutChecks} проверок с выплатой, всего **${legacy.grossPayoutRub.toLocaleString('ru-RU')} ₽**; средняя выплата на проверку **${legacy.payoutPerCheckRub.toLocaleString('ru-RU')} ₽**.
 
-**IRIS 1.2:** ${natural.createdSeries} серий, ${natural.positivePayoutChecks} проверок с выплатой, всего **${natural.grossPayoutRub.toLocaleString('ru-RU')} ₽**.
+**IRIS 1.2:** ${natural.createdSeries} серий, ${natural.positivePayoutChecks} проверок с выплатой, всего **${natural.grossPayoutRub.toLocaleString('ru-RU')} ₽**; средняя выплата на проверку **${natural.payoutPerCheckRub.toLocaleString('ru-RU')} ₽**.
 
 Разница по выплатам: **${delta.grossPayoutRub>=0?'+':''}${delta.grossPayoutRub.toLocaleString('ru-RU')} ₽**.
 
