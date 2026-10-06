@@ -3,6 +3,14 @@
   const $=id=>document.getElementById(id);
   const DBSTORE=window.POZITRON_V63_STORE;
   const ENGINE=window.POZITRON_V63_ENGINE;
+  const APP_INFO=window.POZITRON_V63_VERSION||{version:'6.3',build:'63'};
+  const APP_VERSION=String(APP_INFO.version||'6.3');
+  const APP_BUILD=String(APP_INFO.build||APP_VERSION.replace(/\D/g,''));
+  function applyAppVersion(){
+    document.title=`ПОЗИТРОН КЕНО v${APP_VERSION}`;
+    document.querySelectorAll('[data-app-version]').forEach(el=>{el.textContent=APP_VERSION});
+    document.querySelectorAll('[data-app-build]').forEach(el=>{el.textContent=APP_BUILD});
+  }
   const pad=n=>String(Number(n)).padStart(2,'0');
   const normDate=v=>{
     v=String(v||'').trim();
@@ -174,7 +182,7 @@
         saveLocal();networkReady=true;
         if(DBSTORE)await DBSTORE.saveDraws(draws).catch(()=>{});
         await fetchFingerprintServer();
-        $('status').textContent=`v6.3 STOLOTO SERVER · база: ${draws.length.toLocaleString('ru-RU')} · последний №${draws.at(-1).draw}`;
+        $('status').textContent=`v${APP_VERSION} STOLOTO SERVER · база: ${draws.length.toLocaleString('ru-RU')} · последний №${draws.at(-1).draw}`;
         renderAll();return true;
       }
       throw new Error('Локальная серверная история пуста');
@@ -405,8 +413,8 @@
     startAuto();setTimeout(()=>refresh(false),0);
   });
 
-  updatePanelButtons();startAuto();fetchFresh().catch(()=>{});
+  applyAppVersion();updatePanelButtons();startAuto();fetchFresh().catch(()=>{});
   if('serviceWorker' in navigator){
-    window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=6313',{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{}));
+    window.addEventListener('load',()=>navigator.serviceWorker.register(`./sw.js?v=${APP_BUILD}`,{updateViaCache:'none'}).then(r=>r.update()).catch(()=>{}));
   }
 })();
