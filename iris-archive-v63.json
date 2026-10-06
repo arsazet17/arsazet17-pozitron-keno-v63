@@ -1,16 +1,16 @@
 {
   "version": "iris-1.1.0",
-  "updatedAt": "2026-10-06T00:23:53.501Z",
-  "sourceCutoff": 328943,
+  "updatedAt": "2026-10-06T00:41:41.612Z",
+  "sourceCutoff": 328944,
   "evaluation": {
     "version": "iris-1.1.0",
     "state": "allowed",
     "signal": "PLAY",
-    "sourceCutoff": 328943,
+    "sourceCutoff": 328944,
     "next": {
-      "draw": 328944,
+      "draw": 328945,
       "date": "2026-10-06",
-      "time": "03:32"
+      "time": "04:02"
     },
     "permissionA": true,
     "permissionB": false,
@@ -19,10 +19,10 @@
         "mode": "IRIS",
         "numbers": [
           2,
-          8,
+          11,
           12,
-          18,
           22,
+          26,
           32,
           36,
           42,
@@ -31,14 +31,14 @@
         ],
         "motif": "ритм-якоря + вертикали/±2 · допускаются несколько фрагментов",
         "metrics": {
-          "links": 17,
-          "vertical": 17,
+          "links": 18,
+          "vertical": 18,
           "horizontal": 0,
           "diagonal": 0,
           "rowCounts": [
-            2,
-            2,
             1,
+            2,
+            2,
             2,
             1,
             1,
@@ -47,60 +47,21 @@
           ],
           "maxPerRow": 2,
           "rowsUsed": 7,
-          "strong": 6,
-          "near": 2,
+          "strong": 7,
+          "near": 0,
           "seen": 10,
           "connected": false,
           "components": 3,
           "componentSizes": [
             6,
-            2,
-            2
+            3,
+            1
           ]
         },
         "reason": [
           {
-            "n": 42,
-            "row": 4,
-            "col": 1,
-            "code": "11010",
-            "code4": "1010",
-            "count": 3,
-            "count4": 2,
-            "gap": 1,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 32,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 2,
-                "type": "вертикаль +40"
-              },
-              {
-                "n": 12,
-                "type": "вертикаль +30"
-              },
-              {
-                "n": 52,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 22,
-                "type": "вертикаль +20"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 32,
-            "row": 3,
+            "n": 2,
+            "row": 0,
             "col": 1,
             "code": "01010",
             "code4": "1010",
@@ -115,12 +76,51 @@
             "role": "ритм-якорь",
             "links": [
               {
+                "n": 32,
+                "type": "вертикаль +30"
+              },
+              {
                 "n": 42,
+                "type": "вертикаль +40"
+              },
+              {
+                "n": 12,
                 "type": "вертикаль +10"
               },
               {
+                "n": 52,
+                "type": "вертикаль +50"
+              },
+              {
+                "n": 22,
+                "type": "вертикаль +20"
+              }
+            ],
+            "permissionReason": "сильный ритм — якорь IRIS"
+          },
+          {
+            "n": 32,
+            "row": 3,
+            "col": 1,
+            "code": "10100",
+            "code4": "0100",
+            "count": 2,
+            "count4": 1,
+            "gap": 2,
+            "strong": true,
+            "near": false,
+            "seen": true,
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
+            "links": [
+              {
                 "n": 2,
                 "type": "вертикаль +30"
+              },
+              {
+                "n": 42,
+                "type": "вертикаль +10"
               },
               {
                 "n": 12,
@@ -138,53 +138,53 @@
             "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
-            "n": 2,
-            "row": 0,
+            "n": 42,
+            "row": 4,
             "col": 1,
-            "code": "00101",
-            "code4": "0101",
+            "code": "10100",
+            "code4": "0100",
             "count": 2,
-            "count4": 2,
-            "gap": 0,
-            "strong": false,
-            "near": true,
+            "count4": 1,
+            "gap": 2,
+            "strong": true,
+            "near": false,
             "seen": true,
-            "anchor": false,
+            "anchor": true,
             "temporalAllowed": true,
-            "role": "геометрическое продолжение",
+            "role": "ритм-якорь",
             "links": [
               {
-                "n": 42,
+                "n": 2,
                 "type": "вертикаль +40"
               },
               {
                 "n": 32,
-                "type": "вертикаль +30"
-              },
-              {
-                "n": 12,
                 "type": "вертикаль +10"
               },
               {
+                "n": 12,
+                "type": "вертикаль +30"
+              },
+              {
                 "n": 52,
-                "type": "вертикаль +50"
+                "type": "вертикаль +10"
               },
               {
                 "n": 22,
                 "type": "вертикаль +20"
               }
             ],
-            "permissionReason": "поддерживающий ритм + структура"
+            "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
             "n": 12,
             "row": 1,
             "col": 1,
-            "code": "00100",
-            "code4": "0100",
+            "code": "01000",
+            "code4": "1000",
             "count": 1,
             "count4": 1,
-            "gap": 2,
+            "gap": 3,
             "strong": false,
             "near": false,
             "seen": true,
@@ -193,16 +193,16 @@
             "role": "геометрическое продолжение",
             "links": [
               {
-                "n": 42,
-                "type": "вертикаль +30"
+                "n": 2,
+                "type": "вертикаль +10"
               },
               {
                 "n": 32,
                 "type": "вертикаль +20"
               },
               {
-                "n": 2,
-                "type": "вертикаль +10"
+                "n": 42,
+                "type": "вертикаль +30"
               },
               {
                 "n": 52,
@@ -219,11 +219,11 @@
             "n": 52,
             "row": 5,
             "col": 1,
-            "code": "00100",
-            "code4": "0100",
+            "code": "01000",
+            "code4": "1000",
             "count": 1,
             "count4": 1,
-            "gap": 2,
+            "gap": 3,
             "strong": false,
             "near": false,
             "seen": true,
@@ -232,16 +232,16 @@
             "role": "геометрическое продолжение",
             "links": [
               {
-                "n": 42,
-                "type": "вертикаль +10"
+                "n": 2,
+                "type": "вертикаль +50"
               },
               {
                 "n": 32,
                 "type": "вертикаль +20"
               },
               {
-                "n": 2,
-                "type": "вертикаль +50"
+                "n": 42,
+                "type": "вертикаль +10"
               },
               {
                 "n": 12,
@@ -258,11 +258,11 @@
             "n": 22,
             "row": 2,
             "col": 1,
-            "code": "01000",
-            "code4": "1000",
+            "code": "10000",
+            "code4": "0000",
             "count": 1,
-            "count4": 1,
-            "gap": 3,
+            "count4": 0,
+            "gap": 4,
             "strong": false,
             "near": false,
             "seen": true,
@@ -271,7 +271,7 @@
             "role": "геометрическое продолжение",
             "links": [
               {
-                "n": 42,
+                "n": 2,
                 "type": "вертикаль +20"
               },
               {
@@ -279,7 +279,7 @@
                 "type": "вертикаль +10"
               },
               {
-                "n": 2,
+                "n": 42,
                 "type": "вертикаль +20"
               },
               {
@@ -294,32 +294,54 @@
             "permissionReason": "структурное продолжение от якоря"
           },
           {
-            "n": 36,
-            "row": 3,
+            "n": 26,
+            "row": 2,
             "col": 5,
-            "code": "10101",
-            "code4": "0101",
+            "code": "11010",
+            "code4": "1010",
             "count": 3,
             "count4": 2,
-            "gap": 0,
+            "gap": 1,
             "strong": true,
-            "near": true,
+            "near": false,
             "seen": true,
             "anchor": true,
             "temporalAllowed": true,
             "role": "ритм-якорь",
             "links": [
               {
+                "n": 36,
+                "type": "вертикаль +10"
+              },
+              {
                 "n": 76,
-                "type": "вертикаль +40"
+                "type": "вертикаль +50"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
-            "n": 8,
-            "row": 0,
-            "col": 7,
+            "n": 11,
+            "row": 1,
+            "col": 0,
+            "code": "01010",
+            "code4": "1010",
+            "count": 2,
+            "count4": 2,
+            "gap": 1,
+            "strong": true,
+            "near": false,
+            "seen": true,
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
+            "links": [],
+            "permissionReason": "сильный ритм — якорь IRIS"
+          },
+          {
+            "n": 36,
+            "row": 3,
+            "col": 5,
             "code": "01010",
             "code4": "1010",
             "count": 2,
@@ -333,8 +355,12 @@
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 18,
+                "n": 26,
                 "type": "вертикаль +10"
+              },
+              {
+                "n": 76,
+                "type": "вертикаль +40"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
@@ -343,29 +369,6 @@
             "n": 76,
             "row": 7,
             "col": 5,
-            "code": "11010",
-            "code4": "1010",
-            "count": 3,
-            "count4": 2,
-            "gap": 1,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 36,
-                "type": "вертикаль +40"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 18,
-            "row": 1,
-            "col": 7,
             "code": "10100",
             "code4": "0100",
             "count": 2,
@@ -379,102 +382,67 @@
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 8,
-                "type": "вертикаль +10"
+                "n": 26,
+                "type": "вертикаль +50"
+              },
+              {
+                "n": 36,
+                "type": "вертикаль +40"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
           }
         ],
-        "score": 92.10000000000001,
+        "score": 101.99999999999999,
         "permissionB": false
       },
       {
         "mode": "IRIS",
         "numbers": [
-          8,
+          2,
+          11,
           16,
-          18,
           26,
+          32,
           36,
           42,
-          55,
           56,
           66,
           76
         ],
         "motif": "ритм-якоря + вертикали/±2 · допускаются несколько фрагментов",
         "metrics": {
-          "links": 17,
-          "vertical": 16,
-          "horizontal": 1,
+          "links": 18,
+          "vertical": 18,
+          "horizontal": 0,
           "diagonal": 0,
           "rowCounts": [
             1,
             2,
             1,
-            1,
-            1,
             2,
+            1,
+            1,
             1,
             1
           ],
           "maxPerRow": 2,
           "rowsUsed": 8,
-          "strong": 6,
-          "near": 2,
+          "strong": 7,
+          "near": 0,
           "seen": 10,
           "connected": false,
           "components": 3,
           "componentSizes": [
-            8,
-            1,
+            6,
+            3,
             1
           ]
         },
         "reason": [
           {
-            "n": 36,
-            "row": 3,
-            "col": 5,
-            "code": "10101",
-            "code4": "0101",
-            "count": 3,
-            "count4": 2,
-            "gap": 0,
-            "strong": true,
-            "near": true,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 76,
-                "type": "вертикаль +40"
-              },
-              {
-                "n": 26,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 56,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 66,
-                "type": "вертикаль +30"
-              },
-              {
-                "n": 16,
-                "type": "вертикаль +20"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 76,
-            "row": 7,
+            "n": 26,
+            "row": 2,
             "col": 5,
             "code": "11010",
             "code4": "1010",
@@ -490,45 +458,6 @@
             "links": [
               {
                 "n": 36,
-                "type": "вертикаль +40"
-              },
-              {
-                "n": 26,
-                "type": "вертикаль +50"
-              },
-              {
-                "n": 56,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 66,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 16,
-                "type": "вертикаль +60"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 26,
-            "row": 2,
-            "col": 5,
-            "code": "11101",
-            "code4": "1101",
-            "count": 4,
-            "count4": 3,
-            "gap": 0,
-            "strong": false,
-            "near": true,
-            "seen": true,
-            "anchor": false,
-            "temporalAllowed": true,
-            "role": "геометрическое продолжение",
-            "links": [
-              {
-                "n": 36,
                 "type": "вертикаль +10"
               },
               {
@@ -540,19 +469,136 @@
                 "type": "вертикаль +30"
               },
               {
+                "n": 16,
+                "type": "вертикаль +10"
+              },
+              {
                 "n": 66,
+                "type": "вертикаль +40"
+              }
+            ],
+            "permissionReason": "сильный ритм — якорь IRIS"
+          },
+          {
+            "n": 36,
+            "row": 3,
+            "col": 5,
+            "code": "01010",
+            "code4": "1010",
+            "count": 2,
+            "count4": 2,
+            "gap": 1,
+            "strong": true,
+            "near": false,
+            "seen": true,
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
+            "links": [
+              {
+                "n": 26,
+                "type": "вертикаль +10"
+              },
+              {
+                "n": 76,
                 "type": "вертикаль +40"
               },
               {
+                "n": 56,
+                "type": "вертикаль +20"
+              },
+              {
                 "n": 16,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 66,
+                "type": "вертикаль +30"
+              }
+            ],
+            "permissionReason": "сильный ритм — якорь IRIS"
+          },
+          {
+            "n": 76,
+            "row": 7,
+            "col": 5,
+            "code": "10100",
+            "code4": "0100",
+            "count": 2,
+            "count4": 1,
+            "gap": 2,
+            "strong": true,
+            "near": false,
+            "seen": true,
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
+            "links": [
+              {
+                "n": 26,
+                "type": "вертикаль +50"
+              },
+              {
+                "n": 36,
+                "type": "вертикаль +40"
+              },
+              {
+                "n": 56,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 16,
+                "type": "вертикаль +60"
+              },
+              {
+                "n": 66,
                 "type": "вертикаль +10"
               }
             ],
-            "permissionReason": "поддерживающий ритм + структура"
+            "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
             "n": 56,
             "row": 5,
+            "col": 5,
+            "code": "00011",
+            "code4": "0011",
+            "count": 2,
+            "count4": 2,
+            "gap": 0,
+            "strong": false,
+            "near": false,
+            "seen": true,
+            "anchor": false,
+            "temporalAllowed": false,
+            "role": "геометрическое продолжение",
+            "links": [
+              {
+                "n": 26,
+                "type": "вертикаль +30"
+              },
+              {
+                "n": 36,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 76,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 16,
+                "type": "вертикаль +40"
+              },
+              {
+                "n": 66,
+                "type": "вертикаль +10"
+              }
+            ],
+            "permissionReason": "структурное продолжение от якоря"
+          },
+          {
+            "n": 16,
+            "row": 1,
             "col": 5,
             "code": "00001",
             "code4": "0001",
@@ -567,24 +613,24 @@
             "role": "геометрическое продолжение",
             "links": [
               {
+                "n": 26,
+                "type": "вертикаль +10"
+              },
+              {
                 "n": 36,
                 "type": "вертикаль +20"
               },
               {
                 "n": 76,
-                "type": "вертикаль +20"
+                "type": "вертикаль +60"
               },
               {
-                "n": 26,
-                "type": "вертикаль +30"
+                "n": 56,
+                "type": "вертикаль +40"
               },
               {
                 "n": 66,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 16,
-                "type": "вертикаль +40"
+                "type": "вертикаль +50"
               }
             ],
             "permissionReason": "структурное продолжение от якоря"
@@ -593,11 +639,11 @@
             "n": 66,
             "row": 6,
             "col": 5,
-            "code": "00100",
-            "code4": "0100",
+            "code": "01000",
+            "code4": "1000",
             "count": 1,
             "count4": 1,
-            "gap": 2,
+            "gap": 3,
             "strong": false,
             "near": false,
             "seen": true,
@@ -606,16 +652,16 @@
             "role": "геометрическое продолжение",
             "links": [
               {
+                "n": 26,
+                "type": "вертикаль +40"
+              },
+              {
                 "n": 36,
                 "type": "вертикаль +30"
               },
               {
                 "n": 76,
                 "type": "вертикаль +10"
-              },
-              {
-                "n": 26,
-                "type": "вертикаль +40"
               },
               {
                 "n": 56,
@@ -629,93 +675,81 @@
             "permissionReason": "структурное продолжение от якоря"
           },
           {
-            "n": 16,
-            "row": 1,
-            "col": 5,
-            "code": "10000",
-            "code4": "0000",
-            "count": 1,
-            "count4": 0,
-            "gap": 4,
-            "strong": false,
+            "n": 2,
+            "row": 0,
+            "col": 1,
+            "code": "01010",
+            "code4": "1010",
+            "count": 2,
+            "count4": 2,
+            "gap": 1,
+            "strong": true,
             "near": false,
             "seen": true,
-            "anchor": false,
-            "temporalAllowed": false,
-            "role": "геометрическое продолжение",
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
             "links": [
               {
-                "n": 36,
-                "type": "вертикаль +20"
+                "n": 32,
+                "type": "вертикаль +30"
               },
               {
-                "n": 76,
-                "type": "вертикаль +60"
-              },
-              {
-                "n": 26,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 56,
+                "n": 42,
                 "type": "вертикаль +40"
-              },
-              {
-                "n": 66,
-                "type": "вертикаль +50"
-              },
-              {
-                "n": 18,
-                "type": "горизонталь +2"
               }
             ],
-            "permissionReason": "структурное продолжение от якоря"
+            "permissionReason": "сильный ритм — якорь IRIS"
+          },
+          {
+            "n": 11,
+            "row": 1,
+            "col": 0,
+            "code": "01010",
+            "code4": "1010",
+            "count": 2,
+            "count4": 2,
+            "gap": 1,
+            "strong": true,
+            "near": false,
+            "seen": true,
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
+            "links": [],
+            "permissionReason": "сильный ритм — якорь IRIS"
+          },
+          {
+            "n": 32,
+            "row": 3,
+            "col": 1,
+            "code": "10100",
+            "code4": "0100",
+            "count": 2,
+            "count4": 1,
+            "gap": 2,
+            "strong": true,
+            "near": false,
+            "seen": true,
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
+            "links": [
+              {
+                "n": 2,
+                "type": "вертикаль +30"
+              },
+              {
+                "n": 42,
+                "type": "вертикаль +10"
+              }
+            ],
+            "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
             "n": 42,
             "row": 4,
             "col": 1,
-            "code": "11010",
-            "code4": "1010",
-            "count": 3,
-            "count4": 2,
-            "gap": 1,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 8,
-            "row": 0,
-            "col": 7,
-            "code": "01010",
-            "code4": "1010",
-            "count": 2,
-            "count4": 2,
-            "gap": 1,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 18,
-                "type": "вертикаль +10"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 18,
-            "row": 1,
-            "col": 7,
             "code": "10100",
             "code4": "0100",
             "count": 2,
@@ -729,86 +763,68 @@
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 16,
-                "type": "горизонталь +2"
+                "n": 2,
+                "type": "вертикаль +40"
               },
               {
-                "n": 8,
+                "n": 32,
                 "type": "вертикаль +10"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 55,
-            "row": 5,
-            "col": 4,
-            "code": "01010",
-            "code4": "1010",
-            "count": 2,
-            "count4": 2,
-            "gap": 1,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [],
-            "permissionReason": "сильный ритм — якорь IRIS"
           }
         ],
-        "score": 91.7,
+        "score": 101.99999999999999,
         "permissionB": false
       },
       {
         "mode": "IRIS",
         "numbers": [
-          8,
-          18,
+          1,
+          2,
+          11,
+          21,
           26,
-          28,
           36,
-          42,
-          48,
-          55,
-          76,
-          78
+          41,
+          43,
+          61,
+          76
         ],
         "motif": "ритм-якоря + вертикали/±2 · допускаются несколько фрагментов",
         "metrics": {
-          "links": 15,
+          "links": 14,
           "vertical": 13,
-          "horizontal": 2,
+          "horizontal": 1,
           "diagonal": 0,
           "rowCounts": [
-            1,
-            1,
             2,
             1,
             2,
             1,
+            2,
             0,
-            2
+            1,
+            1
           ],
           "maxPerRow": 2,
           "rowsUsed": 7,
-          "strong": 6,
-          "near": 2,
+          "strong": 5,
+          "near": 0,
           "seen": 10,
           "connected": false,
           "components": 3,
           "componentSizes": [
-            8,
-            1,
+            6,
+            3,
             1
           ]
         },
         "reason": [
           {
-            "n": 8,
-            "row": 0,
-            "col": 7,
+            "n": 11,
+            "row": 1,
+            "col": 0,
             "code": "01010",
             "code4": "1010",
             "count": 2,
@@ -822,63 +838,28 @@
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 18,
+                "n": 21,
                 "type": "вертикаль +10"
               },
               {
-                "n": 28,
-                "type": "вертикаль +20"
+                "n": 61,
+                "type": "вертикаль +50"
               },
               {
-                "n": 48,
-                "type": "вертикаль +40"
-              },
-              {
-                "n": 78,
-                "type": "вертикаль +70"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 18,
-            "row": 1,
-            "col": 7,
-            "code": "10100",
-            "code4": "0100",
-            "count": 2,
-            "count4": 1,
-            "gap": 2,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 8,
+                "n": 1,
                 "type": "вертикаль +10"
               },
               {
-                "n": 28,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 48,
+                "n": 41,
                 "type": "вертикаль +30"
-              },
-              {
-                "n": 78,
-                "type": "вертикаль +60"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
-            "n": 28,
+            "n": 21,
             "row": 2,
-            "col": 7,
+            "col": 0,
             "code": "01001",
             "code4": "1001",
             "count": 2,
@@ -892,67 +873,98 @@
             "role": "геометрическое продолжение",
             "links": [
               {
-                "n": 8,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 18,
+                "n": 11,
                 "type": "вертикаль +10"
               },
               {
-                "n": 48,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 78,
-                "type": "вертикаль +50"
-              },
-              {
-                "n": 26,
-                "type": "горизонталь +2"
-              }
-            ],
-            "permissionReason": "структурное продолжение от якоря"
-          },
-          {
-            "n": 48,
-            "row": 4,
-            "col": 7,
-            "code": "00100",
-            "code4": "0100",
-            "count": 1,
-            "count4": 1,
-            "gap": 2,
-            "strong": false,
-            "near": false,
-            "seen": true,
-            "anchor": false,
-            "temporalAllowed": false,
-            "role": "геометрическое продолжение",
-            "links": [
-              {
-                "n": 8,
+                "n": 61,
                 "type": "вертикаль +40"
               },
               {
-                "n": 18,
-                "type": "вертикаль +30"
-              },
-              {
-                "n": 28,
+                "n": 1,
                 "type": "вертикаль +20"
               },
               {
-                "n": 78,
-                "type": "вертикаль +30"
+                "n": 41,
+                "type": "вертикаль +20"
               }
             ],
             "permissionReason": "структурное продолжение от якоря"
           },
           {
-            "n": 78,
-            "row": 7,
-            "col": 7,
+            "n": 61,
+            "row": 6,
+            "col": 0,
+            "code": "10001",
+            "code4": "0001",
+            "count": 2,
+            "count4": 1,
+            "gap": 0,
+            "strong": false,
+            "near": false,
+            "seen": true,
+            "anchor": false,
+            "temporalAllowed": false,
+            "role": "геометрическое продолжение",
+            "links": [
+              {
+                "n": 11,
+                "type": "вертикаль +50"
+              },
+              {
+                "n": 21,
+                "type": "вертикаль +40"
+              },
+              {
+                "n": 1,
+                "type": "вертикаль +60"
+              },
+              {
+                "n": 41,
+                "type": "вертикаль +20"
+              }
+            ],
+            "permissionReason": "структурное продолжение от якоря"
+          },
+          {
+            "n": 1,
+            "row": 0,
+            "col": 0,
+            "code": "10010",
+            "code4": "0010",
+            "count": 2,
+            "count4": 1,
+            "gap": 1,
+            "strong": false,
+            "near": false,
+            "seen": true,
+            "anchor": false,
+            "temporalAllowed": false,
+            "role": "геометрическое продолжение",
+            "links": [
+              {
+                "n": 11,
+                "type": "вертикаль +10"
+              },
+              {
+                "n": 21,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 61,
+                "type": "вертикаль +60"
+              },
+              {
+                "n": 41,
+                "type": "вертикаль +40"
+              }
+            ],
+            "permissionReason": "структурное продолжение от якоря"
+          },
+          {
+            "n": 41,
+            "row": 4,
+            "col": 0,
             "code": "00100",
             "code4": "0100",
             "count": 1,
@@ -966,31 +978,54 @@
             "role": "геометрическое продолжение",
             "links": [
               {
-                "n": 8,
-                "type": "вертикаль +70"
-              },
-              {
-                "n": 18,
-                "type": "вертикаль +60"
-              },
-              {
-                "n": 28,
-                "type": "вертикаль +50"
-              },
-              {
-                "n": 48,
+                "n": 11,
                 "type": "вертикаль +30"
               },
               {
-                "n": 76,
+                "n": 21,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 61,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 1,
+                "type": "вертикаль +40"
+              },
+              {
+                "n": 43,
                 "type": "горизонталь +2"
               }
             ],
             "permissionReason": "структурное продолжение от якоря"
           },
           {
-            "n": 76,
-            "row": 7,
+            "n": 43,
+            "row": 4,
+            "col": 2,
+            "code": "00011",
+            "code4": "0011",
+            "count": 2,
+            "count4": 2,
+            "gap": 0,
+            "strong": false,
+            "near": false,
+            "seen": true,
+            "anchor": false,
+            "temporalAllowed": false,
+            "role": "геометрическое продолжение",
+            "links": [
+              {
+                "n": 41,
+                "type": "горизонталь +2"
+              }
+            ],
+            "permissionReason": "структурное продолжение от якоря"
+          },
+          {
+            "n": 26,
+            "row": 2,
             "col": 5,
             "code": "11010",
             "code4": "1010",
@@ -1005,42 +1040,20 @@
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 78,
-                "type": "горизонталь +2"
-              },
-              {
                 "n": 36,
-                "type": "вертикаль +40"
+                "type": "вертикаль +10"
               },
               {
-                "n": 26,
+                "n": 76,
                 "type": "вертикаль +50"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
-            "n": 42,
-            "row": 4,
+            "n": 2,
+            "row": 0,
             "col": 1,
-            "code": "11010",
-            "code4": "1010",
-            "count": 3,
-            "count4": 2,
-            "gap": 1,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 55,
-            "row": 5,
-            "col": 4,
             "code": "01010",
             "code4": "1010",
             "count": 2,
@@ -1059,62 +1072,58 @@
             "n": 36,
             "row": 3,
             "col": 5,
-            "code": "10101",
-            "code4": "0101",
-            "count": 3,
+            "code": "01010",
+            "code4": "1010",
+            "count": 2,
             "count4": 2,
-            "gap": 0,
+            "gap": 1,
             "strong": true,
-            "near": true,
+            "near": false,
             "seen": true,
             "anchor": true,
             "temporalAllowed": true,
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 76,
-                "type": "вертикаль +40"
-              },
-              {
                 "n": 26,
                 "type": "вертикаль +10"
+              },
+              {
+                "n": 76,
+                "type": "вертикаль +40"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
-            "n": 26,
-            "row": 2,
+            "n": 76,
+            "row": 7,
             "col": 5,
-            "code": "11101",
-            "code4": "1101",
-            "count": 4,
-            "count4": 3,
-            "gap": 0,
-            "strong": false,
-            "near": true,
+            "code": "10100",
+            "code4": "0100",
+            "count": 2,
+            "count4": 1,
+            "gap": 2,
+            "strong": true,
+            "near": false,
             "seen": true,
-            "anchor": false,
+            "anchor": true,
             "temporalAllowed": true,
-            "role": "геометрическое продолжение",
+            "role": "ритм-якорь",
             "links": [
               {
-                "n": 28,
-                "type": "горизонталь +2"
-              },
-              {
-                "n": 76,
+                "n": 26,
                 "type": "вертикаль +50"
               },
               {
                 "n": 36,
-                "type": "вертикаль +10"
+                "type": "вертикаль +40"
               }
             ],
-            "permissionReason": "поддерживающий ритм + структура"
+            "permissionReason": "сильный ритм — якорь IRIS"
           }
         ],
-        "score": 86.69999999999999,
+        "score": 74.39999999999999,
         "permissionB": false
       },
       {
@@ -1142,8 +1151,8 @@
           ],
           "maxPerRow": 1,
           "rowsUsed": 3,
-          "strong": 2,
-          "near": 1,
+          "strong": 3,
+          "near": 0,
           "seen": 3,
           "connected": true,
           "components": 1,
@@ -1153,8 +1162,8 @@
         },
         "reason": [
           {
-            "n": 32,
-            "row": 3,
+            "n": 2,
+            "row": 0,
             "col": 1,
             "code": "01010",
             "code4": "1010",
@@ -1169,25 +1178,25 @@
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 42,
-                "type": "вертикаль +10"
+                "n": 32,
+                "type": "вертикаль +30"
               },
               {
-                "n": 2,
-                "type": "вертикаль +30"
+                "n": 42,
+                "type": "вертикаль +40"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
-            "n": 42,
-            "row": 4,
+            "n": 32,
+            "row": 3,
             "col": 1,
-            "code": "11010",
-            "code4": "1010",
-            "count": 3,
-            "count4": 2,
-            "gap": 1,
+            "code": "10100",
+            "code4": "0100",
+            "count": 2,
+            "count4": 1,
+            "gap": 2,
             "strong": true,
             "near": false,
             "seen": true,
@@ -1196,45 +1205,45 @@
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 32,
-                "type": "вертикаль +10"
+                "n": 2,
+                "type": "вертикаль +30"
               },
               {
-                "n": 2,
-                "type": "вертикаль +40"
+                "n": 42,
+                "type": "вертикаль +10"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
-            "n": 2,
-            "row": 0,
+            "n": 42,
+            "row": 4,
             "col": 1,
-            "code": "00101",
-            "code4": "0101",
+            "code": "10100",
+            "code4": "0100",
             "count": 2,
-            "count4": 2,
-            "gap": 0,
-            "strong": false,
-            "near": true,
+            "count4": 1,
+            "gap": 2,
+            "strong": true,
+            "near": false,
             "seen": true,
-            "anchor": false,
+            "anchor": true,
             "temporalAllowed": true,
-            "role": "геометрическое продолжение",
+            "role": "ритм-якорь",
             "links": [
               {
-                "n": 32,
-                "type": "вертикаль +30"
+                "n": 2,
+                "type": "вертикаль +40"
               },
               {
-                "n": 42,
-                "type": "вертикаль +40"
+                "n": 32,
+                "type": "вертикаль +10"
               }
             ],
-            "permissionReason": "поддерживающий ритм + структура"
+            "permissionReason": "сильный ритм — якорь IRIS"
           }
         ],
-        "score": 21,
+        "score": 27,
         "permissionB": false
       },
       {
@@ -1263,8 +1272,8 @@
           ],
           "maxPerRow": 1,
           "rowsUsed": 4,
-          "strong": 2,
-          "near": 1,
+          "strong": 3,
+          "near": 0,
           "seen": 4,
           "connected": true,
           "components": 1,
@@ -1274,8 +1283,8 @@
         },
         "reason": [
           {
-            "n": 32,
-            "row": 3,
+            "n": 2,
+            "row": 0,
             "col": 1,
             "code": "01010",
             "code4": "1010",
@@ -1290,12 +1299,43 @@
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 42,
-                "type": "вертикаль +10"
+                "n": 32,
+                "type": "вертикаль +30"
               },
+              {
+                "n": 42,
+                "type": "вертикаль +40"
+              },
+              {
+                "n": 12,
+                "type": "вертикаль +10"
+              }
+            ],
+            "permissionReason": "сильный ритм — якорь IRIS"
+          },
+          {
+            "n": 32,
+            "row": 3,
+            "col": 1,
+            "code": "10100",
+            "code4": "0100",
+            "count": 2,
+            "count4": 1,
+            "gap": 2,
+            "strong": true,
+            "near": false,
+            "seen": true,
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
+            "links": [
               {
                 "n": 2,
                 "type": "вертикаль +30"
+              },
+              {
+                "n": 42,
+                "type": "вертикаль +10"
               },
               {
                 "n": 12,
@@ -1308,11 +1348,11 @@
             "n": 42,
             "row": 4,
             "col": 1,
-            "code": "11010",
-            "code4": "1010",
-            "count": 3,
-            "count4": 2,
-            "gap": 1,
+            "code": "10100",
+            "code4": "0100",
+            "count": 2,
+            "count4": 1,
+            "gap": 2,
             "strong": true,
             "near": false,
             "seen": true,
@@ -1321,12 +1361,12 @@
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 32,
-                "type": "вертикаль +10"
-              },
-              {
                 "n": 2,
                 "type": "вертикаль +40"
+              },
+              {
+                "n": 32,
+                "type": "вертикаль +10"
               },
               {
                 "n": 12,
@@ -1336,45 +1376,14 @@
             "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
-            "n": 2,
-            "row": 0,
-            "col": 1,
-            "code": "00101",
-            "code4": "0101",
-            "count": 2,
-            "count4": 2,
-            "gap": 0,
-            "strong": false,
-            "near": true,
-            "seen": true,
-            "anchor": false,
-            "temporalAllowed": true,
-            "role": "геометрическое продолжение",
-            "links": [
-              {
-                "n": 32,
-                "type": "вертикаль +30"
-              },
-              {
-                "n": 42,
-                "type": "вертикаль +40"
-              },
-              {
-                "n": 12,
-                "type": "вертикаль +10"
-              }
-            ],
-            "permissionReason": "поддерживающий ритм + структура"
-          },
-          {
             "n": 12,
             "row": 1,
             "col": 1,
-            "code": "00100",
-            "code4": "0100",
+            "code": "01000",
+            "code4": "1000",
             "count": 1,
             "count4": 1,
-            "gap": 2,
+            "gap": 3,
             "strong": false,
             "near": false,
             "seen": true,
@@ -1383,22 +1392,22 @@
             "role": "геометрическое продолжение",
             "links": [
               {
+                "n": 2,
+                "type": "вертикаль +10"
+              },
+              {
                 "n": 32,
                 "type": "вертикаль +20"
               },
               {
                 "n": 42,
                 "type": "вертикаль +30"
-              },
-              {
-                "n": 2,
-                "type": "вертикаль +10"
               }
             ],
             "permissionReason": "структурное продолжение от якоря"
           }
         ],
-        "score": 30,
+        "score": 36,
         "permissionB": false
       }
     ],
@@ -1407,10 +1416,10 @@
         "mode": "IRIS",
         "numbers": [
           2,
-          8,
+          11,
           12,
-          18,
           22,
+          26,
           32,
           36,
           42,
@@ -1419,14 +1428,14 @@
         ],
         "motif": "ритм-якоря + вертикали/±2 · допускаются несколько фрагментов",
         "metrics": {
-          "links": 17,
-          "vertical": 17,
+          "links": 18,
+          "vertical": 18,
           "horizontal": 0,
           "diagonal": 0,
           "rowCounts": [
-            2,
-            2,
             1,
+            2,
+            2,
             2,
             1,
             1,
@@ -1435,60 +1444,21 @@
           ],
           "maxPerRow": 2,
           "rowsUsed": 7,
-          "strong": 6,
-          "near": 2,
+          "strong": 7,
+          "near": 0,
           "seen": 10,
           "connected": false,
           "components": 3,
           "componentSizes": [
             6,
-            2,
-            2
+            3,
+            1
           ]
         },
         "reason": [
           {
-            "n": 42,
-            "row": 4,
-            "col": 1,
-            "code": "11010",
-            "code4": "1010",
-            "count": 3,
-            "count4": 2,
-            "gap": 1,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 32,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 2,
-                "type": "вертикаль +40"
-              },
-              {
-                "n": 12,
-                "type": "вертикаль +30"
-              },
-              {
-                "n": 52,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 22,
-                "type": "вертикаль +20"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 32,
-            "row": 3,
+            "n": 2,
+            "row": 0,
             "col": 1,
             "code": "01010",
             "code4": "1010",
@@ -1503,51 +1473,12 @@
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 42,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 2,
+                "n": 32,
                 "type": "вертикаль +30"
               },
-              {
-                "n": 12,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 52,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 22,
-                "type": "вертикаль +10"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 2,
-            "row": 0,
-            "col": 1,
-            "code": "00101",
-            "code4": "0101",
-            "count": 2,
-            "count4": 2,
-            "gap": 0,
-            "strong": false,
-            "near": true,
-            "seen": true,
-            "anchor": false,
-            "temporalAllowed": true,
-            "role": "геометрическое продолжение",
-            "links": [
               {
                 "n": 42,
                 "type": "вертикаль +40"
-              },
-              {
-                "n": 32,
-                "type": "вертикаль +30"
               },
               {
                 "n": 12,
@@ -1562,17 +1493,95 @@
                 "type": "вертикаль +20"
               }
             ],
-            "permissionReason": "поддерживающий ритм + структура"
+            "permissionReason": "сильный ритм — якорь IRIS"
+          },
+          {
+            "n": 32,
+            "row": 3,
+            "col": 1,
+            "code": "10100",
+            "code4": "0100",
+            "count": 2,
+            "count4": 1,
+            "gap": 2,
+            "strong": true,
+            "near": false,
+            "seen": true,
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
+            "links": [
+              {
+                "n": 2,
+                "type": "вертикаль +30"
+              },
+              {
+                "n": 42,
+                "type": "вертикаль +10"
+              },
+              {
+                "n": 12,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 52,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 22,
+                "type": "вертикаль +10"
+              }
+            ],
+            "permissionReason": "сильный ритм — якорь IRIS"
+          },
+          {
+            "n": 42,
+            "row": 4,
+            "col": 1,
+            "code": "10100",
+            "code4": "0100",
+            "count": 2,
+            "count4": 1,
+            "gap": 2,
+            "strong": true,
+            "near": false,
+            "seen": true,
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
+            "links": [
+              {
+                "n": 2,
+                "type": "вертикаль +40"
+              },
+              {
+                "n": 32,
+                "type": "вертикаль +10"
+              },
+              {
+                "n": 12,
+                "type": "вертикаль +30"
+              },
+              {
+                "n": 52,
+                "type": "вертикаль +10"
+              },
+              {
+                "n": 22,
+                "type": "вертикаль +20"
+              }
+            ],
+            "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
             "n": 12,
             "row": 1,
             "col": 1,
-            "code": "00100",
-            "code4": "0100",
+            "code": "01000",
+            "code4": "1000",
             "count": 1,
             "count4": 1,
-            "gap": 2,
+            "gap": 3,
             "strong": false,
             "near": false,
             "seen": true,
@@ -1581,16 +1590,16 @@
             "role": "геометрическое продолжение",
             "links": [
               {
-                "n": 42,
-                "type": "вертикаль +30"
+                "n": 2,
+                "type": "вертикаль +10"
               },
               {
                 "n": 32,
                 "type": "вертикаль +20"
               },
               {
-                "n": 2,
-                "type": "вертикаль +10"
+                "n": 42,
+                "type": "вертикаль +30"
               },
               {
                 "n": 52,
@@ -1607,11 +1616,11 @@
             "n": 52,
             "row": 5,
             "col": 1,
-            "code": "00100",
-            "code4": "0100",
+            "code": "01000",
+            "code4": "1000",
             "count": 1,
             "count4": 1,
-            "gap": 2,
+            "gap": 3,
             "strong": false,
             "near": false,
             "seen": true,
@@ -1620,16 +1629,16 @@
             "role": "геометрическое продолжение",
             "links": [
               {
-                "n": 42,
-                "type": "вертикаль +10"
+                "n": 2,
+                "type": "вертикаль +50"
               },
               {
                 "n": 32,
                 "type": "вертикаль +20"
               },
               {
-                "n": 2,
-                "type": "вертикаль +50"
+                "n": 42,
+                "type": "вертикаль +10"
               },
               {
                 "n": 12,
@@ -1646,11 +1655,11 @@
             "n": 22,
             "row": 2,
             "col": 1,
-            "code": "01000",
-            "code4": "1000",
+            "code": "10000",
+            "code4": "0000",
             "count": 1,
-            "count4": 1,
-            "gap": 3,
+            "count4": 0,
+            "gap": 4,
             "strong": false,
             "near": false,
             "seen": true,
@@ -1659,7 +1668,7 @@
             "role": "геометрическое продолжение",
             "links": [
               {
-                "n": 42,
+                "n": 2,
                 "type": "вертикаль +20"
               },
               {
@@ -1667,7 +1676,7 @@
                 "type": "вертикаль +10"
               },
               {
-                "n": 2,
+                "n": 42,
                 "type": "вертикаль +20"
               },
               {
@@ -1682,32 +1691,54 @@
             "permissionReason": "структурное продолжение от якоря"
           },
           {
-            "n": 36,
-            "row": 3,
+            "n": 26,
+            "row": 2,
             "col": 5,
-            "code": "10101",
-            "code4": "0101",
+            "code": "11010",
+            "code4": "1010",
             "count": 3,
             "count4": 2,
-            "gap": 0,
+            "gap": 1,
             "strong": true,
-            "near": true,
+            "near": false,
             "seen": true,
             "anchor": true,
             "temporalAllowed": true,
             "role": "ритм-якорь",
             "links": [
               {
+                "n": 36,
+                "type": "вертикаль +10"
+              },
+              {
                 "n": 76,
-                "type": "вертикаль +40"
+                "type": "вертикаль +50"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
-            "n": 8,
-            "row": 0,
-            "col": 7,
+            "n": 11,
+            "row": 1,
+            "col": 0,
+            "code": "01010",
+            "code4": "1010",
+            "count": 2,
+            "count4": 2,
+            "gap": 1,
+            "strong": true,
+            "near": false,
+            "seen": true,
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
+            "links": [],
+            "permissionReason": "сильный ритм — якорь IRIS"
+          },
+          {
+            "n": 36,
+            "row": 3,
+            "col": 5,
             "code": "01010",
             "code4": "1010",
             "count": 2,
@@ -1721,8 +1752,12 @@
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 18,
+                "n": 26,
                 "type": "вертикаль +10"
+              },
+              {
+                "n": 76,
+                "type": "вертикаль +40"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
@@ -1731,29 +1766,6 @@
             "n": 76,
             "row": 7,
             "col": 5,
-            "code": "11010",
-            "code4": "1010",
-            "count": 3,
-            "count4": 2,
-            "gap": 1,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 36,
-                "type": "вертикаль +40"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 18,
-            "row": 1,
-            "col": 7,
             "code": "10100",
             "code4": "0100",
             "count": 2,
@@ -1767,101 +1779,66 @@
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 8,
-                "type": "вертикаль +10"
+                "n": 26,
+                "type": "вертикаль +50"
+              },
+              {
+                "n": 36,
+                "type": "вертикаль +40"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
           }
         ],
-        "score": 92.10000000000001
+        "score": 101.99999999999999
       },
       {
         "mode": "IRIS",
         "numbers": [
-          8,
+          2,
+          11,
           16,
-          18,
           26,
+          32,
           36,
           42,
-          55,
           56,
           66,
           76
         ],
         "motif": "ритм-якоря + вертикали/±2 · допускаются несколько фрагментов",
         "metrics": {
-          "links": 17,
-          "vertical": 16,
-          "horizontal": 1,
+          "links": 18,
+          "vertical": 18,
+          "horizontal": 0,
           "diagonal": 0,
           "rowCounts": [
             1,
             2,
             1,
-            1,
-            1,
             2,
+            1,
+            1,
             1,
             1
           ],
           "maxPerRow": 2,
           "rowsUsed": 8,
-          "strong": 6,
-          "near": 2,
+          "strong": 7,
+          "near": 0,
           "seen": 10,
           "connected": false,
           "components": 3,
           "componentSizes": [
-            8,
-            1,
+            6,
+            3,
             1
           ]
         },
         "reason": [
           {
-            "n": 36,
-            "row": 3,
-            "col": 5,
-            "code": "10101",
-            "code4": "0101",
-            "count": 3,
-            "count4": 2,
-            "gap": 0,
-            "strong": true,
-            "near": true,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 76,
-                "type": "вертикаль +40"
-              },
-              {
-                "n": 26,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 56,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 66,
-                "type": "вертикаль +30"
-              },
-              {
-                "n": 16,
-                "type": "вертикаль +20"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 76,
-            "row": 7,
+            "n": 26,
+            "row": 2,
             "col": 5,
             "code": "11010",
             "code4": "1010",
@@ -1877,45 +1854,6 @@
             "links": [
               {
                 "n": 36,
-                "type": "вертикаль +40"
-              },
-              {
-                "n": 26,
-                "type": "вертикаль +50"
-              },
-              {
-                "n": 56,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 66,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 16,
-                "type": "вертикаль +60"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 26,
-            "row": 2,
-            "col": 5,
-            "code": "11101",
-            "code4": "1101",
-            "count": 4,
-            "count4": 3,
-            "gap": 0,
-            "strong": false,
-            "near": true,
-            "seen": true,
-            "anchor": false,
-            "temporalAllowed": true,
-            "role": "геометрическое продолжение",
-            "links": [
-              {
-                "n": 36,
                 "type": "вертикаль +10"
               },
               {
@@ -1927,19 +1865,136 @@
                 "type": "вертикаль +30"
               },
               {
+                "n": 16,
+                "type": "вертикаль +10"
+              },
+              {
                 "n": 66,
+                "type": "вертикаль +40"
+              }
+            ],
+            "permissionReason": "сильный ритм — якорь IRIS"
+          },
+          {
+            "n": 36,
+            "row": 3,
+            "col": 5,
+            "code": "01010",
+            "code4": "1010",
+            "count": 2,
+            "count4": 2,
+            "gap": 1,
+            "strong": true,
+            "near": false,
+            "seen": true,
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
+            "links": [
+              {
+                "n": 26,
+                "type": "вертикаль +10"
+              },
+              {
+                "n": 76,
                 "type": "вертикаль +40"
               },
               {
+                "n": 56,
+                "type": "вертикаль +20"
+              },
+              {
                 "n": 16,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 66,
+                "type": "вертикаль +30"
+              }
+            ],
+            "permissionReason": "сильный ритм — якорь IRIS"
+          },
+          {
+            "n": 76,
+            "row": 7,
+            "col": 5,
+            "code": "10100",
+            "code4": "0100",
+            "count": 2,
+            "count4": 1,
+            "gap": 2,
+            "strong": true,
+            "near": false,
+            "seen": true,
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
+            "links": [
+              {
+                "n": 26,
+                "type": "вертикаль +50"
+              },
+              {
+                "n": 36,
+                "type": "вертикаль +40"
+              },
+              {
+                "n": 56,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 16,
+                "type": "вертикаль +60"
+              },
+              {
+                "n": 66,
                 "type": "вертикаль +10"
               }
             ],
-            "permissionReason": "поддерживающий ритм + структура"
+            "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
             "n": 56,
             "row": 5,
+            "col": 5,
+            "code": "00011",
+            "code4": "0011",
+            "count": 2,
+            "count4": 2,
+            "gap": 0,
+            "strong": false,
+            "near": false,
+            "seen": true,
+            "anchor": false,
+            "temporalAllowed": false,
+            "role": "геометрическое продолжение",
+            "links": [
+              {
+                "n": 26,
+                "type": "вертикаль +30"
+              },
+              {
+                "n": 36,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 76,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 16,
+                "type": "вертикаль +40"
+              },
+              {
+                "n": 66,
+                "type": "вертикаль +10"
+              }
+            ],
+            "permissionReason": "структурное продолжение от якоря"
+          },
+          {
+            "n": 16,
+            "row": 1,
             "col": 5,
             "code": "00001",
             "code4": "0001",
@@ -1954,24 +2009,24 @@
             "role": "геометрическое продолжение",
             "links": [
               {
+                "n": 26,
+                "type": "вертикаль +10"
+              },
+              {
                 "n": 36,
                 "type": "вертикаль +20"
               },
               {
                 "n": 76,
-                "type": "вертикаль +20"
+                "type": "вертикаль +60"
               },
               {
-                "n": 26,
-                "type": "вертикаль +30"
+                "n": 56,
+                "type": "вертикаль +40"
               },
               {
                 "n": 66,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 16,
-                "type": "вертикаль +40"
+                "type": "вертикаль +50"
               }
             ],
             "permissionReason": "структурное продолжение от якоря"
@@ -1980,11 +2035,11 @@
             "n": 66,
             "row": 6,
             "col": 5,
-            "code": "00100",
-            "code4": "0100",
+            "code": "01000",
+            "code4": "1000",
             "count": 1,
             "count4": 1,
-            "gap": 2,
+            "gap": 3,
             "strong": false,
             "near": false,
             "seen": true,
@@ -1993,16 +2048,16 @@
             "role": "геометрическое продолжение",
             "links": [
               {
+                "n": 26,
+                "type": "вертикаль +40"
+              },
+              {
                 "n": 36,
                 "type": "вертикаль +30"
               },
               {
                 "n": 76,
                 "type": "вертикаль +10"
-              },
-              {
-                "n": 26,
-                "type": "вертикаль +40"
               },
               {
                 "n": 56,
@@ -2016,93 +2071,81 @@
             "permissionReason": "структурное продолжение от якоря"
           },
           {
-            "n": 16,
-            "row": 1,
-            "col": 5,
-            "code": "10000",
-            "code4": "0000",
-            "count": 1,
-            "count4": 0,
-            "gap": 4,
-            "strong": false,
+            "n": 2,
+            "row": 0,
+            "col": 1,
+            "code": "01010",
+            "code4": "1010",
+            "count": 2,
+            "count4": 2,
+            "gap": 1,
+            "strong": true,
             "near": false,
             "seen": true,
-            "anchor": false,
-            "temporalAllowed": false,
-            "role": "геометрическое продолжение",
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
             "links": [
               {
-                "n": 36,
-                "type": "вертикаль +20"
+                "n": 32,
+                "type": "вертикаль +30"
               },
               {
-                "n": 76,
-                "type": "вертикаль +60"
-              },
-              {
-                "n": 26,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 56,
+                "n": 42,
                 "type": "вертикаль +40"
-              },
-              {
-                "n": 66,
-                "type": "вертикаль +50"
-              },
-              {
-                "n": 18,
-                "type": "горизонталь +2"
               }
             ],
-            "permissionReason": "структурное продолжение от якоря"
+            "permissionReason": "сильный ритм — якорь IRIS"
+          },
+          {
+            "n": 11,
+            "row": 1,
+            "col": 0,
+            "code": "01010",
+            "code4": "1010",
+            "count": 2,
+            "count4": 2,
+            "gap": 1,
+            "strong": true,
+            "near": false,
+            "seen": true,
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
+            "links": [],
+            "permissionReason": "сильный ритм — якорь IRIS"
+          },
+          {
+            "n": 32,
+            "row": 3,
+            "col": 1,
+            "code": "10100",
+            "code4": "0100",
+            "count": 2,
+            "count4": 1,
+            "gap": 2,
+            "strong": true,
+            "near": false,
+            "seen": true,
+            "anchor": true,
+            "temporalAllowed": true,
+            "role": "ритм-якорь",
+            "links": [
+              {
+                "n": 2,
+                "type": "вертикаль +30"
+              },
+              {
+                "n": 42,
+                "type": "вертикаль +10"
+              }
+            ],
+            "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
             "n": 42,
             "row": 4,
             "col": 1,
-            "code": "11010",
-            "code4": "1010",
-            "count": 3,
-            "count4": 2,
-            "gap": 1,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 8,
-            "row": 0,
-            "col": 7,
-            "code": "01010",
-            "code4": "1010",
-            "count": 2,
-            "count4": 2,
-            "gap": 1,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 18,
-                "type": "вертикаль +10"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 18,
-            "row": 1,
-            "col": 7,
             "code": "10100",
             "code4": "0100",
             "count": 2,
@@ -2116,85 +2159,67 @@
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 16,
-                "type": "горизонталь +2"
+                "n": 2,
+                "type": "вертикаль +40"
               },
               {
-                "n": 8,
+                "n": 32,
                 "type": "вертикаль +10"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 55,
-            "row": 5,
-            "col": 4,
-            "code": "01010",
-            "code4": "1010",
-            "count": 2,
-            "count4": 2,
-            "gap": 1,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [],
-            "permissionReason": "сильный ритм — якорь IRIS"
           }
         ],
-        "score": 91.7
+        "score": 101.99999999999999
       },
       {
         "mode": "IRIS",
         "numbers": [
-          8,
-          18,
+          1,
+          2,
+          11,
+          21,
           26,
-          28,
           36,
-          42,
-          48,
-          55,
-          76,
-          78
+          41,
+          43,
+          61,
+          76
         ],
         "motif": "ритм-якоря + вертикали/±2 · допускаются несколько фрагментов",
         "metrics": {
-          "links": 15,
+          "links": 14,
           "vertical": 13,
-          "horizontal": 2,
+          "horizontal": 1,
           "diagonal": 0,
           "rowCounts": [
-            1,
-            1,
             2,
             1,
             2,
             1,
+            2,
             0,
-            2
+            1,
+            1
           ],
           "maxPerRow": 2,
           "rowsUsed": 7,
-          "strong": 6,
-          "near": 2,
+          "strong": 5,
+          "near": 0,
           "seen": 10,
           "connected": false,
           "components": 3,
           "componentSizes": [
-            8,
-            1,
+            6,
+            3,
             1
           ]
         },
         "reason": [
           {
-            "n": 8,
-            "row": 0,
-            "col": 7,
+            "n": 11,
+            "row": 1,
+            "col": 0,
             "code": "01010",
             "code4": "1010",
             "count": 2,
@@ -2208,63 +2233,28 @@
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 18,
+                "n": 21,
                 "type": "вертикаль +10"
               },
               {
-                "n": 28,
-                "type": "вертикаль +20"
+                "n": 61,
+                "type": "вертикаль +50"
               },
               {
-                "n": 48,
-                "type": "вертикаль +40"
-              },
-              {
-                "n": 78,
-                "type": "вертикаль +70"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 18,
-            "row": 1,
-            "col": 7,
-            "code": "10100",
-            "code4": "0100",
-            "count": 2,
-            "count4": 1,
-            "gap": 2,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 8,
+                "n": 1,
                 "type": "вертикаль +10"
               },
               {
-                "n": 28,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 48,
+                "n": 41,
                 "type": "вертикаль +30"
-              },
-              {
-                "n": 78,
-                "type": "вертикаль +60"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
-            "n": 28,
+            "n": 21,
             "row": 2,
-            "col": 7,
+            "col": 0,
             "code": "01001",
             "code4": "1001",
             "count": 2,
@@ -2278,67 +2268,98 @@
             "role": "геометрическое продолжение",
             "links": [
               {
-                "n": 8,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 18,
+                "n": 11,
                 "type": "вертикаль +10"
               },
               {
-                "n": 48,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 78,
-                "type": "вертикаль +50"
-              },
-              {
-                "n": 26,
-                "type": "горизонталь +2"
-              }
-            ],
-            "permissionReason": "структурное продолжение от якоря"
-          },
-          {
-            "n": 48,
-            "row": 4,
-            "col": 7,
-            "code": "00100",
-            "code4": "0100",
-            "count": 1,
-            "count4": 1,
-            "gap": 2,
-            "strong": false,
-            "near": false,
-            "seen": true,
-            "anchor": false,
-            "temporalAllowed": false,
-            "role": "геометрическое продолжение",
-            "links": [
-              {
-                "n": 8,
+                "n": 61,
                 "type": "вертикаль +40"
               },
               {
-                "n": 18,
-                "type": "вертикаль +30"
-              },
-              {
-                "n": 28,
+                "n": 1,
                 "type": "вертикаль +20"
               },
               {
-                "n": 78,
-                "type": "вертикаль +30"
+                "n": 41,
+                "type": "вертикаль +20"
               }
             ],
             "permissionReason": "структурное продолжение от якоря"
           },
           {
-            "n": 78,
-            "row": 7,
-            "col": 7,
+            "n": 61,
+            "row": 6,
+            "col": 0,
+            "code": "10001",
+            "code4": "0001",
+            "count": 2,
+            "count4": 1,
+            "gap": 0,
+            "strong": false,
+            "near": false,
+            "seen": true,
+            "anchor": false,
+            "temporalAllowed": false,
+            "role": "геометрическое продолжение",
+            "links": [
+              {
+                "n": 11,
+                "type": "вертикаль +50"
+              },
+              {
+                "n": 21,
+                "type": "вертикаль +40"
+              },
+              {
+                "n": 1,
+                "type": "вертикаль +60"
+              },
+              {
+                "n": 41,
+                "type": "вертикаль +20"
+              }
+            ],
+            "permissionReason": "структурное продолжение от якоря"
+          },
+          {
+            "n": 1,
+            "row": 0,
+            "col": 0,
+            "code": "10010",
+            "code4": "0010",
+            "count": 2,
+            "count4": 1,
+            "gap": 1,
+            "strong": false,
+            "near": false,
+            "seen": true,
+            "anchor": false,
+            "temporalAllowed": false,
+            "role": "геометрическое продолжение",
+            "links": [
+              {
+                "n": 11,
+                "type": "вертикаль +10"
+              },
+              {
+                "n": 21,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 61,
+                "type": "вертикаль +60"
+              },
+              {
+                "n": 41,
+                "type": "вертикаль +40"
+              }
+            ],
+            "permissionReason": "структурное продолжение от якоря"
+          },
+          {
+            "n": 41,
+            "row": 4,
+            "col": 0,
             "code": "00100",
             "code4": "0100",
             "count": 1,
@@ -2352,31 +2373,54 @@
             "role": "геометрическое продолжение",
             "links": [
               {
-                "n": 8,
-                "type": "вертикаль +70"
-              },
-              {
-                "n": 18,
-                "type": "вертикаль +60"
-              },
-              {
-                "n": 28,
-                "type": "вертикаль +50"
-              },
-              {
-                "n": 48,
+                "n": 11,
                 "type": "вертикаль +30"
               },
               {
-                "n": 76,
+                "n": 21,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 61,
+                "type": "вертикаль +20"
+              },
+              {
+                "n": 1,
+                "type": "вертикаль +40"
+              },
+              {
+                "n": 43,
                 "type": "горизонталь +2"
               }
             ],
             "permissionReason": "структурное продолжение от якоря"
           },
           {
-            "n": 76,
-            "row": 7,
+            "n": 43,
+            "row": 4,
+            "col": 2,
+            "code": "00011",
+            "code4": "0011",
+            "count": 2,
+            "count4": 2,
+            "gap": 0,
+            "strong": false,
+            "near": false,
+            "seen": true,
+            "anchor": false,
+            "temporalAllowed": false,
+            "role": "геометрическое продолжение",
+            "links": [
+              {
+                "n": 41,
+                "type": "горизонталь +2"
+              }
+            ],
+            "permissionReason": "структурное продолжение от якоря"
+          },
+          {
+            "n": 26,
+            "row": 2,
             "col": 5,
             "code": "11010",
             "code4": "1010",
@@ -2391,42 +2435,20 @@
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 78,
-                "type": "горизонталь +2"
-              },
-              {
                 "n": 36,
-                "type": "вертикаль +40"
+                "type": "вертикаль +10"
               },
               {
-                "n": 26,
+                "n": 76,
                 "type": "вертикаль +50"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
-            "n": 42,
-            "row": 4,
+            "n": 2,
+            "row": 0,
             "col": 1,
-            "code": "11010",
-            "code4": "1010",
-            "count": 3,
-            "count4": 2,
-            "gap": 1,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 55,
-            "row": 5,
-            "col": 4,
             "code": "01010",
             "code4": "1010",
             "count": 2,
@@ -2445,62 +2467,58 @@
             "n": 36,
             "row": 3,
             "col": 5,
-            "code": "10101",
-            "code4": "0101",
-            "count": 3,
+            "code": "01010",
+            "code4": "1010",
+            "count": 2,
             "count4": 2,
-            "gap": 0,
+            "gap": 1,
             "strong": true,
-            "near": true,
+            "near": false,
             "seen": true,
             "anchor": true,
             "temporalAllowed": true,
             "role": "ритм-якорь",
             "links": [
               {
-                "n": 76,
-                "type": "вертикаль +40"
-              },
-              {
                 "n": 26,
                 "type": "вертикаль +10"
+              },
+              {
+                "n": 76,
+                "type": "вертикаль +40"
               }
             ],
             "permissionReason": "сильный ритм — якорь IRIS"
           },
           {
-            "n": 26,
-            "row": 2,
+            "n": 76,
+            "row": 7,
             "col": 5,
-            "code": "11101",
-            "code4": "1101",
-            "count": 4,
-            "count4": 3,
-            "gap": 0,
-            "strong": false,
-            "near": true,
+            "code": "10100",
+            "code4": "0100",
+            "count": 2,
+            "count4": 1,
+            "gap": 2,
+            "strong": true,
+            "near": false,
             "seen": true,
-            "anchor": false,
+            "anchor": true,
             "temporalAllowed": true,
-            "role": "геометрическое продолжение",
+            "role": "ритм-якорь",
             "links": [
               {
-                "n": 28,
-                "type": "горизонталь +2"
-              },
-              {
-                "n": 76,
+                "n": 26,
                 "type": "вертикаль +50"
               },
               {
                 "n": 36,
-                "type": "вертикаль +10"
+                "type": "вертикаль +40"
               }
             ],
-            "permissionReason": "поддерживающий ритм + структура"
+            "permissionReason": "сильный ритм — якорь IRIS"
           }
         ],
-        "score": 86.69999999999999
+        "score": 74.39999999999999
       }
     ],
     "features": [
@@ -2508,11 +2526,11 @@
         "n": 1,
         "row": 0,
         "col": 0,
-        "code": "01001",
-        "code4": "1001",
+        "code": "10010",
+        "code4": "0010",
         "count": 2,
-        "count4": 2,
-        "gap": 0,
+        "count4": 1,
+        "gap": 1,
         "strong": false,
         "near": false,
         "seen": true,
@@ -2523,29 +2541,29 @@
         "n": 2,
         "row": 0,
         "col": 1,
-        "code": "00101",
-        "code4": "0101",
+        "code": "01010",
+        "code4": "1010",
         "count": 2,
         "count4": 2,
-        "gap": 0,
-        "strong": false,
-        "near": true,
+        "gap": 1,
+        "strong": true,
+        "near": false,
         "seen": true,
-        "anchor": false,
+        "anchor": true,
         "temporalAllowed": true
       },
       {
         "n": 3,
         "row": 0,
         "col": 2,
-        "code": "10000",
+        "code": "00000",
         "code4": "0000",
-        "count": 1,
+        "count": 0,
         "count4": 0,
-        "gap": 4,
+        "gap": null,
         "strong": false,
         "near": false,
-        "seen": true,
+        "seen": false,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -2553,26 +2571,26 @@
         "n": 4,
         "row": 0,
         "col": 3,
-        "code": "10011",
-        "code4": "0011",
-        "count": 3,
+        "code": "00110",
+        "code4": "0110",
+        "count": 2,
         "count4": 2,
-        "gap": 0,
+        "gap": 1,
         "strong": false,
-        "near": false,
+        "near": true,
         "seen": true,
         "anchor": false,
-        "temporalAllowed": false
+        "temporalAllowed": true
       },
       {
         "n": 5,
         "row": 0,
         "col": 4,
-        "code": "00010",
-        "code4": "0010",
+        "code": "00100",
+        "code4": "0100",
         "count": 1,
         "count4": 1,
-        "gap": 1,
+        "gap": 2,
         "strong": false,
         "near": false,
         "seen": true,
@@ -2598,11 +2616,11 @@
         "n": 7,
         "row": 0,
         "col": 6,
-        "code": "01100",
-        "code4": "1100",
+        "code": "11000",
+        "code4": "1000",
         "count": 2,
-        "count4": 2,
-        "gap": 2,
+        "count4": 1,
+        "gap": 3,
         "strong": false,
         "near": false,
         "seen": true,
@@ -2613,6 +2631,51 @@
         "n": 8,
         "row": 0,
         "col": 7,
+        "code": "10100",
+        "code4": "0100",
+        "count": 2,
+        "count4": 1,
+        "gap": 2,
+        "strong": true,
+        "near": false,
+        "seen": true,
+        "anchor": true,
+        "temporalAllowed": true
+      },
+      {
+        "n": 9,
+        "row": 0,
+        "col": 8,
+        "code": "01101",
+        "code4": "1101",
+        "count": 3,
+        "count4": 3,
+        "gap": 0,
+        "strong": false,
+        "near": true,
+        "seen": true,
+        "anchor": false,
+        "temporalAllowed": true
+      },
+      {
+        "n": 10,
+        "row": 0,
+        "col": 9,
+        "code": "00010",
+        "code4": "0010",
+        "count": 1,
+        "count4": 1,
+        "gap": 1,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 11,
+        "row": 1,
+        "col": 0,
         "code": "01010",
         "code4": "1010",
         "count": 2,
@@ -2625,9 +2688,39 @@
         "temporalAllowed": true
       },
       {
-        "n": 9,
-        "row": 0,
-        "col": 8,
+        "n": 12,
+        "row": 1,
+        "col": 1,
+        "code": "01000",
+        "code4": "1000",
+        "count": 1,
+        "count4": 1,
+        "gap": 3,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 13,
+        "row": 1,
+        "col": 2,
+        "code": "00001",
+        "code4": "0001",
+        "count": 1,
+        "count4": 1,
+        "gap": 0,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 14,
+        "row": 1,
+        "col": 3,
         "code": "00110",
         "code4": "0110",
         "count": 2,
@@ -2640,54 +2733,9 @@
         "temporalAllowed": true
       },
       {
-        "n": 10,
-        "row": 0,
-        "col": 9,
-        "code": "10001",
-        "code4": "0001",
-        "count": 2,
-        "count4": 1,
-        "gap": 0,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 11,
+        "n": 15,
         "row": 1,
-        "col": 0,
-        "code": "00101",
-        "code4": "0101",
-        "count": 2,
-        "count4": 2,
-        "gap": 0,
-        "strong": false,
-        "near": true,
-        "seen": true,
-        "anchor": false,
-        "temporalAllowed": true
-      },
-      {
-        "n": 12,
-        "row": 1,
-        "col": 1,
-        "code": "00100",
-        "code4": "0100",
-        "count": 1,
-        "count4": 1,
-        "gap": 2,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 13,
-        "row": 1,
-        "col": 2,
+        "col": 4,
         "code": "00000",
         "code4": "0000",
         "count": 0,
@@ -2700,44 +2748,14 @@
         "temporalAllowed": false
       },
       {
-        "n": 14,
-        "row": 1,
-        "col": 3,
-        "code": "10011",
-        "code4": "0011",
-        "count": 3,
-        "count4": 2,
-        "gap": 0,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 15,
-        "row": 1,
-        "col": 4,
-        "code": "10000",
-        "code4": "0000",
-        "count": 1,
-        "count4": 0,
-        "gap": 4,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
         "n": 16,
         "row": 1,
         "col": 5,
-        "code": "10000",
-        "code4": "0000",
+        "code": "00001",
+        "code4": "0001",
         "count": 1,
-        "count4": 0,
-        "gap": 4,
+        "count4": 1,
+        "gap": 0,
         "strong": false,
         "near": false,
         "seen": true,
@@ -2763,66 +2781,6 @@
         "n": 18,
         "row": 1,
         "col": 7,
-        "code": "10100",
-        "code4": "0100",
-        "count": 2,
-        "count4": 1,
-        "gap": 2,
-        "strong": true,
-        "near": false,
-        "seen": true,
-        "anchor": true,
-        "temporalAllowed": true
-      },
-      {
-        "n": 19,
-        "row": 1,
-        "col": 8,
-        "code": "00001",
-        "code4": "0001",
-        "count": 1,
-        "count4": 1,
-        "gap": 0,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 20,
-        "row": 1,
-        "col": 9,
-        "code": "10000",
-        "code4": "0000",
-        "count": 1,
-        "count4": 0,
-        "gap": 4,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 21,
-        "row": 2,
-        "col": 0,
-        "code": "10100",
-        "code4": "0100",
-        "count": 2,
-        "count4": 1,
-        "gap": 2,
-        "strong": true,
-        "near": false,
-        "seen": true,
-        "anchor": true,
-        "temporalAllowed": true
-      },
-      {
-        "n": 22,
-        "row": 2,
-        "col": 1,
         "code": "01000",
         "code4": "1000",
         "count": 1,
@@ -2835,14 +2793,74 @@
         "temporalAllowed": false
       },
       {
-        "n": 23,
-        "row": 2,
-        "col": 2,
+        "n": 19,
+        "row": 1,
+        "col": 8,
         "code": "00010",
         "code4": "0010",
         "count": 1,
         "count4": 1,
         "gap": 1,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 20,
+        "row": 1,
+        "col": 9,
+        "code": "00000",
+        "code4": "0000",
+        "count": 0,
+        "count4": 0,
+        "gap": null,
+        "strong": false,
+        "near": false,
+        "seen": false,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 21,
+        "row": 2,
+        "col": 0,
+        "code": "01001",
+        "code4": "1001",
+        "count": 2,
+        "count4": 2,
+        "gap": 0,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 22,
+        "row": 2,
+        "col": 1,
+        "code": "10000",
+        "code4": "0000",
+        "count": 1,
+        "count4": 0,
+        "gap": 4,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 23,
+        "row": 2,
+        "col": 2,
+        "code": "00100",
+        "code4": "0100",
+        "count": 1,
+        "count4": 1,
+        "gap": 2,
         "strong": false,
         "near": false,
         "seen": true,
@@ -2883,9 +2901,24 @@
         "n": 26,
         "row": 2,
         "col": 5,
-        "code": "11101",
-        "code4": "1101",
-        "count": 4,
+        "code": "11010",
+        "code4": "1010",
+        "count": 3,
+        "count4": 2,
+        "gap": 1,
+        "strong": true,
+        "near": false,
+        "seen": true,
+        "anchor": true,
+        "temporalAllowed": true
+      },
+      {
+        "n": 27,
+        "row": 2,
+        "col": 6,
+        "code": "00111",
+        "code4": "0111",
+        "count": 3,
         "count4": 3,
         "gap": 0,
         "strong": false,
@@ -2895,27 +2928,12 @@
         "temporalAllowed": true
       },
       {
-        "n": 27,
-        "row": 2,
-        "col": 6,
-        "code": "00011",
-        "code4": "0011",
-        "count": 2,
-        "count4": 2,
-        "gap": 0,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
         "n": 28,
         "row": 2,
         "col": 7,
-        "code": "01001",
-        "code4": "1001",
-        "count": 2,
+        "code": "10011",
+        "code4": "0011",
+        "count": 3,
         "count4": 2,
         "gap": 0,
         "strong": false,
@@ -2928,26 +2946,11 @@
         "n": 29,
         "row": 2,
         "col": 8,
-        "code": "00000",
-        "code4": "0000",
-        "count": 0,
-        "count4": 0,
-        "gap": null,
-        "strong": false,
-        "near": false,
-        "seen": false,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 30,
-        "row": 2,
-        "col": 9,
-        "code": "01000",
-        "code4": "1000",
+        "code": "00001",
+        "code4": "0001",
         "count": 1,
         "count4": 1,
-        "gap": 3,
+        "gap": 0,
         "strong": false,
         "near": false,
         "seen": true,
@@ -2955,9 +2958,9 @@
         "temporalAllowed": false
       },
       {
-        "n": 31,
-        "row": 3,
-        "col": 0,
+        "n": 30,
+        "row": 2,
+        "col": 9,
         "code": "10000",
         "code4": "0000",
         "count": 1,
@@ -2970,24 +2973,9 @@
         "temporalAllowed": false
       },
       {
-        "n": 32,
+        "n": 31,
         "row": 3,
-        "col": 1,
-        "code": "01010",
-        "code4": "1010",
-        "count": 2,
-        "count4": 2,
-        "gap": 1,
-        "strong": true,
-        "near": false,
-        "seen": true,
-        "anchor": true,
-        "temporalAllowed": true
-      },
-      {
-        "n": 33,
-        "row": 3,
-        "col": 2,
+        "col": 0,
         "code": "00000",
         "code4": "0000",
         "count": 0,
@@ -3000,14 +2988,44 @@
         "temporalAllowed": false
       },
       {
+        "n": 32,
+        "row": 3,
+        "col": 1,
+        "code": "10100",
+        "code4": "0100",
+        "count": 2,
+        "count4": 1,
+        "gap": 2,
+        "strong": true,
+        "near": false,
+        "seen": true,
+        "anchor": true,
+        "temporalAllowed": true
+      },
+      {
+        "n": 33,
+        "row": 3,
+        "col": 2,
+        "code": "00001",
+        "code4": "0001",
+        "count": 1,
+        "count4": 1,
+        "gap": 0,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
         "n": 34,
         "row": 3,
         "col": 3,
-        "code": "01000",
-        "code4": "1000",
+        "code": "10000",
+        "code4": "0000",
         "count": 1,
-        "count4": 1,
-        "gap": 3,
+        "count4": 0,
+        "gap": 4,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3033,13 +3051,13 @@
         "n": 36,
         "row": 3,
         "col": 5,
-        "code": "10101",
-        "code4": "0101",
-        "count": 3,
+        "code": "01010",
+        "code4": "1010",
+        "count": 2,
         "count4": 2,
-        "gap": 0,
+        "gap": 1,
         "strong": true,
-        "near": true,
+        "near": false,
         "seen": true,
         "anchor": true,
         "temporalAllowed": true
@@ -3078,6 +3096,21 @@
         "n": 39,
         "row": 3,
         "col": 8,
+        "code": "11000",
+        "code4": "1000",
+        "count": 2,
+        "count4": 1,
+        "gap": 3,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 40,
+        "row": 3,
+        "col": 9,
         "code": "01100",
         "code4": "1100",
         "count": 2,
@@ -3090,29 +3123,14 @@
         "temporalAllowed": false
       },
       {
-        "n": 40,
-        "row": 3,
-        "col": 9,
-        "code": "00110",
-        "code4": "0110",
-        "count": 2,
-        "count4": 2,
-        "gap": 1,
-        "strong": false,
-        "near": true,
-        "seen": true,
-        "anchor": false,
-        "temporalAllowed": true
-      },
-      {
         "n": 41,
         "row": 4,
         "col": 0,
-        "code": "00010",
-        "code4": "0010",
+        "code": "00100",
+        "code4": "0100",
         "count": 1,
         "count4": 1,
-        "gap": 1,
+        "gap": 2,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3123,11 +3141,11 @@
         "n": 42,
         "row": 4,
         "col": 1,
-        "code": "11010",
-        "code4": "1010",
-        "count": 3,
-        "count4": 2,
-        "gap": 1,
+        "code": "10100",
+        "code4": "0100",
+        "count": 2,
+        "count4": 1,
+        "gap": 2,
         "strong": true,
         "near": false,
         "seen": true,
@@ -3138,10 +3156,10 @@
         "n": 43,
         "row": 4,
         "col": 2,
-        "code": "10001",
-        "code4": "0001",
+        "code": "00011",
+        "code4": "0011",
         "count": 2,
-        "count4": 1,
+        "count4": 2,
         "gap": 0,
         "strong": false,
         "near": false,
@@ -3153,11 +3171,11 @@
         "n": 44,
         "row": 4,
         "col": 3,
-        "code": "01000",
-        "code4": "1000",
+        "code": "10000",
+        "code4": "0000",
         "count": 1,
-        "count4": 1,
-        "gap": 3,
+        "count4": 0,
+        "gap": 4,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3168,11 +3186,11 @@
         "n": 45,
         "row": 4,
         "col": 4,
-        "code": "10001",
-        "code4": "0001",
-        "count": 2,
+        "code": "00010",
+        "code4": "0010",
+        "count": 1,
         "count4": 1,
-        "gap": 0,
+        "gap": 1,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3198,10 +3216,10 @@
         "n": 47,
         "row": 4,
         "col": 6,
-        "code": "00101",
-        "code4": "0101",
-        "count": 2,
-        "count4": 2,
+        "code": "01011",
+        "code4": "1011",
+        "count": 3,
+        "count4": 3,
         "gap": 0,
         "strong": false,
         "near": true,
@@ -3213,11 +3231,11 @@
         "n": 48,
         "row": 4,
         "col": 7,
-        "code": "00100",
-        "code4": "0100",
+        "code": "01000",
+        "code4": "1000",
         "count": 1,
         "count4": 1,
-        "gap": 2,
+        "gap": 3,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3228,31 +3246,31 @@
         "n": 49,
         "row": 4,
         "col": 8,
-        "code": "10011",
-        "code4": "0011",
-        "count": 3,
+        "code": "00110",
+        "code4": "0110",
+        "count": 2,
         "count4": 2,
-        "gap": 0,
+        "gap": 1,
         "strong": false,
-        "near": false,
+        "near": true,
         "seen": true,
         "anchor": false,
-        "temporalAllowed": false
+        "temporalAllowed": true
       },
       {
         "n": 50,
         "row": 4,
         "col": 9,
-        "code": "10010",
-        "code4": "0010",
+        "code": "00101",
+        "code4": "0101",
         "count": 2,
-        "count4": 1,
-        "gap": 1,
+        "count4": 2,
+        "gap": 0,
         "strong": false,
-        "near": false,
+        "near": true,
         "seen": true,
         "anchor": false,
-        "temporalAllowed": false
+        "temporalAllowed": true
       },
       {
         "n": 51,
@@ -3273,11 +3291,11 @@
         "n": 52,
         "row": 5,
         "col": 1,
-        "code": "00100",
-        "code4": "0100",
+        "code": "01000",
+        "code4": "1000",
         "count": 1,
         "count4": 1,
-        "gap": 2,
+        "gap": 3,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3288,11 +3306,11 @@
         "n": 53,
         "row": 5,
         "col": 2,
-        "code": "00001",
-        "code4": "0001",
+        "code": "00010",
+        "code4": "0010",
         "count": 1,
         "count4": 1,
-        "gap": 0,
+        "gap": 1,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3303,21 +3321,6 @@
         "n": 54,
         "row": 5,
         "col": 3,
-        "code": "00101",
-        "code4": "0101",
-        "count": 2,
-        "count4": 2,
-        "gap": 0,
-        "strong": false,
-        "near": true,
-        "seen": true,
-        "anchor": false,
-        "temporalAllowed": true
-      },
-      {
-        "n": 55,
-        "row": 5,
-        "col": 4,
         "code": "01010",
         "code4": "1010",
         "count": 2,
@@ -3330,13 +3333,28 @@
         "temporalAllowed": true
       },
       {
+        "n": 55,
+        "row": 5,
+        "col": 4,
+        "code": "10100",
+        "code4": "0100",
+        "count": 2,
+        "count4": 1,
+        "gap": 2,
+        "strong": true,
+        "near": false,
+        "seen": true,
+        "anchor": true,
+        "temporalAllowed": true
+      },
+      {
         "n": 56,
         "row": 5,
         "col": 5,
-        "code": "00001",
-        "code4": "0001",
-        "count": 1,
-        "count4": 1,
+        "code": "00011",
+        "code4": "0011",
+        "count": 2,
+        "count4": 2,
         "gap": 0,
         "strong": false,
         "near": false,
@@ -3378,11 +3396,11 @@
         "n": 59,
         "row": 5,
         "col": 8,
-        "code": "10010",
-        "code4": "0010",
-        "count": 2,
+        "code": "00100",
+        "code4": "0100",
+        "count": 1,
         "count4": 1,
-        "gap": 1,
+        "gap": 2,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3393,11 +3411,11 @@
         "n": 60,
         "row": 5,
         "col": 9,
-        "code": "01000",
-        "code4": "1000",
+        "code": "10000",
+        "code4": "0000",
         "count": 1,
-        "count4": 1,
-        "gap": 3,
+        "count4": 0,
+        "gap": 4,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3408,11 +3426,11 @@
         "n": 61,
         "row": 6,
         "col": 0,
-        "code": "01000",
-        "code4": "1000",
-        "count": 1,
+        "code": "10001",
+        "code4": "0001",
+        "count": 2,
         "count4": 1,
-        "gap": 3,
+        "gap": 0,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3438,11 +3456,11 @@
         "n": 63,
         "row": 6,
         "col": 2,
-        "code": "00100",
-        "code4": "0100",
+        "code": "01000",
+        "code4": "1000",
         "count": 1,
         "count4": 1,
-        "gap": 2,
+        "gap": 3,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3453,11 +3471,26 @@
         "n": 64,
         "row": 6,
         "col": 3,
-        "code": "00010",
-        "code4": "0010",
+        "code": "00101",
+        "code4": "0101",
+        "count": 2,
+        "count4": 2,
+        "gap": 0,
+        "strong": false,
+        "near": true,
+        "seen": true,
+        "anchor": false,
+        "temporalAllowed": true
+      },
+      {
+        "n": 65,
+        "row": 6,
+        "col": 4,
+        "code": "00001",
+        "code4": "0001",
         "count": 1,
         "count4": 1,
-        "gap": 1,
+        "gap": 0,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3465,29 +3498,14 @@
         "temporalAllowed": false
       },
       {
-        "n": 65,
-        "row": 6,
-        "col": 4,
-        "code": "00000",
-        "code4": "0000",
-        "count": 0,
-        "count4": 0,
-        "gap": null,
-        "strong": false,
-        "near": false,
-        "seen": false,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
         "n": 66,
         "row": 6,
         "col": 5,
-        "code": "00100",
-        "code4": "0100",
+        "code": "01000",
+        "code4": "1000",
         "count": 1,
         "count4": 1,
-        "gap": 2,
+        "gap": 3,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3498,11 +3516,11 @@
         "n": 67,
         "row": 6,
         "col": 6,
-        "code": "01010",
-        "code4": "1010",
+        "code": "10100",
+        "code4": "0100",
         "count": 2,
-        "count4": 2,
-        "gap": 1,
+        "count4": 1,
+        "gap": 2,
         "strong": true,
         "near": false,
         "seen": true,
@@ -3528,11 +3546,11 @@
         "n": 69,
         "row": 6,
         "col": 8,
-        "code": "01000",
-        "code4": "1000",
-        "count": 1,
+        "code": "10001",
+        "code4": "0001",
+        "count": 2,
         "count4": 1,
-        "gap": 3,
+        "gap": 0,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3543,16 +3561,16 @@
         "n": 70,
         "row": 6,
         "col": 9,
-        "code": "00010",
-        "code4": "0010",
-        "count": 1,
-        "count4": 1,
-        "gap": 1,
+        "code": "00101",
+        "code4": "0101",
+        "count": 2,
+        "count4": 2,
+        "gap": 0,
         "strong": false,
-        "near": false,
+        "near": true,
         "seen": true,
         "anchor": false,
-        "temporalAllowed": false
+        "temporalAllowed": true
       },
       {
         "n": 71,
@@ -3588,24 +3606,24 @@
         "n": 73,
         "row": 7,
         "col": 2,
-        "code": "00110",
-        "code4": "0110",
+        "code": "01100",
+        "code4": "1100",
         "count": 2,
         "count4": 2,
-        "gap": 1,
+        "gap": 2,
         "strong": false,
-        "near": true,
+        "near": false,
         "seen": true,
         "anchor": false,
-        "temporalAllowed": true
+        "temporalAllowed": false
       },
       {
         "n": 74,
         "row": 7,
         "col": 3,
-        "code": "01001",
-        "code4": "1001",
-        "count": 2,
+        "code": "10011",
+        "code4": "0011",
+        "count": 3,
         "count4": 2,
         "gap": 0,
         "strong": false,
@@ -3618,11 +3636,11 @@
         "n": 75,
         "row": 7,
         "col": 4,
-        "code": "00001",
-        "code4": "0001",
+        "code": "00010",
+        "code4": "0010",
         "count": 1,
         "count4": 1,
-        "gap": 0,
+        "gap": 1,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3633,11 +3651,11 @@
         "n": 76,
         "row": 7,
         "col": 5,
-        "code": "11010",
-        "code4": "1010",
-        "count": 3,
-        "count4": 2,
-        "gap": 1,
+        "code": "10100",
+        "code4": "0100",
+        "count": 2,
+        "count4": 1,
+        "gap": 2,
         "strong": true,
         "near": false,
         "seen": true,
@@ -3648,11 +3666,11 @@
         "n": 77,
         "row": 7,
         "col": 6,
-        "code": "11000",
-        "code4": "1000",
+        "code": "10001",
+        "code4": "0001",
         "count": 2,
         "count4": 1,
-        "gap": 3,
+        "gap": 0,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3663,11 +3681,11 @@
         "n": 78,
         "row": 7,
         "col": 7,
-        "code": "00100",
-        "code4": "0100",
+        "code": "01000",
+        "code4": "1000",
         "count": 1,
         "count4": 1,
-        "gap": 2,
+        "gap": 3,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3693,11 +3711,11 @@
         "n": 80,
         "row": 7,
         "col": 9,
-        "code": "00100",
-        "code4": "0100",
-        "count": 1,
-        "count4": 1,
-        "gap": 2,
+        "code": "01001",
+        "code4": "1001",
+        "count": 2,
+        "count4": 2,
+        "gap": 0,
         "strong": false,
         "near": false,
         "seen": true,
@@ -3707,15 +3725,15 @@
     ],
     "historyUsed": 5,
     "sourceWindow": [
-      328939,
       328940,
       328941,
       328942,
-      328943
+      328943,
+      328944
     ],
     "gate": {
-      "anchorCount": 9,
-      "repeat3Count": 7,
+      "anchorCount": 11,
+      "repeat3Count": 6,
       "observed": 3,
       "eligible": 3,
       "rowLimit": null,
@@ -3723,15 +3741,15 @@
       "rule": "ритм-якорь → структурное расширение по вертикалям и ±2; несколько фрагментов допустимы"
     },
     "structure": {
-      "anchorCount": 9,
-      "repeat3Count": 7,
+      "anchorCount": 11,
+      "repeat3Count": 6,
       "observed": 3,
       "eligible": 3,
       "rowLimit": null,
       "heatLimit": null,
       "rule": "ритм-якорь → структурное расширение по вертикалям и ±2; несколько фрагментов допустимы"
     },
-    "message": "IRIS: найдено 9 ритм-якорей и 3 самостоятельных комбинаций. Геометрия расширяет якоря; все числа не обязаны иметь собственный ритм."
+    "message": "IRIS: найдено 11 ритм-якорей и 3 самостоятельных комбинаций. Геометрия расширяет якоря; все числа не обязаны иметь собственный ритм."
   },
   "gateLog": [
     {
@@ -4149,6 +4167,32 @@
         "rule": "ритм-якорь → структурное расширение по вертикалям и ±2; несколько фрагментов допустимы"
       },
       "message": "IRIS: найдено 9 ритм-якорей и 3 самостоятельных комбинаций. Геометрия расширяет якоря; все числа не обязаны иметь собственный ритм."
+    },
+    {
+      "id": "iris-1.1.0:328944",
+      "version": "iris-1.1.0",
+      "createdAt": "2026-10-06T00:41:41.612Z",
+      "sourceCutoff": 328944,
+      "sourceWindow": [
+        328940,
+        328941,
+        328942,
+        328943,
+        328944
+      ],
+      "permissionA": true,
+      "permissionB": false,
+      "signal": "PLAY",
+      "gate": {
+        "anchorCount": 11,
+        "repeat3Count": 6,
+        "observed": 3,
+        "eligible": 3,
+        "rowLimit": null,
+        "heatLimit": null,
+        "rule": "ритм-якорь → структурное расширение по вертикалям и ±2; несколько фрагментов допустимы"
+      },
+      "message": "IRIS: найдено 11 ритм-якорей и 3 самостоятельных комбинаций. Геометрия расширяет якоря; все числа не обязаны иметь собственный ритм."
     }
   ],
   "series": [
@@ -120910,9 +120954,42 @@
           "hitCount": 1,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [
+            28
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
-      "status": "active",
+      "status": "closed",
       "research": false,
       "conflicts": [],
       "bestHits": 4,
@@ -120920,12 +120997,12 @@
         2
       ],
       "bestStep": 2,
-      "averageHits": 2.5,
+      "averageHits": 2.2,
       "winCount": 1,
       "firstWinStep": 2,
       "totalPayout": 100,
       "hasUnknownPayout": false,
-      "noWin": null,
+      "noWin": false,
       "knownPayout": 100
     },
     {
@@ -121546,9 +121623,42 @@
           "hitCount": 2,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [
+            16
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
-      "status": "active",
+      "status": "closed",
       "research": false,
       "conflicts": [],
       "bestHits": 5,
@@ -121556,12 +121666,12 @@
         2
       ],
       "bestStep": 2,
-      "averageHits": 3,
+      "averageHits": 2.6,
       "winCount": 1,
       "firstWinStep": 2,
       "totalPayout": 250,
       "hasUnknownPayout": false,
-      "noWin": null,
+      "noWin": false,
       "knownPayout": 250
     },
     {
@@ -122168,9 +122278,40 @@
           "hitCount": 1,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [],
+          "hitCount": 0,
+          "payout": 200,
+          "payoutTable": "network80-existing-v63"
         }
       ],
-      "status": "active",
+      "status": "closed",
       "research": false,
       "conflicts": [],
       "bestHits": 5,
@@ -122178,13 +122319,13 @@
         2
       ],
       "bestStep": 2,
-      "averageHits": 3.25,
-      "winCount": 2,
+      "averageHits": 2.6,
+      "winCount": 3,
       "firstWinStep": 1,
-      "totalPayout": 350,
+      "totalPayout": 550,
       "hasUnknownPayout": false,
-      "noWin": null,
-      "knownPayout": 350
+      "noWin": false,
+      "knownPayout": 550
     },
     {
       "id": "iris-1.1.0:328939:MINI3:2-22-42",
@@ -122489,9 +122630,40 @@
           "hitCount": 1,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [],
+          "hitCount": 0,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
-      "status": "active",
+      "status": "closed",
       "research": false,
       "conflicts": [],
       "bestHits": 2,
@@ -122499,12 +122671,12 @@
         1
       ],
       "bestStep": 1,
-      "averageHits": 1.25,
+      "averageHits": 1,
       "winCount": 1,
       "firstWinStep": 1,
       "totalPayout": 300,
       "hasUnknownPayout": false,
-      "noWin": null,
+      "noWin": false,
       "knownPayout": 300
     },
     {
@@ -122854,9 +123026,40 @@
           "hitCount": 1,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [],
+          "hitCount": 0,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
-      "status": "active",
+      "status": "closed",
       "research": false,
       "conflicts": [],
       "bestHits": 2,
@@ -122864,12 +123067,12 @@
         1
       ],
       "bestStep": 1,
-      "averageHits": 1.25,
+      "averageHits": 1,
       "winCount": 1,
       "firstWinStep": 1,
       "totalPayout": 100,
       "hasUnknownPayout": false,
-      "noWin": null,
+      "noWin": false,
       "knownPayout": 100
     },
     {
@@ -123477,23 +123680,59 @@
           "hitCount": 2,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [
+            28,
+            50,
+            70,
+            80
+          ],
+          "hitCount": 4,
+          "payout": 100,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
       "research": false,
       "conflicts": [],
-      "bestHits": 3,
+      "bestHits": 4,
       "bestSteps": [
-        2
+        4
       ],
-      "bestStep": 2,
-      "averageHits": 2.3333333333333335,
-      "winCount": 0,
-      "firstWinStep": null,
-      "totalPayout": 0,
+      "bestStep": 4,
+      "averageHits": 2.75,
+      "winCount": 1,
+      "firstWinStep": 4,
+      "totalPayout": 100,
       "hasUnknownPayout": false,
       "noWin": null,
-      "knownPayout": 0
+      "knownPayout": 100
     },
     {
       "id": "iris-1.1.0:328940:MINI3:10-20-50",
@@ -123762,6 +124001,39 @@
           "hitCount": 1,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [
+            50
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -123770,10 +124042,11 @@
       "bestHits": 1,
       "bestSteps": [
         2,
-        3
+        3,
+        4
       ],
       "bestStep": 2,
-      "averageHits": 0.6666666666666666,
+      "averageHits": 0.75,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
@@ -124092,6 +124365,39 @@
           "hitCount": 1,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [
+            50
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -124100,10 +124406,11 @@
       "bestHits": 1,
       "bestSteps": [
         2,
-        3
+        3,
+        4
       ],
       "bestStep": 2,
-      "averageHits": 0.6666666666666666,
+      "averageHits": 0.75,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
@@ -124626,6 +124933,41 @@
           "hitCount": 3,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [
+            28,
+            50,
+            80
+          ],
+          "hitCount": 3,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -124633,10 +124975,11 @@
       "conflicts": [],
       "bestHits": 3,
       "bestSteps": [
-        2
+        2,
+        3
       ],
       "bestStep": 2,
-      "averageHits": 2.5,
+      "averageHits": 2.6666666666666665,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
@@ -125150,6 +125493,40 @@
           "hitCount": 2,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [
+            21,
+            61
+          ],
+          "hitCount": 2,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -125157,10 +125534,11 @@
       "conflicts": [],
       "bestHits": 2,
       "bestSteps": [
-        2
+        2,
+        3
       ],
       "bestStep": 2,
-      "averageHits": 1.5,
+      "averageHits": 1.6666666666666667,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
@@ -125394,6 +125772,37 @@
           "hitCount": 0,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [],
+          "hitCount": 0,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -125404,7 +125813,7 @@
         1
       ],
       "bestStep": 1,
-      "averageHits": 0.5,
+      "averageHits": 0.3333333333333333,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
@@ -125691,6 +126100,40 @@
           "hitCount": 2,
           "payout": 100,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [
+            21,
+            61
+          ],
+          "hitCount": 2,
+          "payout": 100,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -125698,16 +126141,17 @@
       "conflicts": [],
       "bestHits": 2,
       "bestSteps": [
-        2
+        2,
+        3
       ],
       "bestStep": 2,
-      "averageHits": 1,
-      "winCount": 1,
+      "averageHits": 1.3333333333333333,
+      "winCount": 2,
       "firstWinStep": 2,
-      "totalPayout": 100,
+      "totalPayout": 200,
       "hasUnknownPayout": false,
       "noWin": null,
-      "knownPayout": 100
+      "knownPayout": 200
     },
     {
       "id": "iris-1.1.0:328942:IRIS:1-8-11-18-21-31-36-41-61-71",
@@ -126207,6 +126651,40 @@
           "hitCount": 3,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [
+            21,
+            61
+          ],
+          "hitCount": 2,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -126217,7 +126695,7 @@
         1
       ],
       "bestStep": 1,
-      "averageHits": 3,
+      "averageHits": 2.5,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
@@ -126737,6 +127215,40 @@
           "hitCount": 2,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [
+            16,
+            21
+          ],
+          "hitCount": 2,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -126744,7 +127256,8 @@
       "conflicts": [],
       "bestHits": 2,
       "bestSteps": [
-        1
+        1,
+        2
       ],
       "bestStep": 1,
       "averageHits": 2,
@@ -127228,6 +127741,41 @@
           "hitCount": 3,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [
+            16,
+            21,
+            28
+          ],
+          "hitCount": 3,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -127235,7 +127783,8 @@
       "conflicts": [],
       "bestHits": 3,
       "bestSteps": [
-        1
+        1,
+        2
       ],
       "bestStep": 1,
       "averageHits": 3,
@@ -127450,6 +127999,39 @@
           "hitCount": 2,
           "payout": 300,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [
+            21
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -127460,7 +128042,7 @@
         1
       ],
       "bestStep": 1,
-      "averageHits": 2,
+      "averageHits": 1.5,
       "winCount": 1,
       "firstWinStep": 1,
       "totalPayout": 300,
@@ -127716,6 +128298,39 @@
           "hitCount": 2,
           "payout": 100,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [
+            21
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -127726,7 +128341,7 @@
         1
       ],
       "bestStep": 1,
-      "averageHits": 2,
+      "averageHits": 1.5,
       "winCount": 1,
       "firstWinStep": 1,
       "totalPayout": 100,
@@ -128158,20 +128773,54 @@
         ]
       },
       "motif": "ритм-якоря + вертикали/±2 · допускаются несколько фрагментов",
-      "results": [],
+      "results": [
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [],
+          "hitCount": 0,
+          "payout": 200,
+          "payoutTable": "network80-existing-v63"
+        }
+      ],
       "status": "active",
       "research": false,
       "conflicts": [],
-      "bestHits": null,
-      "bestSteps": [],
-      "bestStep": null,
-      "averageHits": null,
-      "winCount": 0,
-      "firstWinStep": null,
-      "totalPayout": 0,
+      "bestHits": 0,
+      "bestSteps": [
+        1
+      ],
+      "bestStep": 1,
+      "averageHits": 0,
+      "winCount": 1,
+      "firstWinStep": 1,
+      "totalPayout": 200,
       "hasUnknownPayout": false,
       "noWin": null,
-      "knownPayout": 0
+      "knownPayout": 200
     },
     {
       "id": "iris-1.1.0:328943:IRIS:8-16-18-26-36-42-55-56-66-76",
@@ -128595,14 +129244,51 @@
         ]
       },
       "motif": "ритм-якоря + вертикали/±2 · допускаются несколько фрагментов",
-      "results": [],
+      "results": [
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [
+            16,
+            56
+          ],
+          "hitCount": 2,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
+        }
+      ],
       "status": "active",
       "research": false,
       "conflicts": [],
-      "bestHits": null,
-      "bestSteps": [],
-      "bestStep": null,
-      "averageHits": null,
+      "bestHits": 2,
+      "bestSteps": [
+        1
+      ],
+      "bestStep": 1,
+      "averageHits": 2,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
@@ -129016,14 +129702,50 @@
         ]
       },
       "motif": "ритм-якоря + вертикали/±2 · допускаются несколько фрагментов",
-      "results": [],
+      "results": [
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [
+            28
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
+        }
+      ],
       "status": "active",
       "research": false,
       "conflicts": [],
-      "bestHits": null,
-      "bestSteps": [],
-      "bestStep": null,
-      "averageHits": null,
+      "bestHits": 1,
+      "bestSteps": [
+        1
+      ],
+      "bestStep": 1,
+      "averageHits": 1,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
@@ -129201,14 +129923,48 @@
         ]
       },
       "motif": "самостоятельная структура от ритм-якоря",
-      "results": [],
+      "results": [
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [],
+          "hitCount": 0,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
+        }
+      ],
       "status": "active",
       "research": false,
       "conflicts": [],
-      "bestHits": null,
-      "bestSteps": [],
-      "bestStep": null,
-      "averageHits": null,
+      "bestHits": 0,
+      "bestSteps": [
+        1
+      ],
+      "bestStep": 1,
+      "averageHits": 0,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
@@ -129430,20 +130186,1327 @@
         ]
       },
       "motif": "самостоятельная структура от ритм-якоря",
-      "results": [],
+      "results": [
+        {
+          "draw": 328944,
+          "date": "2026-10-06",
+          "time": "03:32",
+          "fact": [
+            47,
+            64,
+            28,
+            56,
+            33,
+            61,
+            77,
+            69,
+            74,
+            13,
+            27,
+            65,
+            29,
+            43,
+            21,
+            80,
+            50,
+            70,
+            9,
+            16
+          ],
+          "hits": [],
+          "hitCount": 0,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
+        }
+      ],
       "status": "active",
       "research": false,
       "conflicts": [],
-      "bestHits": null,
-      "bestSteps": [],
-      "bestStep": null,
-      "averageHits": null,
+      "bestHits": 0,
+      "bestSteps": [
+        1
+      ],
+      "bestStep": 1,
+      "averageHits": 0,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
       "hasUnknownPayout": false,
       "noWin": null,
       "knownPayout": 0
+    },
+    {
+      "id": "iris-1.1.0:328944:IRIS:2-11-12-22-26-32-36-42-52-76",
+      "version": "iris-1.1.0",
+      "mode": "IRIS",
+      "origin": "server",
+      "createdAt": "2026-10-06T00:41:41.612Z",
+      "sourceCutoff": 328944,
+      "sourceWindow": [
+        328940,
+        328941,
+        328942,
+        328943,
+        328944
+      ],
+      "targets": [
+        {
+          "draw": 328945,
+          "date": "2026-10-06",
+          "time": "04:02"
+        },
+        {
+          "draw": 328946,
+          "date": "2026-10-06",
+          "time": "04:17"
+        },
+        {
+          "draw": 328947,
+          "date": "2026-10-06",
+          "time": "04:32"
+        },
+        {
+          "draw": 328948,
+          "date": "2026-10-06",
+          "time": "05:02"
+        },
+        {
+          "draw": 328949,
+          "date": "2026-10-06",
+          "time": "05:17"
+        }
+      ],
+      "targetStart": 328945,
+      "targetEnd": 328949,
+      "numbers": [
+        2,
+        11,
+        12,
+        22,
+        26,
+        32,
+        36,
+        42,
+        52,
+        76
+      ],
+      "size": 10,
+      "permissionA": true,
+      "permissionB": false,
+      "gate": {
+        "anchorCount": 11,
+        "repeat3Count": 6,
+        "observed": 3,
+        "eligible": 3,
+        "rowLimit": null,
+        "heatLimit": null,
+        "rule": "ритм-якорь → структурное расширение по вертикалям и ±2; несколько фрагментов допустимы"
+      },
+      "reason": [
+        {
+          "n": 2,
+          "row": 0,
+          "col": 1,
+          "code": "01010",
+          "code4": "1010",
+          "count": 2,
+          "count4": 2,
+          "gap": 1,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 32,
+              "type": "вертикаль +30"
+            },
+            {
+              "n": 42,
+              "type": "вертикаль +40"
+            },
+            {
+              "n": 12,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 52,
+              "type": "вертикаль +50"
+            },
+            {
+              "n": 22,
+              "type": "вертикаль +20"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 32,
+          "row": 3,
+          "col": 1,
+          "code": "10100",
+          "code4": "0100",
+          "count": 2,
+          "count4": 1,
+          "gap": 2,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 2,
+              "type": "вертикаль +30"
+            },
+            {
+              "n": 42,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 12,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 52,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 22,
+              "type": "вертикаль +10"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 42,
+          "row": 4,
+          "col": 1,
+          "code": "10100",
+          "code4": "0100",
+          "count": 2,
+          "count4": 1,
+          "gap": 2,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 2,
+              "type": "вертикаль +40"
+            },
+            {
+              "n": 32,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 12,
+              "type": "вертикаль +30"
+            },
+            {
+              "n": 52,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 22,
+              "type": "вертикаль +20"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 12,
+          "row": 1,
+          "col": 1,
+          "code": "01000",
+          "code4": "1000",
+          "count": 1,
+          "count4": 1,
+          "gap": 3,
+          "strong": false,
+          "near": false,
+          "seen": true,
+          "anchor": false,
+          "temporalAllowed": false,
+          "role": "геометрическое продолжение",
+          "links": [
+            {
+              "n": 2,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 32,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 42,
+              "type": "вертикаль +30"
+            },
+            {
+              "n": 52,
+              "type": "вертикаль +40"
+            },
+            {
+              "n": 22,
+              "type": "вертикаль +10"
+            }
+          ],
+          "permissionReason": "структурное продолжение от якоря"
+        },
+        {
+          "n": 52,
+          "row": 5,
+          "col": 1,
+          "code": "01000",
+          "code4": "1000",
+          "count": 1,
+          "count4": 1,
+          "gap": 3,
+          "strong": false,
+          "near": false,
+          "seen": true,
+          "anchor": false,
+          "temporalAllowed": false,
+          "role": "геометрическое продолжение",
+          "links": [
+            {
+              "n": 2,
+              "type": "вертикаль +50"
+            },
+            {
+              "n": 32,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 42,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 12,
+              "type": "вертикаль +40"
+            },
+            {
+              "n": 22,
+              "type": "вертикаль +30"
+            }
+          ],
+          "permissionReason": "структурное продолжение от якоря"
+        },
+        {
+          "n": 22,
+          "row": 2,
+          "col": 1,
+          "code": "10000",
+          "code4": "0000",
+          "count": 1,
+          "count4": 0,
+          "gap": 4,
+          "strong": false,
+          "near": false,
+          "seen": true,
+          "anchor": false,
+          "temporalAllowed": false,
+          "role": "геометрическое продолжение",
+          "links": [
+            {
+              "n": 2,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 32,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 42,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 12,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 52,
+              "type": "вертикаль +30"
+            }
+          ],
+          "permissionReason": "структурное продолжение от якоря"
+        },
+        {
+          "n": 26,
+          "row": 2,
+          "col": 5,
+          "code": "11010",
+          "code4": "1010",
+          "count": 3,
+          "count4": 2,
+          "gap": 1,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 36,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 76,
+              "type": "вертикаль +50"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 11,
+          "row": 1,
+          "col": 0,
+          "code": "01010",
+          "code4": "1010",
+          "count": 2,
+          "count4": 2,
+          "gap": 1,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 36,
+          "row": 3,
+          "col": 5,
+          "code": "01010",
+          "code4": "1010",
+          "count": 2,
+          "count4": 2,
+          "gap": 1,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 26,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 76,
+              "type": "вертикаль +40"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 76,
+          "row": 7,
+          "col": 5,
+          "code": "10100",
+          "code4": "0100",
+          "count": 2,
+          "count4": 1,
+          "gap": 2,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 26,
+              "type": "вертикаль +50"
+            },
+            {
+              "n": 36,
+              "type": "вертикаль +40"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        }
+      ],
+      "metrics": {
+        "links": 18,
+        "vertical": 18,
+        "horizontal": 0,
+        "diagonal": 0,
+        "rowCounts": [
+          1,
+          2,
+          2,
+          2,
+          1,
+          1,
+          0,
+          1
+        ],
+        "maxPerRow": 2,
+        "rowsUsed": 7,
+        "strong": 7,
+        "near": 0,
+        "seen": 10,
+        "connected": false,
+        "components": 3,
+        "componentSizes": [
+          6,
+          3,
+          1
+        ]
+      },
+      "motif": "ритм-якоря + вертикали/±2 · допускаются несколько фрагментов",
+      "results": [],
+      "status": "active",
+      "research": false
+    },
+    {
+      "id": "iris-1.1.0:328944:IRIS:2-11-16-26-32-36-42-56-66-76",
+      "version": "iris-1.1.0",
+      "mode": "IRIS",
+      "origin": "server",
+      "createdAt": "2026-10-06T00:41:41.612Z",
+      "sourceCutoff": 328944,
+      "sourceWindow": [
+        328940,
+        328941,
+        328942,
+        328943,
+        328944
+      ],
+      "targets": [
+        {
+          "draw": 328945,
+          "date": "2026-10-06",
+          "time": "04:02"
+        },
+        {
+          "draw": 328946,
+          "date": "2026-10-06",
+          "time": "04:17"
+        },
+        {
+          "draw": 328947,
+          "date": "2026-10-06",
+          "time": "04:32"
+        },
+        {
+          "draw": 328948,
+          "date": "2026-10-06",
+          "time": "05:02"
+        },
+        {
+          "draw": 328949,
+          "date": "2026-10-06",
+          "time": "05:17"
+        }
+      ],
+      "targetStart": 328945,
+      "targetEnd": 328949,
+      "numbers": [
+        2,
+        11,
+        16,
+        26,
+        32,
+        36,
+        42,
+        56,
+        66,
+        76
+      ],
+      "size": 10,
+      "permissionA": true,
+      "permissionB": false,
+      "gate": {
+        "anchorCount": 11,
+        "repeat3Count": 6,
+        "observed": 3,
+        "eligible": 3,
+        "rowLimit": null,
+        "heatLimit": null,
+        "rule": "ритм-якорь → структурное расширение по вертикалям и ±2; несколько фрагментов допустимы"
+      },
+      "reason": [
+        {
+          "n": 26,
+          "row": 2,
+          "col": 5,
+          "code": "11010",
+          "code4": "1010",
+          "count": 3,
+          "count4": 2,
+          "gap": 1,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 36,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 76,
+              "type": "вертикаль +50"
+            },
+            {
+              "n": 56,
+              "type": "вертикаль +30"
+            },
+            {
+              "n": 16,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 66,
+              "type": "вертикаль +40"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 36,
+          "row": 3,
+          "col": 5,
+          "code": "01010",
+          "code4": "1010",
+          "count": 2,
+          "count4": 2,
+          "gap": 1,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 26,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 76,
+              "type": "вертикаль +40"
+            },
+            {
+              "n": 56,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 16,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 66,
+              "type": "вертикаль +30"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 76,
+          "row": 7,
+          "col": 5,
+          "code": "10100",
+          "code4": "0100",
+          "count": 2,
+          "count4": 1,
+          "gap": 2,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 26,
+              "type": "вертикаль +50"
+            },
+            {
+              "n": 36,
+              "type": "вертикаль +40"
+            },
+            {
+              "n": 56,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 16,
+              "type": "вертикаль +60"
+            },
+            {
+              "n": 66,
+              "type": "вертикаль +10"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 56,
+          "row": 5,
+          "col": 5,
+          "code": "00011",
+          "code4": "0011",
+          "count": 2,
+          "count4": 2,
+          "gap": 0,
+          "strong": false,
+          "near": false,
+          "seen": true,
+          "anchor": false,
+          "temporalAllowed": false,
+          "role": "геометрическое продолжение",
+          "links": [
+            {
+              "n": 26,
+              "type": "вертикаль +30"
+            },
+            {
+              "n": 36,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 76,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 16,
+              "type": "вертикаль +40"
+            },
+            {
+              "n": 66,
+              "type": "вертикаль +10"
+            }
+          ],
+          "permissionReason": "структурное продолжение от якоря"
+        },
+        {
+          "n": 16,
+          "row": 1,
+          "col": 5,
+          "code": "00001",
+          "code4": "0001",
+          "count": 1,
+          "count4": 1,
+          "gap": 0,
+          "strong": false,
+          "near": false,
+          "seen": true,
+          "anchor": false,
+          "temporalAllowed": false,
+          "role": "геометрическое продолжение",
+          "links": [
+            {
+              "n": 26,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 36,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 76,
+              "type": "вертикаль +60"
+            },
+            {
+              "n": 56,
+              "type": "вертикаль +40"
+            },
+            {
+              "n": 66,
+              "type": "вертикаль +50"
+            }
+          ],
+          "permissionReason": "структурное продолжение от якоря"
+        },
+        {
+          "n": 66,
+          "row": 6,
+          "col": 5,
+          "code": "01000",
+          "code4": "1000",
+          "count": 1,
+          "count4": 1,
+          "gap": 3,
+          "strong": false,
+          "near": false,
+          "seen": true,
+          "anchor": false,
+          "temporalAllowed": false,
+          "role": "геометрическое продолжение",
+          "links": [
+            {
+              "n": 26,
+              "type": "вертикаль +40"
+            },
+            {
+              "n": 36,
+              "type": "вертикаль +30"
+            },
+            {
+              "n": 76,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 56,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 16,
+              "type": "вертикаль +50"
+            }
+          ],
+          "permissionReason": "структурное продолжение от якоря"
+        },
+        {
+          "n": 2,
+          "row": 0,
+          "col": 1,
+          "code": "01010",
+          "code4": "1010",
+          "count": 2,
+          "count4": 2,
+          "gap": 1,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 32,
+              "type": "вертикаль +30"
+            },
+            {
+              "n": 42,
+              "type": "вертикаль +40"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 11,
+          "row": 1,
+          "col": 0,
+          "code": "01010",
+          "code4": "1010",
+          "count": 2,
+          "count4": 2,
+          "gap": 1,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 32,
+          "row": 3,
+          "col": 1,
+          "code": "10100",
+          "code4": "0100",
+          "count": 2,
+          "count4": 1,
+          "gap": 2,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 2,
+              "type": "вертикаль +30"
+            },
+            {
+              "n": 42,
+              "type": "вертикаль +10"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 42,
+          "row": 4,
+          "col": 1,
+          "code": "10100",
+          "code4": "0100",
+          "count": 2,
+          "count4": 1,
+          "gap": 2,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 2,
+              "type": "вертикаль +40"
+            },
+            {
+              "n": 32,
+              "type": "вертикаль +10"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        }
+      ],
+      "metrics": {
+        "links": 18,
+        "vertical": 18,
+        "horizontal": 0,
+        "diagonal": 0,
+        "rowCounts": [
+          1,
+          2,
+          1,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        "maxPerRow": 2,
+        "rowsUsed": 8,
+        "strong": 7,
+        "near": 0,
+        "seen": 10,
+        "connected": false,
+        "components": 3,
+        "componentSizes": [
+          6,
+          3,
+          1
+        ]
+      },
+      "motif": "ритм-якоря + вертикали/±2 · допускаются несколько фрагментов",
+      "results": [],
+      "status": "active",
+      "research": false
+    },
+    {
+      "id": "iris-1.1.0:328944:IRIS:1-2-11-21-26-36-41-43-61-76",
+      "version": "iris-1.1.0",
+      "mode": "IRIS",
+      "origin": "server",
+      "createdAt": "2026-10-06T00:41:41.612Z",
+      "sourceCutoff": 328944,
+      "sourceWindow": [
+        328940,
+        328941,
+        328942,
+        328943,
+        328944
+      ],
+      "targets": [
+        {
+          "draw": 328945,
+          "date": "2026-10-06",
+          "time": "04:02"
+        },
+        {
+          "draw": 328946,
+          "date": "2026-10-06",
+          "time": "04:17"
+        },
+        {
+          "draw": 328947,
+          "date": "2026-10-06",
+          "time": "04:32"
+        },
+        {
+          "draw": 328948,
+          "date": "2026-10-06",
+          "time": "05:02"
+        },
+        {
+          "draw": 328949,
+          "date": "2026-10-06",
+          "time": "05:17"
+        }
+      ],
+      "targetStart": 328945,
+      "targetEnd": 328949,
+      "numbers": [
+        1,
+        2,
+        11,
+        21,
+        26,
+        36,
+        41,
+        43,
+        61,
+        76
+      ],
+      "size": 10,
+      "permissionA": true,
+      "permissionB": false,
+      "gate": {
+        "anchorCount": 11,
+        "repeat3Count": 6,
+        "observed": 3,
+        "eligible": 3,
+        "rowLimit": null,
+        "heatLimit": null,
+        "rule": "ритм-якорь → структурное расширение по вертикалям и ±2; несколько фрагментов допустимы"
+      },
+      "reason": [
+        {
+          "n": 11,
+          "row": 1,
+          "col": 0,
+          "code": "01010",
+          "code4": "1010",
+          "count": 2,
+          "count4": 2,
+          "gap": 1,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 21,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 61,
+              "type": "вертикаль +50"
+            },
+            {
+              "n": 1,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 41,
+              "type": "вертикаль +30"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 21,
+          "row": 2,
+          "col": 0,
+          "code": "01001",
+          "code4": "1001",
+          "count": 2,
+          "count4": 2,
+          "gap": 0,
+          "strong": false,
+          "near": false,
+          "seen": true,
+          "anchor": false,
+          "temporalAllowed": false,
+          "role": "геометрическое продолжение",
+          "links": [
+            {
+              "n": 11,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 61,
+              "type": "вертикаль +40"
+            },
+            {
+              "n": 1,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 41,
+              "type": "вертикаль +20"
+            }
+          ],
+          "permissionReason": "структурное продолжение от якоря"
+        },
+        {
+          "n": 61,
+          "row": 6,
+          "col": 0,
+          "code": "10001",
+          "code4": "0001",
+          "count": 2,
+          "count4": 1,
+          "gap": 0,
+          "strong": false,
+          "near": false,
+          "seen": true,
+          "anchor": false,
+          "temporalAllowed": false,
+          "role": "геометрическое продолжение",
+          "links": [
+            {
+              "n": 11,
+              "type": "вертикаль +50"
+            },
+            {
+              "n": 21,
+              "type": "вертикаль +40"
+            },
+            {
+              "n": 1,
+              "type": "вертикаль +60"
+            },
+            {
+              "n": 41,
+              "type": "вертикаль +20"
+            }
+          ],
+          "permissionReason": "структурное продолжение от якоря"
+        },
+        {
+          "n": 1,
+          "row": 0,
+          "col": 0,
+          "code": "10010",
+          "code4": "0010",
+          "count": 2,
+          "count4": 1,
+          "gap": 1,
+          "strong": false,
+          "near": false,
+          "seen": true,
+          "anchor": false,
+          "temporalAllowed": false,
+          "role": "геометрическое продолжение",
+          "links": [
+            {
+              "n": 11,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 21,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 61,
+              "type": "вертикаль +60"
+            },
+            {
+              "n": 41,
+              "type": "вертикаль +40"
+            }
+          ],
+          "permissionReason": "структурное продолжение от якоря"
+        },
+        {
+          "n": 41,
+          "row": 4,
+          "col": 0,
+          "code": "00100",
+          "code4": "0100",
+          "count": 1,
+          "count4": 1,
+          "gap": 2,
+          "strong": false,
+          "near": false,
+          "seen": true,
+          "anchor": false,
+          "temporalAllowed": false,
+          "role": "геометрическое продолжение",
+          "links": [
+            {
+              "n": 11,
+              "type": "вертикаль +30"
+            },
+            {
+              "n": 21,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 61,
+              "type": "вертикаль +20"
+            },
+            {
+              "n": 1,
+              "type": "вертикаль +40"
+            },
+            {
+              "n": 43,
+              "type": "горизонталь +2"
+            }
+          ],
+          "permissionReason": "структурное продолжение от якоря"
+        },
+        {
+          "n": 43,
+          "row": 4,
+          "col": 2,
+          "code": "00011",
+          "code4": "0011",
+          "count": 2,
+          "count4": 2,
+          "gap": 0,
+          "strong": false,
+          "near": false,
+          "seen": true,
+          "anchor": false,
+          "temporalAllowed": false,
+          "role": "геометрическое продолжение",
+          "links": [
+            {
+              "n": 41,
+              "type": "горизонталь +2"
+            }
+          ],
+          "permissionReason": "структурное продолжение от якоря"
+        },
+        {
+          "n": 26,
+          "row": 2,
+          "col": 5,
+          "code": "11010",
+          "code4": "1010",
+          "count": 3,
+          "count4": 2,
+          "gap": 1,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 36,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 76,
+              "type": "вертикаль +50"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 2,
+          "row": 0,
+          "col": 1,
+          "code": "01010",
+          "code4": "1010",
+          "count": 2,
+          "count4": 2,
+          "gap": 1,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 36,
+          "row": 3,
+          "col": 5,
+          "code": "01010",
+          "code4": "1010",
+          "count": 2,
+          "count4": 2,
+          "gap": 1,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 26,
+              "type": "вертикаль +10"
+            },
+            {
+              "n": 76,
+              "type": "вертикаль +40"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        },
+        {
+          "n": 76,
+          "row": 7,
+          "col": 5,
+          "code": "10100",
+          "code4": "0100",
+          "count": 2,
+          "count4": 1,
+          "gap": 2,
+          "strong": true,
+          "near": false,
+          "seen": true,
+          "anchor": true,
+          "temporalAllowed": true,
+          "role": "ритм-якорь",
+          "links": [
+            {
+              "n": 26,
+              "type": "вертикаль +50"
+            },
+            {
+              "n": 36,
+              "type": "вертикаль +40"
+            }
+          ],
+          "permissionReason": "сильный ритм — якорь IRIS"
+        }
+      ],
+      "metrics": {
+        "links": 14,
+        "vertical": 13,
+        "horizontal": 1,
+        "diagonal": 0,
+        "rowCounts": [
+          2,
+          1,
+          2,
+          1,
+          2,
+          0,
+          1,
+          1
+        ],
+        "maxPerRow": 2,
+        "rowsUsed": 7,
+        "strong": 5,
+        "near": 0,
+        "seen": 10,
+        "connected": false,
+        "components": 3,
+        "componentSizes": [
+          6,
+          3,
+          1
+        ]
+      },
+      "motif": "ритм-якоря + вертикали/±2 · допускаются несколько фрагментов",
+      "results": [],
+      "status": "active",
+      "research": false
     }
   ]
 }
