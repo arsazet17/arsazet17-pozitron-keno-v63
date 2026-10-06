@@ -1,4 +1,4 @@
-name: IRIS 1.2 · LAST 100 BACKTEST
+name: IRIS 1.3 · LAST 100 BACKTEST
 
 on:
   workflow_dispatch:
@@ -49,6 +49,6 @@ jobs:
             echo "Отчёт не изменился"
             exit 0
           fi
-          git commit -m "[research] IRIS 1.2 last-100 natural-size backtest"
+          git commit -m "[research] IRIS 1.3 last-100 natural-size backtest"
           git pull --rebase origin main
           git push origin HEAD:main
