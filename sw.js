@@ -1,16 +1,16 @@
 'use strict';
 
-const CACHE='pozitron-v63-app-6328';
+const CACHE='pozitron-v63-app-6329';
 const REPO_RAW='https://raw.githubusercontent.com/arsazet17/arsazet17-pozitron-keno-v63/main/';
 
 const STATIC_ASSETS=[
-  './','./index.html','./styles-v63.css?v=6328','./archive-v63.css?v=6328',
-  './version-v63.js?v=6328','./storage-v63.js?v=6328','./engine-v63.js?v=6328','./sync-v63-client.js?v=6328','./app-v63.js?v=6328',
-  './iris-engine-v63.js?v=6328','./iris-ui-v63.js?v=6328','./iris-v63.css?v=6328',
-  './network80-engine-v63.js?v=6328','./network80-ui-v63.js?v=6328','./network80-v63.css?v=6328',
-  './iris-archive-beauty.js?v=6328','./iris-archive-beauty.css?v=6328','./iris-waves-v63.js?v=6328',
-  './iris-scroll-stability-v637.js?v=6328','./iris-mobile-fix-v637.css?v=6328',
-  './manifest.webmanifest?v=6328','./icon.svg?v=6328'
+  './','./index.html','./styles-v63.css?v=6329','./archive-v63.css?v=6329',
+  './version-v63.js?v=6329','./storage-v63.js?v=6329','./engine-v63.js?v=6329','./sync-v63-client.js?v=6329','./app-v63.js?v=6329',
+  './iris-engine-v63.js?v=6329','./iris-ui-v63.js?v=6329','./iris-v63.css?v=6329',
+  './network80-engine-v63.js?v=6329','./network80-ui-v63.js?v=6329','./network80-v63.css?v=6329',
+  './iris-archive-beauty.js?v=6329','./iris-archive-beauty.css?v=6329','./iris-waves-v63.js?v=6329',
+  './iris-scroll-stability-v637.js?v=6329','./iris-mobile-fix-v637.css?v=6329',
+  './manifest.webmanifest?v=6329','./icon.svg?v=6329'
 ];
 
 const SERVER_FILES=new Set([
