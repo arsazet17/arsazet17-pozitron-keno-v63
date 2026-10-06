@@ -3,6 +3,12 @@ import fs from 'node:fs/promises';
 async function read(file){ return await fs.readFile(file,'utf8'); }
 async function write(file,text){ await fs.writeFile(file,text); }
 
+const versionSource=await read('version-v63.js');
+const versionMatch=versionSource.match(/version:'([^']+)'.*build:'([^']+)'/);
+if(!versionMatch) throw new Error('CLIENT PATCH FAIL: не распознана version-v63.js');
+const APP_VERSION=versionMatch[1];
+const APP_BUILD=versionMatch[2];
+
 function mustReplace(text, from, to, label) {
   if (text.includes(to)) return text; // уже исправлено
   if (!text.includes(from)) throw new Error(`CLIENT PATCH FAIL: не найден блок ${label}`);
@@ -133,7 +139,7 @@ app = mustReplace(
   'saveSettings'
 );
 
-app = app.replace("./sw.js?v=6500", "./sw.js?v=6600");
+app = app.replace(/\.\/sw\.js\?v=\d+/g, `./sw.js?v=${APP_BUILD}`);
 
 for (const forbidden of ['keno-history-v62.json','pozitron-keno-v5','lucky-numbers.ru']) {
   if (app.includes(forbidden)) throw new Error(`CLIENT PATCH FAIL: app-v63.js ещё содержит ${forbidden}`);
@@ -182,17 +188,17 @@ await write('sync-v63-client.js', sync);
 // Service Worker: никакой 6.2/Lucky логики, серверные JSON всегда свежие.
 const sw = `'use strict';
 
-const CACHE='pozitron-v63-iris-6313';
+const CACHE='pozitron-v63-app-${APP_BUILD}';
 const REPO_RAW='https://raw.githubusercontent.com/arsazet17/arsazet17-pozitron-keno-v63/main/';
 
 const STATIC_ASSETS=[
-  './','./index.html','./styles-v63.css','./archive-v63.css',
-  './storage-v63.js','./engine-v63.js','./sync-v63-client.js','./app-v63.js',
-  './iris-engine-v63.js?v=6313','./iris-ui-v63.js?v=6313','./iris-v63.css?v=6313',
-  './network80-engine-v63.js?v=6313','./network80-ui-v63.js?v=6313','./network80-v63.css?v=6313',
-  './iris-archive-beauty.js?v=6313','./iris-archive-beauty.css?v=6313','./iris-waves-v63.js?v=6313',
-  './iris-scroll-stability-v637.js?v=6313','./iris-mobile-fix-v637.css?v=6313',
-  './manifest.webmanifest','./icon.svg'
+  './','./index.html','./styles-v63.css?v=${APP_BUILD}','./archive-v63.css?v=${APP_BUILD}',
+  './version-v63.js?v=${APP_BUILD}','./storage-v63.js?v=${APP_BUILD}','./engine-v63.js?v=${APP_BUILD}','./sync-v63-client.js?v=${APP_BUILD}','./app-v63.js?v=${APP_BUILD}',
+  './iris-engine-v63.js?v=${APP_BUILD}','./iris-ui-v63.js?v=${APP_BUILD}','./iris-v63.css?v=${APP_BUILD}',
+  './network80-engine-v63.js?v=${APP_BUILD}','./network80-ui-v63.js?v=${APP_BUILD}','./network80-v63.css?v=${APP_BUILD}',
+  './iris-archive-beauty.js?v=${APP_BUILD}','./iris-archive-beauty.css?v=${APP_BUILD}','./iris-waves-v63.js?v=${APP_BUILD}',
+  './iris-scroll-stability-v637.js?v=${APP_BUILD}','./iris-mobile-fix-v637.css?v=${APP_BUILD}',
+  './manifest.webmanifest?v=${APP_BUILD}','./icon.svg?v=${APP_BUILD}'
 ];
 
 const SERVER_FILES=new Set([
@@ -252,7 +258,7 @@ await write('sw.js', sw);
 
 // index: фиксированный серверный источник + cache bust 6600.
 let index = await read('index.html');
-index = index.replaceAll('?v=6505','?v=6600');
+index = index.replace(/\?v=\d+/g,`?v=${APP_BUILD}`);
 index = index.replace(
   '<label class="small">Дополнительный источник истории</label><input id="sourceUrl" placeholder="необязательно">',
   '<label class="small">Источник истории</label><input id="sourceUrl" value="./keno-history-v63.json" readonly>'
@@ -263,4 +269,4 @@ index = index.replace(
 );
 await write('index.html', index);
 
-console.log('CLIENT PATCH PASS: app/storage/sync/sw/index переведены на локальный KENO 6.3 + Столото.');
+console.log(`CLIENT PATCH PASS: v${APP_VERSION} build ${APP_BUILD} · app/storage/sync/sw/index синхронизированы.`);
