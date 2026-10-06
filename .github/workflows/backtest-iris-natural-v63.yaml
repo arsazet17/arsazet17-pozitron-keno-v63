@@ -1,4 +1,4 @@
-name: IRIS 1.2 · FULL ARCHIVE BACKTEST
+name: IRIS 1.2 · LAST 100 BACKTEST
 
 on:
   workflow_dispatch:
@@ -36,7 +36,7 @@ jobs:
           node --check scripts/backtest-iris-natural-v63.js
           node scripts/test-iris-v63.js
 
-      - name: Полный walk-forward архива
+      - name: Walk-forward последних 100 тиражей
         run: node scripts/backtest-iris-natural-v63.js
 
       - name: Сохранить исследовательский отчёт
@@ -44,11 +44,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add iris-natural-backtest-v63.json IRIS_NATURAL_BACKTEST.md
+          git add iris-natural-backtest-last100-v63.json IRIS_NATURAL_BACKTEST_LAST100.md
           if git diff --cached --quiet; then
             echo "Отчёт не изменился"
             exit 0
           fi
-          git commit -m "[research] IRIS 1.2 full archive natural-size backtest"
+          git commit -m "[research] IRIS 1.2 last-100 natural-size backtest"
           git pull --rebase origin main
           git push origin HEAD:main
