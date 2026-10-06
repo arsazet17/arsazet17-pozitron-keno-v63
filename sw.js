@@ -18,7 +18,7 @@ const SERVER_FILES=new Set([
   'fingerprint-archive-v63.json','keno-status-v63.json'
 ]);
 
-function freshRaw(file){return REPO_RAW+file+'?v=6319&t='+Date.now()}
+function freshRaw(file){return REPO_RAW+file+'?v=6600&t='+Date.now()}
 async function fetchFreshRaw(file,fallbackRequest){
   try{
     const response=await fetch(freshRaw(file),{cache:'no-store',headers:{'cache-control':'no-cache'}});
