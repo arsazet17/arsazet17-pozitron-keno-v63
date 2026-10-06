@@ -23,7 +23,7 @@ for(let i=Math.max(4,h.length-120);i<h.length-5;i++){
 }
 assert.ok(anchorWindows>0);assert.ok(observed>0);assert.ok(fixtureIndex>=0);assert.ok(mini3Index>=0);assert.ok(mini4Index>=0);
 const idx=fixtureIndex,now=new Date(E.timestamp(h[idx])+1000).toISOString(),prefix=h.slice(0,idx+1),first=E.process(prefix,[],now),snapshot=JSON.stringify(first.series.map(s=>[s.numbers,s.createdAt,s.reason,s.gate,s.targets]));
-assert.equal(first.version,'iris-1.3.0');
+assert.equal(first.version,'iris-1.4.0');
 assert.ok(first.series.some(s=>s.mode==='IRIS'));
 for(const s of first.series){assert.equal(s.permissionB,false);assert.equal(s.targets.length,5);assert.equal(s.targetEnd-s.targetStart,4);}
 const again=E.process(prefix,first.series,now,{gateLog:first.gateLog});assert.equal(again.created,0);assert.equal(again.gateLog.filter(g=>g.version===E.VERSION&&g.sourceCutoff===h[idx].draw).length,1);
@@ -51,8 +51,9 @@ assert.equal(E.miniLinkType(11,41),'вертикаль +30');
 assert.equal(E.miniLinkType(11,22),'диагональ ±9/11');
 assert.equal(E.miniLinkType(11,51),'');
 assert.equal(E.linkType(1,71),'вертикаль +70');assert.equal(E.linkType(11,13),'горизонталь +2');assert.equal(E.linkType(11,22),'');
+const probe={n:71,strong:false,near:true,count:2,gap:1};assert.equal(E.extensionScore(probe,[1,11,21]),E.extensionScore(probe,[1,11,21,31,41,51]));
 for(let size=3;size<=10;size++)for(let hits=0;hits<=size;hits++)assert.equal(E.payout(size,hits),N.payout(size,hits));assert.equal(E.payout(7,0),150);assert.equal(E.payout(7,5),1200);
 const oldFrozen=JSON.stringify(archive.series.map(s=>[s.numbers,s.createdAt,s.results])),settledOld=E.settle(archive.series,[]);assert.equal(JSON.stringify(settledOld.map(s=>[s.numbers,s.createdAt,s.results])),oldFrozen);
 const demo={numbers:[1,2,3,4,5,6],targetStart:100,status:'closed',results:[0,3,4,4,1].map((hitCount,i)=>({draw:100+i,hitCount,payout:E.payout(6,hitCount)}))},sum=E.summary(demo);assert.equal(sum.firstWinStep,2);assert.deepEqual(sum.bestSteps,[3,4]);assert.equal(sum.totalPayout,1700);assert.equal(sum.winCount,3);
 const research=E.backtest(h.slice(0,idx+6),{limit:10});assert.equal(research.research,true);assert.ok(research.series.every(s=>s.origin==='backtest'&&s.research));assert.equal(require('./iris-update-v63.js').recoverRecent,undefined);
-console.log('PASS: IRIS 1.3 natural main sizes + restored historical independent MINI geometry/search, five frozen draws, dedup, immutable history, payouts and anti-leakage.');
+console.log('PASS: IRIS 1.4 natural main sizes without same-column score explosion + restored historical MINI geometry/search, five frozen draws, dedup, immutable history, payouts and anti-leakage.');
