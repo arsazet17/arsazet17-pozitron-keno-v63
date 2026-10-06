@@ -21,7 +21,7 @@ for(let i=Math.max(4,h.length-120);i<h.length-5;i++){
 }
 assert.ok(anchorWindows>0);assert.ok(observed>0);assert.ok(fixtureIndex>=0);
 const idx=fixtureIndex,now=new Date(E.timestamp(h[idx])+1000).toISOString(),prefix=h.slice(0,idx+1),first=E.process(prefix,[],now),snapshot=JSON.stringify(first.series.map(s=>[s.numbers,s.createdAt,s.reason,s.gate,s.targets]));
-assert.equal(first.version,'iris-1.1.0');
+assert.equal(first.version,'iris-1.2.0');
 assert.ok(first.series.some(s=>s.mode==='IRIS'));assert.ok(first.series.some(s=>s.mode==='MINI3'));assert.ok(first.series.some(s=>s.mode==='MINI4'));
 for(const s of first.series){assert.equal(s.permissionB,false);assert.equal(s.targets.length,5);assert.equal(s.targetEnd-s.targetStart,4);}
 const again=E.process(prefix,first.series,now,{gateLog:first.gateLog});assert.equal(again.created,0);assert.equal(again.gateLog.filter(g=>g.version===E.VERSION&&g.sourceCutoff===h[idx].draw).length,1);
@@ -39,4 +39,4 @@ for(let size=3;size<=10;size++)for(let hits=0;hits<=size;hits++)assert.equal(E.p
 const oldFrozen=JSON.stringify(archive.series.map(s=>[s.numbers,s.createdAt,s.results])),settledOld=E.settle(archive.series,[]);assert.equal(JSON.stringify(settledOld.map(s=>[s.numbers,s.createdAt,s.results])),oldFrozen);
 const demo={numbers:[1,2,3,4,5,6],targetStart:100,status:'closed',results:[0,3,4,4,1].map((hitCount,i)=>({draw:100+i,hitCount,payout:E.payout(6,hitCount)}))},sum=E.summary(demo);assert.equal(sum.firstWinStep,2);assert.deepEqual(sum.bestSteps,[3,4]);assert.equal(sum.totalPayout,1700);assert.equal(sum.winCount,3);
 const research=E.backtest(h.slice(0,idx+6),{limit:10});assert.equal(research.research,true);assert.ok(research.series.every(s=>s.origin==='backtest'&&s.research));assert.equal(require('./iris-update-v63.js').recoverRecent,undefined);
-console.log('PASS: restored IRIS rhythm anchors, vertical/+2 structural expansion, multi-fragment main combinations, independent MINI, five frozen draws, dedup, immutable history, payouts and anti-leakage.');
+console.log('PASS: IRIS 1.2 natural-size main combinations, rhythm anchors, vertical/+2 structural expansion, independent MINI, five frozen draws, dedup, immutable history, payouts and anti-leakage.');
