@@ -114,7 +114,7 @@ function simulate(label,candidateFn){
 function newCandidates(features){return E.independentCandidates(features);}
 function simulateMini(size){
   const active=new Map(),hitDistribution={};
-  let validWindows=0,signalWindows=0,createdSeries=0,checks=0,totalPayout=0,positivePayoutChecks=0,bestHits=0;
+  let validWindows=0,signalWindows=0,createdSeries=0,checks=0,totalPayout=0,positivePayoutChecks=0,bestHits=0,verticalOnly=0,mixedShape=0;
   const startIndex=Math.max(4,history.length-100);
   for(let i=startIndex;i<history.length-5;i++){
     if(!usableSource(i))continue;
@@ -124,14 +124,14 @@ function simulateMini(size){
     signalWindows++;
     const source=history[i].draw,key=c.numbers.join(','),activeEnd=active.get(key)||0;
     if(activeEnd>=source+1)continue;
-    active.set(key,source+5);createdSeries++;
+    active.set(key,source+5);createdSeries++;const cols=new Set(c.numbers.map(n=>(n-1)%10));if(cols.size===1)verticalOnly++;else mixedShape++;
     for(let j=1;j<=5;j++){
       const fact=history[i+j],hits=c.numbers.filter(n=>fact.balls.includes(n)).length,pay=Number(E.payout(size,hits)||0);
       checks++;totalPayout+=pay;if(pay>0)positivePayoutChecks++;bestHits=Math.max(bestHits,hits);
       hitDistribution[hits]=(hitDistribution[hits]||0)+1;
     }
   }
-  return {size,validWindows,signalWindows,createdSeries,checks,positivePayoutChecks,bestHits,grossPayoutRub:totalPayout,hitDistribution};
+  return {size,validWindows,signalWindows,createdSeries,verticalOnly,mixedShape,checks,positivePayoutChecks,bestHits,grossPayoutRub:totalPayout,hitDistribution};
 }
 
 const legacy=simulate('legacy_forced_sizes_1.1',legacyCandidates);
@@ -153,21 +153,21 @@ const report={
 fs.writeFileSync('iris-natural-backtest-last100-v63.json',JSON.stringify(report,null,2)+'\n');
 
 const rows=[5,6,7,8,9,10].map(n=>`| ${n} | ${legacy.sizeSeries[n]} | ${natural.sizeSeries[n]} | ${legacy.sizePayout[n].toLocaleString('ru-RU')} ₽ | ${natural.sizePayout[n].toLocaleString('ru-RU')} ₽ |`).join('\n');
-const md=`# IRIS 1.2 · walk-forward последних 100 тиражей
+const md=`# IRIS 1.3 · walk-forward последних 100 тиражей
 
 Проверка: последние **100 тиражей**, №${history.at(-100).draw}–№${history.at(-1).draw}.
 
-Сравнение старой принудительной схемы размеров с IRIS 1.2, где размер основной комбинации определяется естественным окончанием подтверждённой структуры.
+Сравнение старой принудительной схемы размеров с IRIS 1.3, где размер основной комбинации определяется естественным окончанием подтверждённой структуры.
 
-| Размер | Старых серий | IRIS 1.2 серий | Старая выплата | IRIS 1.2 выплата |
+| Размер | Старых серий | IRIS 1.3 серий | Старая выплата | IRIS 1.3 выплата |
 |---:|---:|---:|---:|---:|
 ${rows}
 
 **Старая схема:** ${legacy.createdSeries} серий, ${legacy.positivePayoutChecks} проверок с выплатой, всего **${legacy.grossPayoutRub.toLocaleString('ru-RU')} ₽**; средняя выплата на проверку **${legacy.payoutPerCheckRub.toLocaleString('ru-RU')} ₽**.
 
-**IRIS 1.2:** ${natural.createdSeries} серий, ${natural.positivePayoutChecks} проверок с выплатой, всего **${natural.grossPayoutRub.toLocaleString('ru-RU')} ₽**; средняя выплата на проверку **${natural.payoutPerCheckRub.toLocaleString('ru-RU')} ₽**.
+**IRIS 1.3:** ${natural.createdSeries} серий, ${natural.positivePayoutChecks} проверок с выплатой, всего **${natural.grossPayoutRub.toLocaleString('ru-RU')} ₽**; средняя выплата на проверку **${natural.payoutPerCheckRub.toLocaleString('ru-RU')} ₽**.
 
-Разница по выплатам: **${delta.grossPayoutRub>=0?'+':''}${delta.grossPayoutRub.toLocaleString('ru-RU')} ₽**.\n\n**Естественная MINI-3:** ${mini3.createdSeries} серий, ${mini3.positivePayoutChecks} проверок с выплатой, всего **${mini3.grossPayoutRub.toLocaleString('ru-RU')} ₽**, максимум ${mini3.bestHits}/3.\n\n**Естественная MINI-4:** ${mini4.createdSeries} серий, ${mini4.positivePayoutChecks} проверок с выплатой, всего **${mini4.grossPayoutRub.toLocaleString('ru-RU')} ₽**, максимум ${mini4.bestHits}/4.
+Разница по выплатам: **${delta.grossPayoutRub>=0?'+':''}${delta.grossPayoutRub.toLocaleString('ru-RU')} ₽**.\n\n**MINI-3 по восстановленному историческому правилу:** ${mini3.createdSeries} серий; чистый один столб ${mini3.verticalOnly}, смешанная геометрия ${mini3.mixedShape}; ${mini3.positivePayoutChecks} проверок с выплатой, всего **${mini3.grossPayoutRub.toLocaleString('ru-RU')} ₽**, максимум ${mini3.bestHits}/3.\n\n**MINI-4 по восстановленному историческому правилу:** ${mini4.createdSeries} серий; чистый один столб ${mini4.verticalOnly}, смешанная геометрия ${mini4.mixedShape}; ${mini4.positivePayoutChecks} проверок с выплатой, всего **${mini4.grossPayoutRub.toLocaleString('ru-RU')} ₽**, максимум ${mini4.bestHits}/4.
 
 > Это исторический walk-forward, а не обещание будущего результата. Выплата указана по внутренней таблице приложения без вычета стоимости ставок.
 `;
