@@ -73,7 +73,8 @@ function simulate(label,candidateFn){
   let validWindows=0,signalWindows=0,createdSeries=0,checks=0,totalHits=0,totalPayout=0,positivePayoutChecks=0,zeroHitPayoutChecks=0,seriesWithPayout=0,perfectChecks=0;
   const bestBySize={},perfectExamples=[];
   let best={hits:-1,size:0,draw:null,source:null,numbers:[]};
-  for(let i=4;i<history.length-5;i++){
+  const startIndex=Math.max(4,history.length-100);
+  for(let i=startIndex;i<history.length-5;i++){
     if(!usableSource(i))continue;
     validWindows++;
     const features=E.rank(history.slice(i-4,i+1)),candidates=candidateFn(features)||[];
@@ -111,9 +112,31 @@ function simulate(label,candidateFn){
   };
 }
 function newCandidates(features){return E.independentCandidates(features);}
+function simulateMini(size){
+  const active=new Map(),hitDistribution={};
+  let validWindows=0,signalWindows=0,createdSeries=0,checks=0,totalPayout=0,positivePayoutChecks=0,bestHits=0;
+  const startIndex=Math.max(4,history.length-100);
+  for(let i=startIndex;i<history.length-5;i++){
+    if(!usableSource(i))continue;
+    validWindows++;
+    const features=E.rank(history.slice(i-4,i+1)),c=E.miniSearch(features,size);
+    if(!c)continue;
+    signalWindows++;
+    const source=history[i].draw,key=c.numbers.join(','),activeEnd=active.get(key)||0;
+    if(activeEnd>=source+1)continue;
+    active.set(key,source+5);createdSeries++;
+    for(let j=1;j<=5;j++){
+      const fact=history[i+j],hits=c.numbers.filter(n=>fact.balls.includes(n)).length,pay=Number(E.payout(size,hits)||0);
+      checks++;totalPayout+=pay;if(pay>0)positivePayoutChecks++;bestHits=Math.max(bestHits,hits);
+      hitDistribution[hits]=(hitDistribution[hits]||0)+1;
+    }
+  }
+  return {size,validWindows,signalWindows,createdSeries,checks,positivePayoutChecks,bestHits,grossPayoutRub:totalPayout,hitDistribution};
+}
 
 const legacy=simulate('legacy_forced_sizes_1.1',legacyCandidates);
 const natural=simulate('natural_sizes_1.2',newCandidates);
+const mini3=simulateMini(3),mini4=simulateMini(4);
 const delta={
   series:natural.createdSeries-legacy.createdSeries,
   grossPayoutRub:natural.grossPayoutRub-legacy.grossPayoutRub,
@@ -122,17 +145,17 @@ const delta={
 const report={
   generatedAt:new Date().toISOString(),
   engineVersion:E.VERSION,
-  archive:{draws:history.length,first:history[0],last:history.at(-1)},
-  method:'Walk-forward по всему архиву. Для каждого полностью последовательного 5-тиражного окна основная IRIS фиксируется до фактов и проверяется на следующих 5 тиражах. Одинаковая активная комбинация повторно не запускается. MINI-3/MINI-4 здесь не считаются.',
+  archive:{draws:history.length,first:history.at(-100),last:history.at(-1)},
+  method:'Walk-forward только по последним 100 тиражам. Для каждого полностью последовательного 5-тиражного окна IRIS фиксируется до фактов и проверяется на следующих 5 тиражах. Одинаковая активная комбинация повторно не запускается.',
   payoutNote:'grossPayoutRub — сумма выплат по встроенной таблице приложения, без вычета стоимости ставок.',
-  legacy,natural,delta
+  legacy,natural,mini3,mini4,delta
 };
-fs.writeFileSync('iris-natural-backtest-v63.json',JSON.stringify(report,null,2)+'\n');
+fs.writeFileSync('iris-natural-backtest-last100-v63.json',JSON.stringify(report,null,2)+'\n');
 
 const rows=[5,6,7,8,9,10].map(n=>`| ${n} | ${legacy.sizeSeries[n]} | ${natural.sizeSeries[n]} | ${legacy.sizePayout[n].toLocaleString('ru-RU')} ₽ | ${natural.sizePayout[n].toLocaleString('ru-RU')} ₽ |`).join('\n');
-const md=`# IRIS 1.2 · полный walk-forward архива
+const md=`# IRIS 1.2 · walk-forward последних 100 тиражей
 
-Архив: **${history.length} тиражей**, №${history[0].draw}–№${history.at(-1).draw}.
+Проверка: последние **100 тиражей**, №${history.at(-100).draw}–№${history.at(-1).draw}.
 
 Сравнение старой принудительной схемы размеров с IRIS 1.2, где размер основной комбинации определяется естественным окончанием подтверждённой структуры.
 
@@ -144,9 +167,9 @@ ${rows}
 
 **IRIS 1.2:** ${natural.createdSeries} серий, ${natural.positivePayoutChecks} проверок с выплатой, всего **${natural.grossPayoutRub.toLocaleString('ru-RU')} ₽**; средняя выплата на проверку **${natural.payoutPerCheckRub.toLocaleString('ru-RU')} ₽**.
 
-Разница по выплатам: **${delta.grossPayoutRub>=0?'+':''}${delta.grossPayoutRub.toLocaleString('ru-RU')} ₽**.
+Разница по выплатам: **${delta.grossPayoutRub>=0?'+':''}${delta.grossPayoutRub.toLocaleString('ru-RU')} ₽**.\n\n**Естественная MINI-3:** ${mini3.createdSeries} серий, ${mini3.positivePayoutChecks} проверок с выплатой, всего **${mini3.grossPayoutRub.toLocaleString('ru-RU')} ₽**, максимум ${mini3.bestHits}/3.\n\n**Естественная MINI-4:** ${mini4.createdSeries} серий, ${mini4.positivePayoutChecks} проверок с выплатой, всего **${mini4.grossPayoutRub.toLocaleString('ru-RU')} ₽**, максимум ${mini4.bestHits}/4.
 
 > Это исторический walk-forward, а не обещание будущего результата. Выплата указана по внутренней таблице приложения без вычета стоимости ставок.
 `;
-fs.writeFileSync('IRIS_NATURAL_BACKTEST.md',md);
-console.log(JSON.stringify({archive:report.archive,legacy:{createdSeries:legacy.createdSeries,sizeSeries:legacy.sizeSeries,grossPayoutRub:legacy.grossPayoutRub,positivePayoutChecks:legacy.positivePayoutChecks},natural:{createdSeries:natural.createdSeries,sizeSeries:natural.sizeSeries,grossPayoutRub:natural.grossPayoutRub,positivePayoutChecks:natural.positivePayoutChecks},delta},null,2));
+fs.writeFileSync('IRIS_NATURAL_BACKTEST_LAST100.md',md);
+console.log(JSON.stringify({archive:report.archive,legacy:{createdSeries:legacy.createdSeries,sizeSeries:legacy.sizeSeries,grossPayoutRub:legacy.grossPayoutRub,positivePayoutChecks:legacy.positivePayoutChecks},natural:{createdSeries:natural.createdSeries,sizeSeries:natural.sizeSeries,grossPayoutRub:natural.grossPayoutRub,positivePayoutChecks:natural.positivePayoutChecks},mini3,mini4,delta},null,2));
