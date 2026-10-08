@@ -1,747 +1,35 @@
 {
   "version": "iris-1.4.0",
-  "updatedAt": "2026-10-08T09:12:08.439Z",
-  "sourceCutoff": 329094,
+  "updatedAt": "2026-10-08T09:26:54.509Z",
+  "sourceCutoff": 329095,
   "evaluation": {
     "version": "iris-1.4.0",
-    "state": "allowed",
-    "signal": "PLAY",
-    "sourceCutoff": 329094,
+    "state": "denied",
+    "signal": "OFF",
+    "sourceCutoff": 329095,
     "next": {
-      "draw": 329095,
+      "draw": 329096,
       "date": "2026-10-08",
-      "time": "12:17"
+      "time": "12:32"
     },
-    "permissionA": true,
+    "permissionA": false,
     "permissionB": false,
-    "candidates": [
-      {
-        "mode": "IRIS",
-        "numbers": [
-          3,
-          13,
-          23,
-          43,
-          63
-        ],
-        "motif": "естественная структура: ритм-якоря + подтверждённые вертикали/±2",
-        "metrics": {
-          "links": 10,
-          "vertical": 10,
-          "horizontal": 0,
-          "diagonal": 0,
-          "rowCounts": [
-            1,
-            1,
-            1,
-            0,
-            1,
-            0,
-            1,
-            0
-          ],
-          "maxPerRow": 1,
-          "rowsUsed": 5,
-          "strong": 2,
-          "near": 1,
-          "seen": 5,
-          "connected": true,
-          "components": 1,
-          "componentSizes": [
-            5
-          ]
-        },
-        "reason": [
-          {
-            "n": 23,
-            "row": 2,
-            "col": 2,
-            "code": "10101",
-            "code4": "0101",
-            "count": 3,
-            "count4": 2,
-            "gap": 0,
-            "strong": true,
-            "near": true,
-            "seen": true,
-            "historyCount": 9,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 3,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 13,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 43,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 63,
-                "type": "вертикаль +40"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 3,
-            "row": 0,
-            "col": 2,
-            "code": "10100",
-            "code4": "0100",
-            "count": 2,
-            "count4": 1,
-            "gap": 2,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "historyCount": 21,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 23,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 13,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 43,
-                "type": "вертикаль +40"
-              },
-              {
-                "n": 63,
-                "type": "вертикаль +60"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 13,
-            "row": 1,
-            "col": 2,
-            "code": "00011",
-            "code4": "0011",
-            "count": 2,
-            "count4": 2,
-            "gap": 0,
-            "strong": false,
-            "near": false,
-            "seen": true,
-            "historyCount": 22,
-            "anchor": false,
-            "temporalAllowed": false,
-            "role": "геометрическое продолжение",
-            "links": [
-              {
-                "n": 23,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 3,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 43,
-                "type": "вертикаль +30"
-              },
-              {
-                "n": 63,
-                "type": "вертикаль +50"
-              }
-            ],
-            "permissionReason": "структурное продолжение от якоря"
-          },
-          {
-            "n": 43,
-            "row": 4,
-            "col": 2,
-            "code": "10010",
-            "code4": "0010",
-            "count": 2,
-            "count4": 1,
-            "gap": 1,
-            "strong": false,
-            "near": false,
-            "seen": true,
-            "historyCount": 16,
-            "anchor": false,
-            "temporalAllowed": false,
-            "role": "геометрическое продолжение",
-            "links": [
-              {
-                "n": 23,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 3,
-                "type": "вертикаль +40"
-              },
-              {
-                "n": 13,
-                "type": "вертикаль +30"
-              },
-              {
-                "n": 63,
-                "type": "вертикаль +20"
-              }
-            ],
-            "permissionReason": "структурное продолжение от якоря"
-          },
-          {
-            "n": 63,
-            "row": 6,
-            "col": 2,
-            "code": "00001",
-            "code4": "0001",
-            "count": 1,
-            "count4": 1,
-            "gap": 0,
-            "strong": false,
-            "near": false,
-            "seen": true,
-            "historyCount": 59,
-            "anchor": false,
-            "temporalAllowed": false,
-            "role": "геометрическое продолжение",
-            "links": [
-              {
-                "n": 23,
-                "type": "вертикаль +40"
-              },
-              {
-                "n": 3,
-                "type": "вертикаль +60"
-              },
-              {
-                "n": 13,
-                "type": "вертикаль +50"
-              },
-              {
-                "n": 43,
-                "type": "вертикаль +20"
-              }
-            ],
-            "permissionReason": "структурное продолжение от якоря"
-          }
-        ],
-        "score": 5.24,
-        "permissionB": false
-      },
-      {
-        "mode": "MINI3",
-        "numbers": [
-          3,
-          12,
-          23
-        ],
-        "motif": "историческая самостоятельная MINI-структура",
-        "metrics": {
-          "links": 3,
-          "vertical": 1,
-          "horizontal": 0,
-          "diagonal": 2,
-          "rowCounts": [
-            1,
-            1,
-            1,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "maxPerRow": 1,
-          "rowsUsed": 3,
-          "strong": 2,
-          "near": 2,
-          "seen": 3,
-          "connected": true,
-          "components": 1
-        },
-        "reason": [
-          {
-            "n": 23,
-            "row": 2,
-            "col": 2,
-            "code": "10101",
-            "code4": "0101",
-            "count": 3,
-            "count4": 2,
-            "gap": 0,
-            "strong": true,
-            "near": true,
-            "seen": true,
-            "historyCount": 9,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 3,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 12,
-                "type": "диагональ ±9/11"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь MINI"
-          },
-          {
-            "n": 3,
-            "row": 0,
-            "col": 2,
-            "code": "10100",
-            "code4": "0100",
-            "count": 2,
-            "count4": 1,
-            "gap": 2,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "historyCount": 21,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 12,
-                "type": "диагональ ±9/11"
-              },
-              {
-                "n": 23,
-                "type": "вертикаль +20"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь MINI"
-          },
-          {
-            "n": 12,
-            "row": 1,
-            "col": 1,
-            "code": "00110",
-            "code4": "0110",
-            "count": 2,
-            "count4": 2,
-            "gap": 1,
-            "strong": false,
-            "near": true,
-            "seen": true,
-            "historyCount": 17,
-            "anchor": false,
-            "temporalAllowed": true,
-            "role": "геометрическое продолжение",
-            "links": [
-              {
-                "n": 3,
-                "type": "диагональ ±9/11"
-              },
-              {
-                "n": 23,
-                "type": "диагональ ±9/11"
-              }
-            ],
-            "permissionReason": "поддерживающий ритм + структура"
-          }
-        ],
-        "score": 44.37,
-        "permissionB": false
-      },
-      {
-        "mode": "MINI4",
-        "numbers": [
-          3,
-          23,
-          25,
-          34
-        ],
-        "motif": "историческая самостоятельная MINI-структура",
-        "metrics": {
-          "links": 4,
-          "vertical": 1,
-          "horizontal": 1,
-          "diagonal": 2,
-          "rowCounts": [
-            1,
-            0,
-            2,
-            1,
-            0,
-            0,
-            0,
-            0
-          ],
-          "maxPerRow": 2,
-          "rowsUsed": 3,
-          "strong": 2,
-          "near": 3,
-          "seen": 4,
-          "connected": true,
-          "components": 1
-        },
-        "reason": [
-          {
-            "n": 23,
-            "row": 2,
-            "col": 2,
-            "code": "10101",
-            "code4": "0101",
-            "count": 3,
-            "count4": 2,
-            "gap": 0,
-            "strong": true,
-            "near": true,
-            "seen": true,
-            "historyCount": 9,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 3,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 25,
-                "type": "горизонталь +2"
-              },
-              {
-                "n": 34,
-                "type": "диагональ ±9/11"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь MINI"
-          },
-          {
-            "n": 3,
-            "row": 0,
-            "col": 2,
-            "code": "10100",
-            "code4": "0100",
-            "count": 2,
-            "count4": 1,
-            "gap": 2,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "historyCount": 21,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 23,
-                "type": "вертикаль +20"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь MINI"
-          },
-          {
-            "n": 34,
-            "row": 3,
-            "col": 3,
-            "code": "00101",
-            "code4": "0101",
-            "count": 2,
-            "count4": 2,
-            "gap": 0,
-            "strong": false,
-            "near": true,
-            "seen": true,
-            "historyCount": 21,
-            "anchor": false,
-            "temporalAllowed": true,
-            "role": "геометрическое продолжение",
-            "links": [
-              {
-                "n": 23,
-                "type": "диагональ ±9/11"
-              },
-              {
-                "n": 25,
-                "type": "диагональ ±9/11"
-              }
-            ],
-            "permissionReason": "поддерживающий ритм + структура"
-          },
-          {
-            "n": 25,
-            "row": 2,
-            "col": 4,
-            "code": "00110",
-            "code4": "0110",
-            "count": 2,
-            "count4": 2,
-            "gap": 1,
-            "strong": false,
-            "near": true,
-            "seen": true,
-            "historyCount": 15,
-            "anchor": false,
-            "temporalAllowed": true,
-            "role": "геометрическое продолжение",
-            "links": [
-              {
-                "n": 23,
-                "type": "горизонталь +2"
-              },
-              {
-                "n": 34,
-                "type": "диагональ ±9/11"
-              }
-            ],
-            "permissionReason": "поддерживающий ритм + структура"
-          }
-        ],
-        "score": 55.76,
-        "permissionB": false
-      }
-    ],
-    "observedCandidates": [
-      {
-        "mode": "IRIS",
-        "numbers": [
-          3,
-          13,
-          23,
-          43,
-          63
-        ],
-        "motif": "естественная структура: ритм-якоря + подтверждённые вертикали/±2",
-        "metrics": {
-          "links": 10,
-          "vertical": 10,
-          "horizontal": 0,
-          "diagonal": 0,
-          "rowCounts": [
-            1,
-            1,
-            1,
-            0,
-            1,
-            0,
-            1,
-            0
-          ],
-          "maxPerRow": 1,
-          "rowsUsed": 5,
-          "strong": 2,
-          "near": 1,
-          "seen": 5,
-          "connected": true,
-          "components": 1,
-          "componentSizes": [
-            5
-          ]
-        },
-        "reason": [
-          {
-            "n": 23,
-            "row": 2,
-            "col": 2,
-            "code": "10101",
-            "code4": "0101",
-            "count": 3,
-            "count4": 2,
-            "gap": 0,
-            "strong": true,
-            "near": true,
-            "seen": true,
-            "historyCount": 9,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 3,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 13,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 43,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 63,
-                "type": "вертикаль +40"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 3,
-            "row": 0,
-            "col": 2,
-            "code": "10100",
-            "code4": "0100",
-            "count": 2,
-            "count4": 1,
-            "gap": 2,
-            "strong": true,
-            "near": false,
-            "seen": true,
-            "historyCount": 21,
-            "anchor": true,
-            "temporalAllowed": true,
-            "role": "ритм-якорь",
-            "links": [
-              {
-                "n": 23,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 13,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 43,
-                "type": "вертикаль +40"
-              },
-              {
-                "n": 63,
-                "type": "вертикаль +60"
-              }
-            ],
-            "permissionReason": "сильный ритм — якорь IRIS"
-          },
-          {
-            "n": 13,
-            "row": 1,
-            "col": 2,
-            "code": "00011",
-            "code4": "0011",
-            "count": 2,
-            "count4": 2,
-            "gap": 0,
-            "strong": false,
-            "near": false,
-            "seen": true,
-            "historyCount": 22,
-            "anchor": false,
-            "temporalAllowed": false,
-            "role": "геометрическое продолжение",
-            "links": [
-              {
-                "n": 23,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 3,
-                "type": "вертикаль +10"
-              },
-              {
-                "n": 43,
-                "type": "вертикаль +30"
-              },
-              {
-                "n": 63,
-                "type": "вертикаль +50"
-              }
-            ],
-            "permissionReason": "структурное продолжение от якоря"
-          },
-          {
-            "n": 43,
-            "row": 4,
-            "col": 2,
-            "code": "10010",
-            "code4": "0010",
-            "count": 2,
-            "count4": 1,
-            "gap": 1,
-            "strong": false,
-            "near": false,
-            "seen": true,
-            "historyCount": 16,
-            "anchor": false,
-            "temporalAllowed": false,
-            "role": "геометрическое продолжение",
-            "links": [
-              {
-                "n": 23,
-                "type": "вертикаль +20"
-              },
-              {
-                "n": 3,
-                "type": "вертикаль +40"
-              },
-              {
-                "n": 13,
-                "type": "вертикаль +30"
-              },
-              {
-                "n": 63,
-                "type": "вертикаль +20"
-              }
-            ],
-            "permissionReason": "структурное продолжение от якоря"
-          },
-          {
-            "n": 63,
-            "row": 6,
-            "col": 2,
-            "code": "00001",
-            "code4": "0001",
-            "count": 1,
-            "count4": 1,
-            "gap": 0,
-            "strong": false,
-            "near": false,
-            "seen": true,
-            "historyCount": 59,
-            "anchor": false,
-            "temporalAllowed": false,
-            "role": "геометрическое продолжение",
-            "links": [
-              {
-                "n": 23,
-                "type": "вертикаль +40"
-              },
-              {
-                "n": 3,
-                "type": "вертикаль +60"
-              },
-              {
-                "n": 13,
-                "type": "вертикаль +50"
-              },
-              {
-                "n": 43,
-                "type": "вертикаль +20"
-              }
-            ],
-            "permissionReason": "структурное продолжение от якоря"
-          }
-        ],
-        "score": 5.24
-      }
-    ],
+    "candidates": [],
+    "observedCandidates": [],
     "features": [
       {
         "n": 1,
         "row": 0,
         "col": 0,
-        "code": "00100",
-        "code4": "0100",
+        "code": "01000",
+        "code4": "1000",
         "count": 1,
         "count4": 1,
-        "gap": 2,
+        "gap": 3,
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 54,
+        "historyCount": 60,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -749,15 +37,15 @@
         "n": 2,
         "row": 0,
         "col": 1,
-        "code": "01100",
-        "code4": "1100",
+        "code": "11000",
+        "code4": "1000",
         "count": 2,
-        "count4": 2,
-        "gap": 2,
+        "count4": 1,
+        "gap": 3,
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 20,
+        "historyCount": 16,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -765,31 +53,31 @@
         "n": 3,
         "row": 0,
         "col": 2,
-        "code": "10100",
-        "code4": "0100",
-        "count": 2,
+        "code": "01000",
+        "code4": "1000",
+        "count": 1,
         "count4": 1,
-        "gap": 2,
-        "strong": true,
+        "gap": 3,
+        "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 21,
-        "anchor": true,
-        "temporalAllowed": true
+        "historyCount": 51,
+        "anchor": false,
+        "temporalAllowed": false
       },
       {
         "n": 4,
         "row": 0,
         "col": 3,
-        "code": "00001",
-        "code4": "0001",
+        "code": "00010",
+        "code4": "0010",
         "count": 1,
         "count4": 1,
-        "gap": 0,
+        "gap": 1,
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 53,
+        "historyCount": 58,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -797,15 +85,15 @@
         "n": 5,
         "row": 0,
         "col": 4,
-        "code": "10000",
+        "code": "00000",
         "code4": "0000",
-        "count": 1,
+        "count": 0,
         "count4": 0,
-        "gap": 4,
+        "gap": null,
         "strong": false,
         "near": false,
-        "seen": true,
-        "historyCount": 54,
+        "seen": false,
+        "historyCount": 159,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -813,15 +101,15 @@
         "n": 6,
         "row": 0,
         "col": 5,
-        "code": "00001",
-        "code4": "0001",
-        "count": 1,
-        "count4": 1,
+        "code": "00011",
+        "code4": "0011",
+        "count": 2,
+        "count4": 2,
         "gap": 0,
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 56,
+        "historyCount": 22,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -829,11 +117,11 @@
         "n": 7,
         "row": 0,
         "col": 6,
-        "code": "10000",
-        "code4": "0000",
+        "code": "00001",
+        "code4": "0001",
         "count": 1,
-        "count4": 0,
-        "gap": 4,
+        "count4": 1,
+        "gap": 0,
         "strong": false,
         "near": false,
         "seen": true,
@@ -861,15 +149,15 @@
         "n": 9,
         "row": 0,
         "col": 8,
-        "code": "00111",
-        "code4": "0111",
+        "code": "01110",
+        "code4": "1110",
         "count": 3,
         "count4": 3,
-        "gap": 0,
+        "gap": 1,
         "strong": false,
         "near": true,
         "seen": true,
-        "historyCount": 3,
+        "historyCount": 5,
         "anchor": false,
         "temporalAllowed": true
       },
@@ -877,6 +165,38 @@
         "n": 10,
         "row": 0,
         "col": 9,
+        "code": "11000",
+        "code4": "1000",
+        "count": 2,
+        "count4": 1,
+        "gap": 3,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 22,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 11,
+        "row": 1,
+        "col": 0,
+        "code": "00010",
+        "code4": "0010",
+        "count": 1,
+        "count4": 1,
+        "gap": 1,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 61,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 12,
+        "row": 1,
+        "col": 1,
         "code": "01100",
         "code4": "1100",
         "count": 2,
@@ -885,30 +205,14 @@
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 25,
+        "historyCount": 16,
         "anchor": false,
         "temporalAllowed": false
       },
       {
-        "n": 11,
+        "n": 13,
         "row": 1,
-        "col": 0,
-        "code": "00001",
-        "code4": "0001",
-        "count": 1,
-        "count4": 1,
-        "gap": 0,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 58,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 12,
-        "row": 1,
-        "col": 1,
+        "col": 2,
         "code": "00110",
         "code4": "0110",
         "count": 2,
@@ -917,25 +221,9 @@
         "strong": false,
         "near": true,
         "seen": true,
-        "historyCount": 17,
+        "historyCount": 21,
         "anchor": false,
         "temporalAllowed": true
-      },
-      {
-        "n": 13,
-        "row": 1,
-        "col": 2,
-        "code": "00011",
-        "code4": "0011",
-        "count": 2,
-        "count4": 2,
-        "gap": 0,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 22,
-        "anchor": false,
-        "temporalAllowed": false
       },
       {
         "n": 14,
@@ -949,7 +237,7 @@
         "strong": false,
         "near": false,
         "seen": false,
-        "historyCount": 170,
+        "historyCount": 171,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -957,31 +245,31 @@
         "n": 15,
         "row": 1,
         "col": 4,
-        "code": "00010",
-        "code4": "0010",
-        "count": 1,
-        "count4": 1,
-        "gap": 1,
+        "code": "00101",
+        "code4": "0101",
+        "count": 2,
+        "count4": 2,
+        "gap": 0,
         "strong": false,
-        "near": false,
+        "near": true,
         "seen": true,
-        "historyCount": 60,
+        "historyCount": 26,
         "anchor": false,
-        "temporalAllowed": false
+        "temporalAllowed": true
       },
       {
         "n": 16,
         "row": 1,
         "col": 5,
-        "code": "10000",
+        "code": "00000",
         "code4": "0000",
-        "count": 1,
+        "count": 0,
         "count4": 0,
-        "gap": 4,
+        "gap": null,
         "strong": false,
         "near": false,
-        "seen": true,
-        "historyCount": 64,
+        "seen": false,
+        "historyCount": 142,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -989,15 +277,15 @@
         "n": 17,
         "row": 1,
         "col": 6,
-        "code": "10000",
+        "code": "00000",
         "code4": "0000",
-        "count": 1,
+        "count": 0,
         "count4": 0,
-        "gap": 4,
+        "gap": null,
         "strong": false,
         "near": false,
-        "seen": true,
-        "historyCount": 48,
+        "seen": false,
+        "historyCount": 184,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1005,6 +293,70 @@
         "n": 18,
         "row": 1,
         "col": 7,
+        "code": "00100",
+        "code4": "0100",
+        "count": 1,
+        "count4": 1,
+        "gap": 2,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 59,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 19,
+        "row": 1,
+        "col": 8,
+        "code": "00001",
+        "code4": "0001",
+        "count": 1,
+        "count4": 1,
+        "gap": 0,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 53,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 20,
+        "row": 1,
+        "col": 9,
+        "code": "00001",
+        "code4": "0001",
+        "count": 1,
+        "count4": 1,
+        "gap": 0,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 55,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 21,
+        "row": 2,
+        "col": 0,
+        "code": "00100",
+        "code4": "0100",
+        "count": 1,
+        "count4": 1,
+        "gap": 2,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 50,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 22,
+        "row": 2,
+        "col": 1,
         "code": "00010",
         "code4": "0010",
         "count": 1,
@@ -1018,98 +370,34 @@
         "temporalAllowed": false
       },
       {
-        "n": 19,
-        "row": 1,
-        "col": 8,
-        "code": "00000",
-        "code4": "0000",
-        "count": 0,
-        "count4": 0,
-        "gap": null,
-        "strong": false,
-        "near": false,
-        "seen": false,
-        "historyCount": 152,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 20,
-        "row": 1,
-        "col": 9,
-        "code": "00000",
-        "code4": "0000",
-        "count": 0,
-        "count4": 0,
-        "gap": null,
-        "strong": false,
-        "near": false,
-        "seen": false,
-        "historyCount": 170,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 21,
-        "row": 2,
-        "col": 0,
-        "code": "10010",
-        "code4": "0010",
-        "count": 2,
-        "count4": 1,
-        "gap": 1,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 18,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 22,
-        "row": 2,
-        "col": 1,
-        "code": "00001",
-        "code4": "0001",
-        "count": 1,
-        "count4": 1,
-        "gap": 0,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 60,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
         "n": 23,
         "row": 2,
         "col": 2,
-        "code": "10101",
-        "code4": "0101",
+        "code": "01011",
+        "code4": "1011",
         "count": 3,
-        "count4": 2,
+        "count4": 3,
         "gap": 0,
-        "strong": true,
+        "strong": false,
         "near": true,
         "seen": true,
-        "historyCount": 9,
-        "anchor": true,
+        "historyCount": 6,
+        "anchor": false,
         "temporalAllowed": true
       },
       {
         "n": 24,
         "row": 2,
         "col": 3,
-        "code": "01001",
-        "code4": "1001",
-        "count": 2,
+        "code": "10011",
+        "code4": "0011",
+        "count": 3,
         "count4": 2,
         "gap": 0,
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 24,
+        "historyCount": 11,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1117,31 +405,31 @@
         "n": 25,
         "row": 2,
         "col": 4,
-        "code": "00110",
-        "code4": "0110",
+        "code": "01100",
+        "code4": "1100",
         "count": 2,
         "count4": 2,
-        "gap": 1,
+        "gap": 2,
         "strong": false,
-        "near": true,
+        "near": false,
         "seen": true,
-        "historyCount": 15,
+        "historyCount": 19,
         "anchor": false,
-        "temporalAllowed": true
+        "temporalAllowed": false
       },
       {
         "n": 26,
         "row": 2,
         "col": 5,
-        "code": "00001",
-        "code4": "0001",
-        "count": 1,
-        "count4": 1,
+        "code": "00011",
+        "code4": "0011",
+        "count": 2,
+        "count4": 2,
         "gap": 0,
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 52,
+        "historyCount": 14,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1149,15 +437,15 @@
         "n": 27,
         "row": 2,
         "col": 6,
-        "code": "11000",
-        "code4": "1000",
-        "count": 2,
-        "count4": 1,
-        "gap": 3,
+        "code": "10000",
+        "code4": "0000",
+        "count": 1,
+        "count4": 0,
+        "gap": 4,
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 16,
+        "historyCount": 55,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1165,6 +453,38 @@
         "n": 28,
         "row": 2,
         "col": 7,
+        "code": "01000",
+        "code4": "1000",
+        "count": 1,
+        "count4": 1,
+        "gap": 3,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 58,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 29,
+        "row": 2,
+        "col": 8,
+        "code": "11100",
+        "code4": "1100",
+        "count": 3,
+        "count4": 2,
+        "gap": 2,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 6,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 30,
+        "row": 2,
+        "col": 9,
         "code": "00100",
         "code4": "0100",
         "count": 1,
@@ -1178,50 +498,18 @@
         "temporalAllowed": false
       },
       {
-        "n": 29,
-        "row": 2,
-        "col": 8,
-        "code": "01110",
-        "code4": "1110",
-        "count": 3,
-        "count4": 3,
-        "gap": 1,
-        "strong": false,
-        "near": true,
-        "seen": true,
-        "historyCount": 10,
-        "anchor": false,
-        "temporalAllowed": true
-      },
-      {
-        "n": 30,
-        "row": 2,
-        "col": 9,
-        "code": "00010",
-        "code4": "0010",
-        "count": 1,
-        "count4": 1,
-        "gap": 1,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 58,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
         "n": 31,
         "row": 3,
         "col": 0,
-        "code": "00000",
-        "code4": "0000",
-        "count": 0,
-        "count4": 0,
-        "gap": null,
+        "code": "00001",
+        "code4": "0001",
+        "count": 1,
+        "count4": 1,
+        "gap": 0,
         "strong": false,
         "near": false,
-        "seen": false,
-        "historyCount": 176,
+        "seen": true,
+        "historyCount": 55,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1253,7 +541,7 @@
         "strong": false,
         "near": false,
         "seen": false,
-        "historyCount": 160,
+        "historyCount": 161,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1261,6 +549,22 @@
         "n": 34,
         "row": 3,
         "col": 3,
+        "code": "01011",
+        "code4": "1011",
+        "count": 3,
+        "count4": 3,
+        "gap": 0,
+        "strong": false,
+        "near": true,
+        "seen": true,
+        "historyCount": 7,
+        "anchor": false,
+        "temporalAllowed": true
+      },
+      {
+        "n": 35,
+        "row": 3,
+        "col": 4,
         "code": "00101",
         "code4": "0101",
         "count": 2,
@@ -1269,78 +573,14 @@
         "strong": false,
         "near": true,
         "seen": true,
-        "historyCount": 21,
+        "historyCount": 24,
         "anchor": false,
         "temporalAllowed": true
-      },
-      {
-        "n": 35,
-        "row": 3,
-        "col": 4,
-        "code": "00010",
-        "code4": "0010",
-        "count": 1,
-        "count4": 1,
-        "gap": 1,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 46,
-        "anchor": false,
-        "temporalAllowed": false
       },
       {
         "n": 36,
         "row": 3,
         "col": 5,
-        "code": "00000",
-        "code4": "0000",
-        "count": 0,
-        "count4": 0,
-        "gap": null,
-        "strong": false,
-        "near": false,
-        "seen": false,
-        "historyCount": 185,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 37,
-        "row": 3,
-        "col": 6,
-        "code": "01000",
-        "code4": "1000",
-        "count": 1,
-        "count4": 1,
-        "gap": 3,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 51,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 38,
-        "row": 3,
-        "col": 7,
-        "code": "01110",
-        "code4": "1110",
-        "count": 3,
-        "count4": 3,
-        "gap": 1,
-        "strong": false,
-        "near": true,
-        "seen": true,
-        "historyCount": 5,
-        "anchor": false,
-        "temporalAllowed": true
-      },
-      {
-        "n": 39,
-        "row": 3,
-        "col": 8,
         "code": "00001",
         "code4": "0001",
         "count": 1,
@@ -1349,7 +589,55 @@
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 52,
+        "historyCount": 57,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 37,
+        "row": 3,
+        "col": 6,
+        "code": "10000",
+        "code4": "0000",
+        "count": 1,
+        "count4": 0,
+        "gap": 4,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 53,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 38,
+        "row": 3,
+        "col": 7,
+        "code": "11100",
+        "code4": "1100",
+        "count": 3,
+        "count4": 2,
+        "gap": 2,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 6,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 39,
+        "row": 3,
+        "col": 8,
+        "code": "00010",
+        "code4": "0010",
+        "count": 1,
+        "count4": 1,
+        "gap": 1,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 51,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1357,15 +645,15 @@
         "n": 40,
         "row": 3,
         "col": 9,
-        "code": "00000",
-        "code4": "0000",
-        "count": 0,
-        "count4": 0,
-        "gap": null,
+        "code": "00001",
+        "code4": "0001",
+        "count": 1,
+        "count4": 1,
+        "gap": 0,
         "strong": false,
         "near": false,
-        "seen": false,
-        "historyCount": 117,
+        "seen": true,
+        "historyCount": 48,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1381,7 +669,7 @@
         "strong": false,
         "near": false,
         "seen": false,
-        "historyCount": 189,
+        "historyCount": 190,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1397,7 +685,7 @@
         "strong": false,
         "near": false,
         "seen": false,
-        "historyCount": 158,
+        "historyCount": 159,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1405,15 +693,15 @@
         "n": 43,
         "row": 4,
         "col": 2,
-        "code": "10010",
-        "code4": "0010",
-        "count": 2,
+        "code": "00100",
+        "code4": "0100",
+        "count": 1,
         "count4": 1,
-        "gap": 1,
+        "gap": 2,
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 16,
+        "historyCount": 51,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1421,49 +709,49 @@
         "n": 44,
         "row": 4,
         "col": 3,
-        "code": "00011",
-        "code4": "0011",
+        "code": "00110",
+        "code4": "0110",
         "count": 2,
         "count4": 2,
-        "gap": 0,
+        "gap": 1,
         "strong": false,
-        "near": false,
+        "near": true,
         "seen": true,
-        "historyCount": 15,
+        "historyCount": 24,
         "anchor": false,
-        "temporalAllowed": false
+        "temporalAllowed": true
       },
       {
         "n": 45,
         "row": 4,
         "col": 4,
-        "code": "10010",
-        "code4": "0010",
+        "code": "00101",
+        "code4": "0101",
         "count": 2,
-        "count4": 1,
-        "gap": 1,
+        "count4": 2,
+        "gap": 0,
         "strong": false,
-        "near": false,
+        "near": true,
         "seen": true,
-        "historyCount": 14,
+        "historyCount": 25,
         "anchor": false,
-        "temporalAllowed": false
+        "temporalAllowed": true
       },
       {
         "n": 46,
         "row": 4,
         "col": 5,
-        "code": "00011",
-        "code4": "0011",
+        "code": "00110",
+        "code4": "0110",
         "count": 2,
         "count4": 2,
-        "gap": 0,
+        "gap": 1,
         "strong": false,
-        "near": false,
+        "near": true,
         "seen": true,
-        "historyCount": 15,
+        "historyCount": 18,
         "anchor": false,
-        "temporalAllowed": false
+        "temporalAllowed": true
       },
       {
         "n": 47,
@@ -1477,7 +765,7 @@
         "strong": false,
         "near": false,
         "seen": false,
-        "historyCount": 181,
+        "historyCount": 182,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1493,7 +781,7 @@
         "strong": false,
         "near": false,
         "seen": false,
-        "historyCount": 150,
+        "historyCount": 151,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1501,15 +789,15 @@
         "n": 49,
         "row": 4,
         "col": 8,
-        "code": "11000",
-        "code4": "1000",
+        "code": "10001",
+        "code4": "0001",
         "count": 2,
         "count4": 1,
-        "gap": 3,
+        "gap": 0,
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 17,
+        "historyCount": 20,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1517,15 +805,15 @@
         "n": 50,
         "row": 4,
         "col": 9,
-        "code": "00001",
-        "code4": "0001",
-        "count": 1,
-        "count4": 1,
+        "code": "00011",
+        "code4": "0011",
+        "count": 2,
+        "count4": 2,
         "gap": 0,
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 60,
+        "historyCount": 23,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1533,15 +821,15 @@
         "n": 51,
         "row": 5,
         "col": 0,
-        "code": "10000",
+        "code": "00000",
         "code4": "0000",
-        "count": 1,
+        "count": 0,
         "count4": 0,
-        "gap": 4,
+        "gap": null,
         "strong": false,
         "near": false,
-        "seen": true,
-        "historyCount": 62,
+        "seen": false,
+        "historyCount": 154,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1557,7 +845,7 @@
         "strong": false,
         "near": false,
         "seen": false,
-        "historyCount": 158,
+        "historyCount": 159,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1565,262 +853,6 @@
         "n": 53,
         "row": 5,
         "col": 2,
-        "code": "00010",
-        "code4": "0010",
-        "count": 1,
-        "count4": 1,
-        "gap": 1,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 52,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 54,
-        "row": 5,
-        "col": 3,
-        "code": "11000",
-        "code4": "1000",
-        "count": 2,
-        "count4": 1,
-        "gap": 3,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 17,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 55,
-        "row": 5,
-        "col": 4,
-        "code": "10000",
-        "code4": "0000",
-        "count": 1,
-        "count4": 0,
-        "gap": 4,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 54,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 56,
-        "row": 5,
-        "col": 5,
-        "code": "01001",
-        "code4": "1001",
-        "count": 2,
-        "count4": 2,
-        "gap": 0,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 18,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 57,
-        "row": 5,
-        "col": 6,
-        "code": "01100",
-        "code4": "1100",
-        "count": 2,
-        "count4": 2,
-        "gap": 2,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 22,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 58,
-        "row": 5,
-        "col": 7,
-        "code": "11000",
-        "code4": "1000",
-        "count": 2,
-        "count4": 1,
-        "gap": 3,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 18,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 59,
-        "row": 5,
-        "col": 8,
-        "code": "11000",
-        "code4": "1000",
-        "count": 2,
-        "count4": 1,
-        "gap": 3,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 17,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 60,
-        "row": 5,
-        "col": 9,
-        "code": "00110",
-        "code4": "0110",
-        "count": 2,
-        "count4": 2,
-        "gap": 1,
-        "strong": false,
-        "near": true,
-        "seen": true,
-        "historyCount": 19,
-        "anchor": false,
-        "temporalAllowed": true
-      },
-      {
-        "n": 61,
-        "row": 6,
-        "col": 0,
-        "code": "00000",
-        "code4": "0000",
-        "count": 0,
-        "count4": 0,
-        "gap": null,
-        "strong": false,
-        "near": false,
-        "seen": false,
-        "historyCount": 160,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 62,
-        "row": 6,
-        "col": 1,
-        "code": "00001",
-        "code4": "0001",
-        "count": 1,
-        "count4": 1,
-        "gap": 0,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 56,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 63,
-        "row": 6,
-        "col": 2,
-        "code": "00001",
-        "code4": "0001",
-        "count": 1,
-        "count4": 1,
-        "gap": 0,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 59,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 64,
-        "row": 6,
-        "col": 3,
-        "code": "00100",
-        "code4": "0100",
-        "count": 1,
-        "count4": 1,
-        "gap": 2,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 66,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 65,
-        "row": 6,
-        "col": 4,
-        "code": "00100",
-        "code4": "0100",
-        "count": 1,
-        "count4": 1,
-        "gap": 2,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 56,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 66,
-        "row": 6,
-        "col": 5,
-        "code": "00010",
-        "code4": "0010",
-        "count": 1,
-        "count4": 1,
-        "gap": 1,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 55,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 67,
-        "row": 6,
-        "col": 6,
-        "code": "01001",
-        "code4": "1001",
-        "count": 2,
-        "count4": 2,
-        "gap": 0,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 22,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 68,
-        "row": 6,
-        "col": 7,
-        "code": "11000",
-        "code4": "1000",
-        "count": 2,
-        "count4": 1,
-        "gap": 3,
-        "strong": false,
-        "near": false,
-        "seen": true,
-        "historyCount": 18,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 69,
-        "row": 6,
-        "col": 8,
         "code": "00100",
         "code4": "0100",
         "count": 1,
@@ -1834,25 +866,57 @@
         "temporalAllowed": false
       },
       {
-        "n": 70,
-        "row": 6,
-        "col": 9,
-        "code": "01000",
-        "code4": "1000",
+        "n": 54,
+        "row": 5,
+        "col": 3,
+        "code": "10000",
+        "code4": "0000",
         "count": 1,
-        "count4": 1,
-        "gap": 3,
+        "count4": 0,
+        "gap": 4,
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 62,
+        "historyCount": 60,
         "anchor": false,
         "temporalAllowed": false
       },
       {
-        "n": 71,
-        "row": 7,
-        "col": 0,
+        "n": 55,
+        "row": 5,
+        "col": 4,
+        "code": "00000",
+        "code4": "0000",
+        "count": 0,
+        "count4": 0,
+        "gap": null,
+        "strong": false,
+        "near": false,
+        "seen": false,
+        "historyCount": 155,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 56,
+        "row": 5,
+        "col": 5,
+        "code": "10010",
+        "code4": "0010",
+        "count": 2,
+        "count4": 1,
+        "gap": 1,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 17,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 57,
+        "row": 5,
+        "col": 6,
         "code": "11000",
         "code4": "1000",
         "count": 2,
@@ -1861,7 +925,231 @@
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 19,
+        "historyCount": 23,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 58,
+        "row": 5,
+        "col": 7,
+        "code": "10000",
+        "code4": "0000",
+        "count": 1,
+        "count4": 0,
+        "gap": 4,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 58,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 59,
+        "row": 5,
+        "col": 8,
+        "code": "10000",
+        "code4": "0000",
+        "count": 1,
+        "count4": 0,
+        "gap": 4,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 61,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 60,
+        "row": 5,
+        "col": 9,
+        "code": "01100",
+        "code4": "1100",
+        "count": 2,
+        "count4": 2,
+        "gap": 2,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 21,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 61,
+        "row": 6,
+        "col": 0,
+        "code": "00000",
+        "code4": "0000",
+        "count": 0,
+        "count4": 0,
+        "gap": null,
+        "strong": false,
+        "near": false,
+        "seen": false,
+        "historyCount": 161,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 62,
+        "row": 6,
+        "col": 1,
+        "code": "00010",
+        "code4": "0010",
+        "count": 1,
+        "count4": 1,
+        "gap": 1,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 50,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 63,
+        "row": 6,
+        "col": 2,
+        "code": "00010",
+        "code4": "0010",
+        "count": 1,
+        "count4": 1,
+        "gap": 1,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 58,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 64,
+        "row": 6,
+        "col": 3,
+        "code": "01000",
+        "code4": "1000",
+        "count": 1,
+        "count4": 1,
+        "gap": 3,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 64,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 65,
+        "row": 6,
+        "col": 4,
+        "code": "01000",
+        "code4": "1000",
+        "count": 1,
+        "count4": 1,
+        "gap": 3,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 53,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 66,
+        "row": 6,
+        "col": 5,
+        "code": "00100",
+        "code4": "0100",
+        "count": 1,
+        "count4": 1,
+        "gap": 2,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 56,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 67,
+        "row": 6,
+        "col": 6,
+        "code": "10010",
+        "code4": "0010",
+        "count": 2,
+        "count4": 1,
+        "gap": 1,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 25,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 68,
+        "row": 6,
+        "col": 7,
+        "code": "10001",
+        "code4": "0001",
+        "count": 2,
+        "count4": 1,
+        "gap": 0,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 15,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 69,
+        "row": 6,
+        "col": 8,
+        "code": "01000",
+        "code4": "1000",
+        "count": 1,
+        "count4": 1,
+        "gap": 3,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 55,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 70,
+        "row": 6,
+        "col": 9,
+        "code": "10000",
+        "code4": "0000",
+        "count": 1,
+        "count4": 0,
+        "gap": 4,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 60,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 71,
+        "row": 7,
+        "col": 0,
+        "code": "10000",
+        "code4": "0000",
+        "count": 1,
+        "count4": 0,
+        "gap": 4,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 65,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1869,15 +1157,15 @@
         "n": 72,
         "row": 7,
         "col": 1,
-        "code": "10110",
-        "code4": "0110",
+        "code": "01101",
+        "code4": "1101",
         "count": 3,
-        "count4": 2,
-        "gap": 1,
+        "count4": 3,
+        "gap": 0,
         "strong": false,
         "near": true,
         "seen": true,
-        "historyCount": 5,
+        "historyCount": 12,
         "anchor": false,
         "temporalAllowed": true
       },
@@ -1893,7 +1181,7 @@
         "strong": false,
         "near": false,
         "seen": false,
-        "historyCount": 143,
+        "historyCount": 144,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1901,38 +1189,6 @@
         "n": 74,
         "row": 7,
         "col": 3,
-        "code": "10110",
-        "code4": "0110",
-        "count": 3,
-        "count4": 2,
-        "gap": 1,
-        "strong": false,
-        "near": true,
-        "seen": true,
-        "historyCount": 4,
-        "anchor": false,
-        "temporalAllowed": true
-      },
-      {
-        "n": 75,
-        "row": 7,
-        "col": 4,
-        "code": "00000",
-        "code4": "0000",
-        "count": 0,
-        "count4": 0,
-        "gap": null,
-        "strong": false,
-        "near": false,
-        "seen": false,
-        "historyCount": 203,
-        "anchor": false,
-        "temporalAllowed": false
-      },
-      {
-        "n": 76,
-        "row": 7,
-        "col": 5,
         "code": "01100",
         "code4": "1100",
         "count": 2,
@@ -1941,7 +1197,39 @@
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 22,
+        "historyCount": 13,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 75,
+        "row": 7,
+        "col": 4,
+        "code": "00001",
+        "code4": "0001",
+        "count": 1,
+        "count4": 1,
+        "gap": 0,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 55,
+        "anchor": false,
+        "temporalAllowed": false
+      },
+      {
+        "n": 76,
+        "row": 7,
+        "col": 5,
+        "code": "11000",
+        "code4": "1000",
+        "count": 2,
+        "count4": 1,
+        "gap": 3,
+        "strong": false,
+        "near": false,
+        "seen": true,
+        "historyCount": 23,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1957,7 +1245,7 @@
         "strong": false,
         "near": false,
         "seen": false,
-        "historyCount": 144,
+        "historyCount": 145,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1965,15 +1253,15 @@
         "n": 78,
         "row": 7,
         "col": 7,
-        "code": "01001",
-        "code4": "1001",
+        "code": "10010",
+        "code4": "0010",
         "count": 2,
-        "count4": 2,
-        "gap": 0,
+        "count4": 1,
+        "gap": 1,
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 17,
+        "historyCount": 12,
         "anchor": false,
         "temporalAllowed": false
       },
@@ -1981,11 +1269,11 @@
         "n": 79,
         "row": 7,
         "col": 8,
-        "code": "01000",
-        "code4": "1000",
+        "code": "10000",
+        "code4": "0000",
         "count": 1,
-        "count4": 1,
-        "gap": 3,
+        "count4": 0,
+        "gap": 4,
         "strong": false,
         "near": false,
         "seen": true,
@@ -1997,46 +1285,46 @@
         "n": 80,
         "row": 7,
         "col": 9,
-        "code": "00001",
-        "code4": "0001",
-        "count": 1,
-        "count4": 1,
+        "code": "00011",
+        "code4": "0011",
+        "count": 2,
+        "count4": 2,
         "gap": 0,
         "strong": false,
         "near": false,
         "seen": true,
-        "historyCount": 60,
+        "historyCount": 22,
         "anchor": false,
         "temporalAllowed": false
       }
     ],
     "historyUsed": 5,
     "sourceWindow": [
-      329090,
       329091,
       329092,
       329093,
-      329094
+      329094,
+      329095
     ],
     "gate": {
-      "anchorCount": 2,
-      "repeat3Count": 6,
-      "observed": 1,
-      "eligible": 1,
+      "anchorCount": 0,
+      "repeat3Count": 7,
+      "observed": 0,
+      "eligible": 0,
       "rowLimit": null,
       "heatLimit": null,
       "rule": "ритм-якорь → структурное расширение по вертикалям и ±2; несколько фрагментов допустимы"
     },
     "structure": {
-      "anchorCount": 2,
-      "repeat3Count": 6,
-      "observed": 1,
-      "eligible": 1,
+      "anchorCount": 0,
+      "repeat3Count": 7,
+      "observed": 0,
+      "eligible": 0,
       "rowLimit": null,
       "heatLimit": null,
       "rule": "ритм-якорь → структурное расширение по вертикалям и ±2; несколько фрагментов допустимы"
     },
-    "message": "IRIS: найдено 2 ритм-якорей и 1 самостоятельных комбинаций. Геометрия расширяет якоря; все числа не обязаны иметь собственный ритм."
+    "message": "OFF: в окне нет сильного ритм-якоря IRIS."
   },
   "gateLog": [
     {
@@ -6094,6 +5382,32 @@
         "rule": "ритм-якорь → структурное расширение по вертикалям и ±2; несколько фрагментов допустимы"
       },
       "message": "IRIS: найдено 2 ритм-якорей и 1 самостоятельных комбинаций. Геометрия расширяет якоря; все числа не обязаны иметь собственный ритм."
+    },
+    {
+      "id": "iris-1.4.0:329095",
+      "version": "iris-1.4.0",
+      "createdAt": "2026-10-08T09:26:54.509Z",
+      "sourceCutoff": 329095,
+      "sourceWindow": [
+        329091,
+        329092,
+        329093,
+        329094,
+        329095
+      ],
+      "permissionA": false,
+      "permissionB": false,
+      "signal": "OFF",
+      "gate": {
+        "anchorCount": 0,
+        "repeat3Count": 7,
+        "observed": 0,
+        "eligible": 0,
+        "rowLimit": null,
+        "heatLimit": null,
+        "rule": "ритм-якорь → структурное расширение по вертикалям и ±2; несколько фрагментов допустимы"
+      },
+      "message": "OFF: в окне нет сильного ритм-якоря IRIS."
     }
   ],
   "series": [
@@ -446329,24 +445643,59 @@
           "hitCount": 2,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            23,
+            31,
+            35,
+            75
+          ],
+          "hitCount": 4,
+          "payout": 150,
+          "payoutTable": "network80-existing-v63"
         }
       ],
-      "status": "active",
+      "status": "closed",
       "research": false,
       "conflicts": [],
-      "bestHits": 2,
+      "bestHits": 4,
       "bestSteps": [
-        3,
-        4
+        5
       ],
-      "bestStep": 3,
-      "averageHits": 1.5,
-      "winCount": 0,
-      "firstWinStep": null,
-      "totalPayout": 0,
+      "bestStep": 5,
+      "averageHits": 2,
+      "winCount": 1,
+      "firstWinStep": 5,
+      "totalPayout": 150,
       "hasUnknownPayout": false,
-      "noWin": null,
-      "knownPayout": 0
+      "noWin": false,
+      "knownPayout": 150
     },
     {
       "id": "iris-1.4.0:329090:IRIS:5-7-11-31-33-35-45-55-65-75",
@@ -446927,23 +446276,60 @@
           "hitCount": 1,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            7,
+            31,
+            35,
+            45,
+            75
+          ],
+          "hitCount": 5,
+          "payout": 250,
+          "payoutTable": "network80-existing-v63"
         }
       ],
-      "status": "active",
+      "status": "closed",
       "research": false,
       "conflicts": [],
-      "bestHits": 2,
+      "bestHits": 5,
       "bestSteps": [
-        3
+        5
       ],
-      "bestStep": 3,
-      "averageHits": 1,
-      "winCount": 1,
+      "bestStep": 5,
+      "averageHits": 1.8,
+      "winCount": 2,
       "firstWinStep": 1,
-      "totalPayout": 200,
+      "totalPayout": 450,
       "hasUnknownPayout": false,
-      "noWin": null,
-      "knownPayout": 200
+      "noWin": false,
+      "knownPayout": 450
     },
     {
       "id": "iris-1.4.0:329090:IRIS:14-34-54-56-74",
@@ -447327,9 +446713,42 @@
           "hitCount": 2,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            34
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
-      "status": "active",
+      "status": "closed",
       "research": false,
       "conflicts": [],
       "bestHits": 2,
@@ -447339,12 +446758,12 @@
         4
       ],
       "bestStep": 1,
-      "averageHits": 1.75,
+      "averageHits": 1.6,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
       "hasUnknownPayout": false,
-      "noWin": null,
+      "noWin": true,
       "knownPayout": 0
     },
     {
@@ -447998,9 +447417,44 @@
           "hitCount": 2,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            7,
+            19,
+            49
+          ],
+          "hitCount": 3,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
-      "status": "active",
+      "status": "closed",
       "research": false,
       "conflicts": [],
       "bestHits": 4,
@@ -448008,12 +447462,12 @@
         1
       ],
       "bestStep": 1,
-      "averageHits": 2.75,
+      "averageHits": 2.8,
       "winCount": 1,
       "firstWinStep": 1,
       "totalPayout": 100,
       "hasUnknownPayout": false,
-      "noWin": null,
+      "noWin": false,
       "knownPayout": 100
     },
     {
@@ -448315,9 +447769,42 @@
           "hitCount": 1,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            35
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
-      "status": "active",
+      "status": "closed",
       "research": false,
       "conflicts": [],
       "bestHits": 2,
@@ -448325,12 +447812,12 @@
         3
       ],
       "bestStep": 3,
-      "averageHits": 0.75,
+      "averageHits": 0.8,
       "winCount": 1,
       "firstWinStep": 3,
       "totalPayout": 300,
       "hasUnknownPayout": false,
-      "noWin": null,
+      "noWin": false,
       "knownPayout": 300
     },
     {
@@ -448673,23 +448160,58 @@
           "hitCount": 1,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            35,
+            45
+          ],
+          "hitCount": 2,
+          "payout": 100,
+          "payoutTable": "network80-existing-v63"
         }
       ],
-      "status": "active",
+      "status": "closed",
       "research": false,
       "conflicts": [],
       "bestHits": 2,
       "bestSteps": [
-        3
+        3,
+        5
       ],
       "bestStep": 3,
-      "averageHits": 1.25,
-      "winCount": 1,
+      "averageHits": 1.4,
+      "winCount": 2,
       "firstWinStep": 3,
-      "totalPayout": 100,
+      "totalPayout": 200,
       "hasUnknownPayout": false,
-      "noWin": null,
-      "knownPayout": 100
+      "noWin": false,
+      "knownPayout": 200
     },
     {
       "id": "iris-1.4.0:329091:IRIS:5-11-23-31-33-35-43-75",
@@ -449118,24 +448640,59 @@
           "hitCount": 2,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            23,
+            31,
+            35,
+            75
+          ],
+          "hitCount": 4,
+          "payout": 200,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
       "research": false,
       "conflicts": [],
-      "bestHits": 2,
+      "bestHits": 4,
       "bestSteps": [
-        2,
-        3
+        4
       ],
-      "bestStep": 2,
-      "averageHits": 1.6666666666666667,
-      "winCount": 0,
-      "firstWinStep": null,
-      "totalPayout": 0,
+      "bestStep": 4,
+      "averageHits": 2.25,
+      "winCount": 1,
+      "firstWinStep": 4,
+      "totalPayout": 200,
       "hasUnknownPayout": false,
       "noWin": null,
-      "knownPayout": 0
+      "knownPayout": 200
     },
     {
       "id": "iris-1.4.0:329091:IRIS:5-35-45-65-75",
@@ -449506,23 +449063,58 @@
           "hitCount": 0,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            35,
+            45,
+            75
+          ],
+          "hitCount": 3,
+          "payout": 400,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
       "research": false,
       "conflicts": [],
-      "bestHits": 2,
+      "bestHits": 3,
       "bestSteps": [
-        2
+        4
       ],
-      "bestStep": 2,
-      "averageHits": 1,
-      "winCount": 0,
-      "firstWinStep": null,
-      "totalPayout": 0,
+      "bestStep": 4,
+      "averageHits": 1.5,
+      "winCount": 1,
+      "firstWinStep": 4,
+      "totalPayout": 400,
       "hasUnknownPayout": false,
       "noWin": null,
-      "knownPayout": 0
+      "knownPayout": 400
     },
     {
       "id": "iris-1.4.0:329091:IRIS:14-24-34-54-72-74",
@@ -449927,6 +449519,41 @@
           "hitCount": 2,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            24,
+            34,
+            72
+          ],
+          "hitCount": 3,
+          "payout": 200,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -449934,16 +449561,17 @@
       "conflicts": [],
       "bestHits": 3,
       "bestSteps": [
-        1
+        1,
+        4
       ],
       "bestStep": 1,
-      "averageHits": 2.3333333333333335,
-      "winCount": 1,
+      "averageHits": 2.5,
+      "winCount": 2,
       "firstWinStep": 1,
-      "totalPayout": 200,
+      "totalPayout": 400,
       "hasUnknownPayout": false,
       "noWin": null,
-      "knownPayout": 200
+      "knownPayout": 400
     },
     {
       "id": "iris-1.4.0:329091:MINI3:23-34-43",
@@ -450216,6 +449844,40 @@
           "hitCount": 2,
           "payout": 300,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            23,
+            34
+          ],
+          "hitCount": 2,
+          "payout": 300,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -450224,16 +449886,17 @@
       "bestHits": 2,
       "bestSteps": [
         1,
-        3
+        3,
+        4
       ],
       "bestStep": 1,
-      "averageHits": 1.6666666666666667,
-      "winCount": 2,
+      "averageHits": 1.75,
+      "winCount": 3,
       "firstWinStep": 1,
-      "totalPayout": 600,
+      "totalPayout": 900,
       "hasUnknownPayout": false,
       "noWin": null,
-      "knownPayout": 600
+      "knownPayout": 900
     },
     {
       "id": "iris-1.4.0:329091:MINI4:23-33-34-43",
@@ -450543,6 +450206,40 @@
           "hitCount": 2,
           "payout": 100,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            23,
+            34
+          ],
+          "hitCount": 2,
+          "payout": 100,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -450551,16 +450248,17 @@
       "bestHits": 2,
       "bestSteps": [
         1,
-        3
+        3,
+        4
       ],
       "bestStep": 1,
-      "averageHits": 1.6666666666666667,
-      "winCount": 2,
+      "averageHits": 1.75,
+      "winCount": 3,
       "firstWinStep": 1,
-      "totalPayout": 200,
+      "totalPayout": 300,
       "hasUnknownPayout": false,
       "noWin": null,
-      "knownPayout": 200
+      "knownPayout": 300
     },
     {
       "id": "iris-1.4.0:329092:IRIS:24-34-54-72-74",
@@ -450877,24 +450575,58 @@
           "hitCount": 2,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            24,
+            34,
+            72
+          ],
+          "hitCount": 3,
+          "payout": 400,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
       "research": false,
       "conflicts": [],
-      "bestHits": 2,
+      "bestHits": 3,
       "bestSteps": [
-        1,
-        2
+        3
       ],
-      "bestStep": 1,
-      "averageHits": 2,
-      "winCount": 0,
-      "firstWinStep": null,
-      "totalPayout": 0,
+      "bestStep": 3,
+      "averageHits": 2.3333333333333335,
+      "winCount": 1,
+      "firstWinStep": 3,
+      "totalPayout": 400,
       "hasUnknownPayout": false,
       "noWin": null,
-      "knownPayout": 0
+      "knownPayout": 400
     },
     {
       "id": "iris-1.4.0:329092:IRIS:3-5-23-33-43",
@@ -451209,6 +450941,39 @@
           "hitCount": 1,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            23
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -451217,7 +450982,8 @@
       "bestHits": 1,
       "bestSteps": [
         1,
-        2
+        2,
+        3
       ],
       "bestStep": 1,
       "averageHits": 1,
@@ -451691,6 +451457,40 @@
           "hitCount": 2,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            23,
+            68
+          ],
+          "hitCount": 2,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -451699,7 +451499,8 @@
       "bestHits": 2,
       "bestSteps": [
         1,
-        2
+        2,
+        3
       ],
       "bestStep": 1,
       "averageHits": 2,
@@ -451943,6 +451744,39 @@
           ],
           "hits": [],
           "hitCount": 0,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            35
+          ],
+          "hitCount": 1,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
         }
@@ -452236,6 +452070,40 @@
           "hitCount": 0,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            35,
+            45
+          ],
+          "hitCount": 2,
+          "payout": 100,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -452246,13 +452114,13 @@
         1
       ],
       "bestStep": 1,
-      "averageHits": 1.5,
-      "winCount": 1,
+      "averageHits": 1.6666666666666667,
+      "winCount": 2,
       "firstWinStep": 1,
-      "totalPayout": 300,
+      "totalPayout": 400,
       "hasUnknownPayout": false,
       "noWin": null,
-      "knownPayout": 300
+      "knownPayout": 400
     },
     {
       "id": "iris-1.4.0:329093:IRIS:3-13-23-43-53",
@@ -452559,6 +452427,39 @@
           "hitCount": 2,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            23
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -452569,7 +452470,7 @@
         1
       ],
       "bestStep": 1,
-      "averageHits": 2,
+      "averageHits": 1.5,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
@@ -452892,17 +452793,50 @@
           "hitCount": 0,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            68
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
       "research": false,
       "conflicts": [],
-      "bestHits": 0,
+      "bestHits": 1,
       "bestSteps": [
-        1
+        2
       ],
-      "bestStep": 1,
-      "averageHits": 0,
+      "bestStep": 2,
+      "averageHits": 0.5,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
@@ -453457,6 +453391,41 @@
           "hitCount": 3,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            24,
+            34,
+            72
+          ],
+          "hitCount": 3,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -453464,7 +453433,8 @@
       "conflicts": [],
       "bestHits": 3,
       "bestSteps": [
-        1
+        1,
+        2
       ],
       "bestStep": 1,
       "averageHits": 3,
@@ -453678,6 +453648,39 @@
           "hitCount": 1,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            23
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -453685,7 +453688,8 @@
       "conflicts": [],
       "bestHits": 1,
       "bestSteps": [
-        1
+        1,
+        2
       ],
       "bestStep": 1,
       "averageHits": 1,
@@ -453945,6 +453949,40 @@
           "hitCount": 2,
           "payout": 100,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            24,
+            35
+          ],
+          "hitCount": 2,
+          "payout": 100,
+          "payoutTable": "network80-existing-v63"
         }
       ],
       "status": "active",
@@ -453952,16 +453990,17 @@
       "conflicts": [],
       "bestHits": 2,
       "bestSteps": [
-        1
+        1,
+        2
       ],
       "bestStep": 1,
       "averageHits": 2,
-      "winCount": 1,
+      "winCount": 2,
       "firstWinStep": 1,
-      "totalPayout": 100,
+      "totalPayout": 200,
       "hasUnknownPayout": false,
       "noWin": null,
-      "knownPayout": 100
+      "knownPayout": 200
     },
     {
       "id": "iris-1.4.0:329094:IRIS:3-13-23-43-63",
@@ -454234,14 +454273,50 @@
         ]
       },
       "motif": "естественная структура: ритм-якоря + подтверждённые вертикали/±2",
-      "results": [],
+      "results": [
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            23
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
+        }
+      ],
       "status": "active",
       "research": false,
       "conflicts": [],
-      "bestHits": null,
-      "bestSteps": [],
-      "bestStep": null,
-      "averageHits": null,
+      "bestHits": 1,
+      "bestSteps": [
+        1
+      ],
+      "bestStep": 1,
+      "averageHits": 1,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
@@ -454419,14 +454494,50 @@
         "components": 1
       },
       "motif": "историческая самостоятельная MINI-структура",
-      "results": [],
+      "results": [
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            23
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
+        }
+      ],
       "status": "active",
       "research": false,
       "conflicts": [],
-      "bestHits": null,
-      "bestSteps": [],
-      "bestStep": null,
-      "averageHits": null,
+      "bestHits": 1,
+      "bestSteps": [
+        1
+      ],
+      "bestStep": 1,
+      "averageHits": 1,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
@@ -454633,20 +454744,57 @@
         "components": 1
       },
       "motif": "историческая самостоятельная MINI-структура",
-      "results": [],
+      "results": [
+        {
+          "draw": 329095,
+          "date": "2026-10-08",
+          "time": "12:17",
+          "fact": [
+            72,
+            26,
+            34,
+            6,
+            15,
+            80,
+            19,
+            49,
+            68,
+            20,
+            50,
+            40,
+            24,
+            75,
+            45,
+            23,
+            35,
+            36,
+            31,
+            7
+          ],
+          "hits": [
+            23,
+            34
+          ],
+          "hitCount": 2,
+          "payout": 100,
+          "payoutTable": "network80-existing-v63"
+        }
+      ],
       "status": "active",
       "research": false,
       "conflicts": [],
-      "bestHits": null,
-      "bestSteps": [],
-      "bestStep": null,
-      "averageHits": null,
-      "winCount": 0,
-      "firstWinStep": null,
-      "totalPayout": 0,
+      "bestHits": 2,
+      "bestSteps": [
+        1
+      ],
+      "bestStep": 1,
+      "averageHits": 2,
+      "winCount": 1,
+      "firstWinStep": 1,
+      "totalPayout": 100,
       "hasUnknownPayout": false,
       "noWin": null,
-      "knownPayout": 0
+      "knownPayout": 100
     }
   ]
 }
