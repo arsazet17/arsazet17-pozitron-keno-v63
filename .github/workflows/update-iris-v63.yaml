@@ -52,5 +52,22 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add iris-archive-v63.json
           git commit -m "KENO v6.3 · Iris · серии и проверки"
-          git pull --rebase origin main
-          git push origin HEAD:main
+
+          for attempt in 1 2 3 4 5 6; do
+            echo "IRIS push attempt $attempt/6"
+            git fetch origin main
+            git rebase origin/main
+
+            if git push origin HEAD:main; then
+              echo "IRIS archive pushed successfully"
+              exit 0
+            fi
+
+            if [ "$attempt" -lt 6 ]; then
+              echo "::warning::main changed during IRIS push; retrying after refresh"
+              sleep $((attempt * 2))
+            fi
+          done
+
+          echo "::error::IRIS archive could not be pushed after 6 attempts"
+          exit 1
