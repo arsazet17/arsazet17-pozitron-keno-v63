@@ -1,701 +1,6 @@
 [
   {
     "version": "6.3-network80-0200",
-    "sourceDraw": 329053,
-    "targetDraw": 329054,
-    "createdAt": "2026-10-07T16:12:34.820Z",
-    "scopeStartDraw": 324994,
-    "scopeDraws": 4060,
-    "recentDraws": 60,
-    "candidates": [
-      {
-        "id": "N80-1",
-        "numbers": [
-          25,
-          27,
-          39,
-          52,
-          64
-        ],
-        "size": 5,
-        "type": "ФРАГМЕНТ-5",
-        "level": "СИЛЬНАЯ",
-        "score": 7.3756,
-        "density": 1,
-        "strongEdges": 10,
-        "totalEdges": 10,
-        "bridges": 5,
-        "movement": "СТАБИЛЬНА",
-        "selectionMode": "LIVE-GROUP",
-        "triggerScore": 1.422,
-        "triggerZ": 1.154,
-        "triggeredNodes": 5,
-        "edgeDelta": 0.0023,
-        "strengthenedEdges": 0,
-        "newEdges": 0,
-        "keyEdges": [
-          {
-            "a": 25,
-            "b": 52,
-            "score": 3.9985,
-            "support": 16.45,
-            "relations": [
-              "ЗЕРКАЛО"
-            ]
-          },
-          {
-            "a": 27,
-            "b": 39,
-            "score": 3.4562,
-            "support": 14.45,
-            "relations": []
-          },
-          {
-            "a": 25,
-            "b": 64,
-            "score": 2.7732,
-            "support": 11.25,
-            "relations": []
-          },
-          {
-            "a": 27,
-            "b": 52,
-            "score": 2.6817,
-            "support": 11.8,
-            "relations": []
-          },
-          {
-            "a": 52,
-            "b": 64,
-            "score": 1.5253,
-            "support": 11.9,
-            "relations": []
-          }
-        ],
-        "hits": [
-          25,
-          27
-        ],
-        "hitCount": 2,
-        "payout": 0,
-        "win": false
-      },
-      {
-        "id": "N80-2",
-        "numbers": [
-          35,
-          53,
-          60
-        ],
-        "size": 3,
-        "type": "ФРАГМЕНТ-3",
-        "level": "СИЛЬНАЯ",
-        "score": 8.5136,
-        "density": 1,
-        "strongEdges": 3,
-        "totalEdges": 3,
-        "bridges": 3,
-        "movement": "СТАБИЛЬНА",
-        "selectionMode": "LIVE-FRAGMENT",
-        "triggerScore": 1.357,
-        "triggerZ": 0.971,
-        "triggeredNodes": 3,
-        "edgeDelta": 0.0105,
-        "strengthenedEdges": 0,
-        "newEdges": 0,
-        "keyEdges": [
-          {
-            "a": 35,
-            "b": 60,
-            "score": 3.3274,
-            "support": 15.75,
-            "relations": []
-          },
-          {
-            "a": 35,
-            "b": 53,
-            "score": 3.1542,
-            "support": 11.95,
-            "relations": [
-              "ЗЕРКАЛО"
-            ]
-          },
-          {
-            "a": 53,
-            "b": 60,
-            "score": 3.1342,
-            "support": 14.2,
-            "relations": [
-              "РЯД"
-            ]
-          }
-        ],
-        "hits": [
-          60
-        ],
-        "hitCount": 1,
-        "payout": 0,
-        "win": false
-      },
-      {
-        "id": "N80-3",
-        "numbers": [
-          13,
-          29
-        ],
-        "size": 2,
-        "type": "ФРАГМЕНТ-2",
-        "level": "СИЛЬНАЯ",
-        "score": 9.2594,
-        "density": 1,
-        "strongEdges": 1,
-        "totalEdges": 1,
-        "bridges": 0,
-        "movement": "УСИЛИЛАСЬ",
-        "selectionMode": "LIVE-EDGE",
-        "triggerScore": 1.141,
-        "triggerZ": 0.363,
-        "triggeredNodes": 2,
-        "edgeDelta": 0.6176,
-        "strengthenedEdges": 1,
-        "newEdges": 0,
-        "keyEdges": [
-          {
-            "a": 13,
-            "b": 29,
-            "score": 3.5431,
-            "support": 12.4,
-            "relations": []
-          }
-        ],
-        "hits": [
-          13,
-          29
-        ],
-        "hitCount": 2,
-        "payout": 300,
-        "win": true
-      },
-      {
-        "id": "N80-4",
-        "numbers": [
-          16,
-          42
-        ],
-        "size": 2,
-        "type": "ФРАГМЕНТ-2",
-        "level": "СИЛЬНАЯ",
-        "score": 8.97,
-        "density": 1,
-        "strongEdges": 1,
-        "totalEdges": 1,
-        "bridges": 0,
-        "movement": "УСИЛИЛАСЬ",
-        "selectionMode": "LIVE",
-        "triggerScore": 1.183,
-        "triggerZ": 0.482,
-        "triggeredNodes": 2,
-        "edgeDelta": 0.2377,
-        "strengthenedEdges": 1,
-        "newEdges": 0,
-        "keyEdges": [
-          {
-            "a": 16,
-            "b": 42,
-            "score": 3.4759,
-            "support": 13.3,
-            "relations": []
-          }
-        ],
-        "hits": [
-          16
-        ],
-        "hitCount": 1,
-        "payout": 100,
-        "win": true
-      }
-    ],
-    "topEdges": [
-      {
-        "a": 25,
-        "b": 52,
-        "score": 3.9985,
-        "support": 16.45,
-        "coRecent": 10,
-        "coAll": 250,
-        "liftRecent": 1.536,
-        "liftBase": 0.986,
-        "adjRecent": 3,
-        "lag1Recent": 7,
-        "lag2Recent": 5,
-        "relations": [
-          "ЗЕРКАЛО"
-        ]
-      },
-      {
-        "a": 16,
-        "b": 35,
-        "score": 3.7653,
-        "support": 11.95,
-        "coRecent": 7,
-        "coAll": 227,
-        "liftRecent": 1.267,
-        "liftBase": 0.887,
-        "adjRecent": 2,
-        "lag1Recent": 5,
-        "lag2Recent": 6,
-        "relations": []
-      },
-      {
-        "a": 16,
-        "b": 17,
-        "score": 3.6691,
-        "support": 10.95,
-        "coRecent": 7,
-        "coAll": 212,
-        "liftRecent": 1.81,
-        "liftBase": 0.88,
-        "adjRecent": 3,
-        "lag1Recent": 1,
-        "lag2Recent": 3,
-        "relations": [
-          "РЯД",
-          "ГОРИЗОНТАЛЬ",
-          "ЧИСЛО-СОСЕД"
-        ]
-      },
-      {
-        "a": 6,
-        "b": 75,
-        "score": 3.6354,
-        "support": 11.15,
-        "coRecent": 6,
-        "coAll": 259,
-        "liftRecent": 1.833,
-        "liftBase": 0.996,
-        "adjRecent": 3,
-        "lag1Recent": 5,
-        "lag2Recent": 2,
-        "relations": []
-      },
-      {
-        "a": 13,
-        "b": 29,
-        "score": 3.5431,
-        "support": 12.4,
-        "coRecent": 7,
-        "coAll": 250,
-        "liftRecent": 1.664,
-        "liftBase": 0.994,
-        "adjRecent": 3,
-        "lag1Recent": 4,
-        "lag2Recent": 5,
-        "relations": []
-      },
-      {
-        "a": 39,
-        "b": 59,
-        "score": 3.5292,
-        "support": 14.15,
-        "coRecent": 9,
-        "coAll": 250,
-        "liftRecent": 1.405,
-        "liftBase": 0.93,
-        "adjRecent": 2,
-        "lag1Recent": 5,
-        "lag2Recent": 7,
-        "relations": [
-          "СТОЛБ"
-        ]
-      },
-      {
-        "a": 15,
-        "b": 53,
-        "score": 3.5214,
-        "support": 13.95,
-        "coRecent": 9,
-        "coAll": 246,
-        "liftRecent": 1.684,
-        "liftBase": 0.966,
-        "adjRecent": 2,
-        "lag1Recent": 5,
-        "lag2Recent": 6,
-        "relations": []
-      },
-      {
-        "a": 16,
-        "b": 42,
-        "score": 3.4759,
-        "support": 13.3,
-        "coRecent": 8,
-        "coAll": 236,
-        "liftRecent": 1.433,
-        "liftBase": 0.941,
-        "adjRecent": 2,
-        "lag1Recent": 6,
-        "lag2Recent": 6,
-        "relations": []
-      },
-      {
-        "a": 66,
-        "b": 74,
-        "score": 3.4617,
-        "support": 9.2,
-        "coRecent": 5,
-        "coAll": 270,
-        "liftRecent": 2.4,
-        "liftBase": 1.003,
-        "adjRecent": 2,
-        "lag1Recent": 4,
-        "lag2Recent": 4,
-        "relations": []
-      },
-      {
-        "a": 18,
-        "b": 73,
-        "score": 3.4573,
-        "support": 14.2,
-        "coRecent": 9,
-        "coAll": 242,
-        "liftRecent": 1.455,
-        "liftBase": 0.898,
-        "adjRecent": 2,
-        "lag1Recent": 4,
-        "lag2Recent": 9,
-        "relations": []
-      },
-      {
-        "a": 27,
-        "b": 39,
-        "score": 3.4562,
-        "support": 14.45,
-        "coRecent": 8,
-        "coAll": 264,
-        "liftRecent": 1.33,
-        "liftBase": 0.999,
-        "adjRecent": 2,
-        "lag1Recent": 7,
-        "lag2Recent": 10,
-        "relations": []
-      },
-      {
-        "a": 42,
-        "b": 79,
-        "score": 3.4392,
-        "support": 13.4,
-        "coRecent": 8,
-        "coAll": 251,
-        "liftRecent": 1.433,
-        "liftBase": 0.994,
-        "adjRecent": 3,
-        "lag1Recent": 4,
-        "lag2Recent": 5,
-        "relations": []
-      },
-      {
-        "a": 45,
-        "b": 67,
-        "score": 3.4001,
-        "support": 9.9,
-        "coRecent": 6,
-        "coAll": 239,
-        "liftRecent": 1.714,
-        "liftBase": 0.94,
-        "adjRecent": 2,
-        "lag1Recent": 2,
-        "lag2Recent": 6,
-        "relations": []
-      },
-      {
-        "a": 27,
-        "b": 37,
-        "score": 3.3454,
-        "support": 12.45,
-        "coRecent": 7,
-        "coAll": 249,
-        "liftRecent": 1.407,
-        "liftBase": 0.933,
-        "adjRecent": 2,
-        "lag1Recent": 7,
-        "lag2Recent": 5,
-        "relations": [
-          "СТОЛБ",
-          "ВЕРТИКАЛЬ"
-        ]
-      },
-      {
-        "a": 35,
-        "b": 60,
-        "score": 3.3274,
-        "support": 15.75,
-        "coRecent": 9,
-        "coAll": 256,
-        "liftRecent": 1.391,
-        "liftBase": 0.962,
-        "adjRecent": 2,
-        "lag1Recent": 9,
-        "lag2Recent": 8,
-        "relations": []
-      },
-      {
-        "a": 22,
-        "b": 49,
-        "score": 3.2975,
-        "support": 10.05,
-        "coRecent": 6,
-        "coAll": 221,
-        "liftRecent": 1.707,
-        "liftBase": 0.925,
-        "adjRecent": 2,
-        "lag1Recent": 3,
-        "lag2Recent": 5,
-        "relations": []
-      },
-      {
-        "a": 6,
-        "b": 59,
-        "score": 3.2913,
-        "support": 12.95,
-        "coRecent": 7,
-        "coAll": 258,
-        "liftRecent": 1.567,
-        "liftBase": 0.975,
-        "adjRecent": 3,
-        "lag1Recent": 5,
-        "lag2Recent": 6,
-        "relations": []
-      },
-      {
-        "a": 42,
-        "b": 76,
-        "score": 3.2886,
-        "support": 11.25,
-        "coRecent": 6,
-        "coAll": 248,
-        "liftRecent": 1.833,
-        "liftBase": 1.011,
-        "adjRecent": 3,
-        "lag1Recent": 3,
-        "lag2Recent": 6,
-        "relations": []
-      },
-      {
-        "a": 72,
-        "b": 75,
-        "score": 3.2655,
-        "support": 9.1,
-        "coRecent": 6,
-        "coAll": 216,
-        "liftRecent": 1.737,
-        "liftBase": 0.862,
-        "adjRecent": 2,
-        "lag1Recent": 2,
-        "lag2Recent": 2,
-        "relations": [
-          "РЯД"
-        ]
-      },
-      {
-        "a": 3,
-        "b": 43,
-        "score": 3.2629,
-        "support": 13.3,
-        "coRecent": 7,
-        "coAll": 246,
-        "liftRecent": 1.152,
-        "liftBase": 0.99,
-        "adjRecent": 3,
-        "lag1Recent": 6,
-        "lag2Recent": 6,
-        "relations": [
-          "СТОЛБ"
-        ]
-      },
-      {
-        "a": 3,
-        "b": 50,
-        "score": 3.256,
-        "support": 11.45,
-        "coRecent": 6,
-        "coAll": 218,
-        "liftRecent": 1.467,
-        "liftBase": 0.935,
-        "adjRecent": 2,
-        "lag1Recent": 7,
-        "lag2Recent": 5,
-        "relations": []
-      },
-      {
-        "a": 33,
-        "b": 74,
-        "score": 3.2515,
-        "support": 10.3,
-        "coRecent": 5,
-        "coAll": 234,
-        "liftRecent": 1.377,
-        "liftBase": 0.9,
-        "adjRecent": 2,
-        "lag1Recent": 6,
-        "lag2Recent": 6,
-        "relations": []
-      },
-      {
-        "a": 25,
-        "b": 72,
-        "score": 3.2306,
-        "support": 13.1,
-        "coRecent": 8,
-        "coAll": 237,
-        "liftRecent": 1.593,
-        "liftBase": 0.952,
-        "adjRecent": 2,
-        "lag1Recent": 6,
-        "lag2Recent": 5,
-        "relations": []
-      },
-      {
-        "a": 39,
-        "b": 58,
-        "score": 3.229,
-        "support": 10.8,
-        "coRecent": 5,
-        "coAll": 234,
-        "liftRecent": 1.043,
-        "liftBase": 0.947,
-        "adjRecent": 2,
-        "lag1Recent": 8,
-        "lag2Recent": 5,
-        "relations": []
-      },
-      {
-        "a": 32,
-        "b": 55,
-        "score": 3.187,
-        "support": 11.65,
-        "coRecent": 7,
-        "coAll": 252,
-        "liftRecent": 1.664,
-        "liftBase": 0.97,
-        "adjRecent": 3,
-        "lag1Recent": 3,
-        "lag2Recent": 3,
-        "relations": []
-      },
-      {
-        "a": 48,
-        "b": 79,
-        "score": 3.1746,
-        "support": 14.8,
-        "coRecent": 9,
-        "coAll": 234,
-        "liftRecent": 1.684,
-        "liftBase": 0.934,
-        "adjRecent": 2,
-        "lag1Recent": 8,
-        "lag2Recent": 5,
-        "relations": []
-      },
-      {
-        "a": 13,
-        "b": 56,
-        "score": 3.1712,
-        "support": 11.1,
-        "coRecent": 6,
-        "coAll": 248,
-        "liftRecent": 1.445,
-        "liftBase": 1,
-        "adjRecent": 2,
-        "lag1Recent": 6,
-        "lag2Recent": 5,
-        "relations": []
-      },
-      {
-        "a": 55,
-        "b": 69,
-        "score": 3.159,
-        "support": 13.85,
-        "coRecent": 8,
-        "coAll": 242,
-        "liftRecent": 1.437,
-        "liftBase": 0.968,
-        "adjRecent": 2,
-        "lag1Recent": 7,
-        "lag2Recent": 7,
-        "relations": []
-      },
-      {
-        "a": 35,
-        "b": 53,
-        "score": 3.1542,
-        "support": 11.95,
-        "coRecent": 7,
-        "coAll": 248,
-        "liftRecent": 1.267,
-        "liftBase": 0.96,
-        "adjRecent": 2,
-        "lag1Recent": 5,
-        "lag2Recent": 6,
-        "relations": [
-          "ЗЕРКАЛО"
-        ]
-      },
-      {
-        "a": 72,
-        "b": 73,
-        "score": 3.1444,
-        "support": 12.3,
-        "coRecent": 6,
-        "coAll": 251,
-        "liftRecent": 1.112,
-        "liftBase": 0.952,
-        "adjRecent": 3,
-        "lag1Recent": 6,
-        "lag2Recent": 6,
-        "relations": [
-          "РЯД",
-          "ГОРИЗОНТАЛЬ",
-          "ЧИСЛО-СОСЕД"
-        ]
-      }
-    ],
-    "server": true,
-    "serverVersion": "6.3-network80-server-0100",
-    "generatedMode": "live",
-    "actual": {
-      "draw": 329054,
-      "date": "07.10.26",
-      "time": "19:32",
-      "balls": [
-        34,
-        29,
-        65,
-        50,
-        16,
-        25,
-        27,
-        20,
-        13,
-        40,
-        68,
-        67,
-        60,
-        11,
-        61,
-        31,
-        5,
-        4,
-        62,
-        12
-      ],
-      "column": 10,
-      "parity": "Поровну"
-    },
-    "totalPayout": 400,
-    "bestHit": 2,
-    "settledAt": "2026-10-07T16:41:55.552Z"
-  },
-  {
-    "version": "6.3-network80-0200",
     "sourceDraw": 329054,
     "targetDraw": 329055,
     "createdAt": "2026-10-07T16:41:55.519Z",
@@ -276161,7 +275466,13 @@
             "support": 12.4,
             "relations": []
           }
-        ]
+        ],
+        "hits": [
+          64
+        ],
+        "hitCount": 1,
+        "payout": 0,
+        "win": false
       },
       {
         "id": "N80-2",
@@ -276212,7 +275523,11 @@
             "support": 13.7,
             "relations": []
           }
-        ]
+        ],
+        "hits": [],
+        "hitCount": 0,
+        "payout": 0,
+        "win": false
       },
       {
         "id": "N80-3",
@@ -276244,7 +275559,13 @@
             "support": 13.05,
             "relations": []
           }
-        ]
+        ],
+        "hits": [
+          74
+        ],
+        "hitCount": 1,
+        "payout": 100,
+        "win": true
       },
       {
         "id": "N80-4",
@@ -276279,7 +275600,14 @@
               "ВЕРТИКАЛЬ"
             ]
           }
-        ]
+        ],
+        "hits": [
+          64,
+          74
+        ],
+        "hitCount": 2,
+        "payout": 300,
+        "win": true
       }
     ],
     "topEdges": [
@@ -276733,6 +276061,686 @@
         "lag1Recent": 6,
         "lag2Recent": 4,
         "relations": []
+      }
+    ],
+    "server": true,
+    "serverVersion": "6.3-network80-server-0100",
+    "generatedMode": "live",
+    "actual": {
+      "draw": 329453,
+      "date": "13.10.26",
+      "time": "22:17",
+      "balls": [
+        48,
+        80,
+        19,
+        39,
+        15,
+        64,
+        71,
+        27,
+        29,
+        17,
+        52,
+        46,
+        20,
+        26,
+        55,
+        74,
+        25,
+        65,
+        35,
+        12
+      ],
+      "column": 5,
+      "parity": "Больше нечётных"
+    },
+    "totalPayout": 400,
+    "bestHit": 2,
+    "settledAt": "2026-10-13T19:25:04.789Z"
+  },
+  {
+    "version": "6.3-network80-0200",
+    "sourceDraw": 329453,
+    "targetDraw": 329454,
+    "createdAt": "2026-10-13T19:25:04.728Z",
+    "scopeStartDraw": 324994,
+    "scopeDraws": 4460,
+    "recentDraws": 60,
+    "candidates": [
+      {
+        "id": "N80-1",
+        "numbers": [
+          20,
+          46,
+          48,
+          66,
+          70
+        ],
+        "size": 5,
+        "type": "ФРАГМЕНТ-5",
+        "level": "СИЛЬНАЯ",
+        "score": 8.2995,
+        "density": 1,
+        "strongEdges": 10,
+        "totalEdges": 10,
+        "bridges": 5,
+        "movement": "УСИЛИЛАСЬ",
+        "selectionMode": "LIVE-GROUP",
+        "triggerScore": 1.782,
+        "triggerZ": 1.347,
+        "triggeredNodes": 5,
+        "edgeDelta": 0.1552,
+        "strengthenedEdges": 2,
+        "newEdges": 0,
+        "keyEdges": [
+          {
+            "a": 20,
+            "b": 48,
+            "score": 3.6332,
+            "support": 17.7,
+            "relations": []
+          },
+          {
+            "a": 20,
+            "b": 46,
+            "score": 3.1911,
+            "support": 16.3,
+            "relations": []
+          },
+          {
+            "a": 20,
+            "b": 66,
+            "score": 3.0149,
+            "support": 15.85,
+            "relations": []
+          },
+          {
+            "a": 48,
+            "b": 70,
+            "score": 2.986,
+            "support": 11.8,
+            "relations": []
+          },
+          {
+            "a": 46,
+            "b": 48,
+            "score": 2.5949,
+            "support": 12.8,
+            "relations": [
+              "РЯД"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "N80-2",
+        "numbers": [
+          46,
+          52,
+          64
+        ],
+        "size": 3,
+        "type": "ФРАГМЕНТ-3",
+        "level": "СИЛЬНАЯ",
+        "score": 8.2088,
+        "density": 1,
+        "strongEdges": 3,
+        "totalEdges": 3,
+        "bridges": 3,
+        "movement": "УСИЛИЛАСЬ",
+        "selectionMode": "LIVE-FRAGMENT",
+        "triggerScore": 1.77,
+        "triggerZ": 1.322,
+        "triggeredNodes": 3,
+        "edgeDelta": 0.5322,
+        "strengthenedEdges": 1,
+        "newEdges": 0,
+        "keyEdges": [
+          {
+            "a": 52,
+            "b": 64,
+            "score": 3.1987,
+            "support": 13.9,
+            "relations": []
+          },
+          {
+            "a": 46,
+            "b": 52,
+            "score": 2.2679,
+            "support": 11.3,
+            "relations": []
+          },
+          {
+            "a": 46,
+            "b": 64,
+            "score": 1.5422,
+            "support": 13.2,
+            "relations": [
+              "ЗЕРКАЛО"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "N80-3",
+        "numbers": [
+          30,
+          72
+        ],
+        "size": 2,
+        "type": "ФРАГМЕНТ-2",
+        "level": "СИЛЬНАЯ",
+        "score": 8.223,
+        "density": 1,
+        "strongEdges": 1,
+        "totalEdges": 1,
+        "bridges": 0,
+        "movement": "СТАБИЛЬНА",
+        "selectionMode": "LIVE-EDGE",
+        "triggerScore": 1.48,
+        "triggerZ": 0.752,
+        "triggeredNodes": 2,
+        "edgeDelta": 0.0001,
+        "strengthenedEdges": 0,
+        "newEdges": 0,
+        "keyEdges": [
+          {
+            "a": 30,
+            "b": 72,
+            "score": 3.6801,
+            "support": 15.9,
+            "relations": []
+          }
+        ]
+      },
+      {
+        "id": "N80-4",
+        "numbers": [
+          13,
+          69
+        ],
+        "size": 2,
+        "type": "ФРАГМЕНТ-2",
+        "level": "СИЛЬНАЯ",
+        "score": 8.2097,
+        "density": 1,
+        "strongEdges": 1,
+        "totalEdges": 1,
+        "bridges": 0,
+        "movement": "УСИЛИЛАСЬ",
+        "selectionMode": "LIVE",
+        "triggerScore": 0.582,
+        "triggerZ": -1.015,
+        "triggeredNodes": 2,
+        "edgeDelta": 0.1132,
+        "strengthenedEdges": 0,
+        "newEdges": 0,
+        "keyEdges": [
+          {
+            "a": 13,
+            "b": 69,
+            "score": 3.7748,
+            "support": 9.8,
+            "relations": []
+          }
+        ]
+      }
+    ],
+    "topEdges": [
+      {
+        "a": 13,
+        "b": 69,
+        "score": 3.7748,
+        "support": 9.8,
+        "coRecent": 5,
+        "coAll": 253,
+        "liftRecent": 1.867,
+        "liftBase": 0.956,
+        "adjRecent": 3,
+        "lag1Recent": 4,
+        "lag2Recent": 2,
+        "relations": []
+      },
+      {
+        "a": 30,
+        "b": 72,
+        "score": 3.6801,
+        "support": 15.9,
+        "coRecent": 10,
+        "coAll": 257,
+        "liftRecent": 1.395,
+        "liftBase": 0.949,
+        "adjRecent": 2,
+        "lag1Recent": 6,
+        "lag2Recent": 9,
+        "relations": []
+      },
+      {
+        "a": 20,
+        "b": 48,
+        "score": 3.6332,
+        "support": 17.7,
+        "coRecent": 12,
+        "coAll": 257,
+        "liftRecent": 1.68,
+        "liftBase": 0.937,
+        "adjRecent": 2,
+        "lag1Recent": 6,
+        "lag2Recent": 8,
+        "relations": []
+      },
+      {
+        "a": 29,
+        "b": 80,
+        "score": 3.5721,
+        "support": 14.3,
+        "coRecent": 9,
+        "coAll": 254,
+        "liftRecent": 1.466,
+        "liftBase": 0.931,
+        "adjRecent": 2,
+        "lag1Recent": 6,
+        "lag2Recent": 6,
+        "relations": []
+      },
+      {
+        "a": 2,
+        "b": 6,
+        "score": 3.5093,
+        "support": 16.15,
+        "coRecent": 9,
+        "coAll": 284,
+        "liftRecent": 1.385,
+        "liftBase": 0.964,
+        "adjRecent": 3,
+        "lag1Recent": 9,
+        "lag2Recent": 5,
+        "relations": [
+          "РЯД"
+        ]
+      },
+      {
+        "a": 58,
+        "b": 59,
+        "score": 3.4282,
+        "support": 11.65,
+        "coRecent": 6,
+        "coAll": 257,
+        "liftRecent": 1.165,
+        "liftBase": 0.923,
+        "adjRecent": 2,
+        "lag1Recent": 7,
+        "lag2Recent": 6,
+        "relations": [
+          "РЯД",
+          "ГОРИЗОНТАЛЬ",
+          "ЧИСЛО-СОСЕД"
+        ]
+      },
+      {
+        "a": 7,
+        "b": 45,
+        "score": 3.3757,
+        "support": 9.55,
+        "coRecent": 5,
+        "coAll": 261,
+        "liftRecent": 1.556,
+        "liftBase": 0.939,
+        "adjRecent": 2,
+        "lag1Recent": 5,
+        "lag2Recent": 4,
+        "relations": []
+      },
+      {
+        "a": 7,
+        "b": 20,
+        "score": 3.3232,
+        "support": 14.1,
+        "coRecent": 7,
+        "coAll": 269,
+        "liftRecent": 1.197,
+        "liftBase": 0.96,
+        "adjRecent": 4,
+        "lag1Recent": 6,
+        "lag2Recent": 5,
+        "relations": []
+      },
+      {
+        "a": 29,
+        "b": 49,
+        "score": 3.3168,
+        "support": 16.45,
+        "coRecent": 9,
+        "coAll": 268,
+        "liftRecent": 1.11,
+        "liftBase": 0.936,
+        "adjRecent": 2,
+        "lag1Recent": 11,
+        "lag2Recent": 8,
+        "relations": [
+          "СТОЛБ"
+        ]
+      },
+      {
+        "a": 40,
+        "b": 80,
+        "score": 3.3101,
+        "support": 10.85,
+        "coRecent": 7,
+        "coAll": 281,
+        "liftRecent": 2.214,
+        "liftBase": 1.01,
+        "adjRecent": 2,
+        "lag1Recent": 3,
+        "lag2Recent": 4,
+        "relations": [
+          "СТОЛБ"
+        ]
+      },
+      {
+        "a": 8,
+        "b": 14,
+        "score": 3.3024,
+        "support": 12.1,
+        "coRecent": 7,
+        "coAll": 262,
+        "liftRecent": 1.49,
+        "liftBase": 0.915,
+        "adjRecent": 2,
+        "lag1Recent": 6,
+        "lag2Recent": 5,
+        "relations": []
+      },
+      {
+        "a": 12,
+        "b": 22,
+        "score": 3.2924,
+        "support": 10.2,
+        "coRecent": 5,
+        "coAll": 242,
+        "liftRecent": 1.151,
+        "liftBase": 0.909,
+        "adjRecent": 3,
+        "lag1Recent": 4,
+        "lag2Recent": 4,
+        "relations": [
+          "СТОЛБ",
+          "ВЕРТИКАЛЬ"
+        ]
+      },
+      {
+        "a": 74,
+        "b": 75,
+        "score": 3.2889,
+        "support": 11.95,
+        "coRecent": 7,
+        "coAll": 275,
+        "liftRecent": 1.382,
+        "liftBase": 0.944,
+        "adjRecent": 2,
+        "lag1Recent": 5,
+        "lag2Recent": 6,
+        "relations": [
+          "РЯД",
+          "ГОРИЗОНТАЛЬ",
+          "ЧИСЛО-СОСЕД"
+        ]
+      },
+      {
+        "a": 52,
+        "b": 66,
+        "score": 3.2762,
+        "support": 13.15,
+        "coRecent": 8,
+        "coAll": 274,
+        "liftRecent": 1.449,
+        "liftBase": 0.962,
+        "adjRecent": 2,
+        "lag1Recent": 5,
+        "lag2Recent": 7,
+        "relations": []
+      },
+      {
+        "a": 46,
+        "b": 65,
+        "score": 3.2258,
+        "support": 10,
+        "coRecent": 6,
+        "coAll": 258,
+        "liftRecent": 1.752,
+        "liftBase": 0.915,
+        "adjRecent": 2,
+        "lag1Recent": 4,
+        "lag2Recent": 3,
+        "relations": []
+      },
+      {
+        "a": 15,
+        "b": 16,
+        "score": 3.2021,
+        "support": 9.2,
+        "coRecent": 5,
+        "coAll": 251,
+        "liftRecent": 1.493,
+        "liftBase": 0.909,
+        "adjRecent": 2,
+        "lag1Recent": 4,
+        "lag2Recent": 4,
+        "relations": [
+          "РЯД",
+          "ГОРИЗОНТАЛЬ",
+          "ЧИСЛО-СОСЕД"
+        ]
+      },
+      {
+        "a": 52,
+        "b": 64,
+        "score": 3.1987,
+        "support": 13.9,
+        "coRecent": 7,
+        "coAll": 273,
+        "liftRecent": 1.281,
+        "liftBase": 0.995,
+        "adjRecent": 2,
+        "lag1Recent": 10,
+        "lag2Recent": 7,
+        "relations": []
+      },
+      {
+        "a": 16,
+        "b": 61,
+        "score": 3.1928,
+        "support": 18.1,
+        "coRecent": 11,
+        "coAll": 251,
+        "liftRecent": 1.289,
+        "liftBase": 0.913,
+        "adjRecent": 2,
+        "lag1Recent": 10,
+        "lag2Recent": 8,
+        "relations": [
+          "ЗЕРКАЛО"
+        ]
+      },
+      {
+        "a": 20,
+        "b": 46,
+        "score": 3.1911,
+        "support": 16.3,
+        "coRecent": 9,
+        "coAll": 265,
+        "liftRecent": 1.218,
+        "liftBase": 0.917,
+        "adjRecent": 2,
+        "lag1Recent": 10,
+        "lag2Recent": 9,
+        "relations": []
+      },
+      {
+        "a": 61,
+        "b": 69,
+        "score": 3.1796,
+        "support": 12.8,
+        "coRecent": 7,
+        "coAll": 271,
+        "liftRecent": 1.407,
+        "liftBase": 1.009,
+        "adjRecent": 2,
+        "lag1Recent": 8,
+        "lag2Recent": 5,
+        "relations": [
+          "РЯД"
+        ]
+      },
+      {
+        "a": 53,
+        "b": 59,
+        "score": 3.1768,
+        "support": 10.7,
+        "coRecent": 6,
+        "coAll": 271,
+        "liftRecent": 1.616,
+        "liftBase": 0.942,
+        "adjRecent": 2,
+        "lag1Recent": 6,
+        "lag2Recent": 3,
+        "relations": [
+          "РЯД"
+        ]
+      },
+      {
+        "a": 7,
+        "b": 74,
+        "score": 3.1701,
+        "support": 13.05,
+        "coRecent": 8,
+        "coAll": 276,
+        "liftRecent": 1.47,
+        "liftBase": 0.937,
+        "adjRecent": 2,
+        "lag1Recent": 7,
+        "lag2Recent": 3,
+        "relations": []
+      },
+      {
+        "a": 33,
+        "b": 47,
+        "score": 3.1674,
+        "support": 13.2,
+        "coRecent": 7,
+        "coAll": 283,
+        "liftRecent": 1.226,
+        "liftBase": 0.995,
+        "adjRecent": 2,
+        "lag1Recent": 8,
+        "lag2Recent": 7,
+        "relations": []
+      },
+      {
+        "a": 12,
+        "b": 16,
+        "score": 3.1405,
+        "support": 12.45,
+        "coRecent": 7,
+        "coAll": 262,
+        "liftRecent": 1.226,
+        "liftBase": 0.955,
+        "adjRecent": 2,
+        "lag1Recent": 7,
+        "lag2Recent": 5,
+        "relations": [
+          "РЯД"
+        ]
+      },
+      {
+        "a": 16,
+        "b": 58,
+        "score": 3.1156,
+        "support": 12.5,
+        "coRecent": 6,
+        "coAll": 260,
+        "liftRecent": 1.065,
+        "liftBase": 0.984,
+        "adjRecent": 3,
+        "lag1Recent": 6,
+        "lag2Recent": 7,
+        "relations": []
+      },
+      {
+        "a": 64,
+        "b": 74,
+        "score": 3.114,
+        "support": 15.2,
+        "coRecent": 9,
+        "coAll": 290,
+        "liftRecent": 1.263,
+        "liftBase": 1.022,
+        "adjRecent": 2,
+        "lag1Recent": 8,
+        "lag2Recent": 7,
+        "relations": [
+          "СТОЛБ",
+          "ВЕРТИКАЛЬ"
+        ]
+      },
+      {
+        "a": 9,
+        "b": 23,
+        "score": 3.1111,
+        "support": 13.25,
+        "coRecent": 7,
+        "coAll": 270,
+        "liftRecent": 1.226,
+        "liftBase": 0.979,
+        "adjRecent": 2,
+        "lag1Recent": 7,
+        "lag2Recent": 9,
+        "relations": []
+      },
+      {
+        "a": 8,
+        "b": 29,
+        "score": 3.1062,
+        "support": 14,
+        "coRecent": 7,
+        "coAll": 280,
+        "liftRecent": 1.101,
+        "liftBase": 0.975,
+        "adjRecent": 3,
+        "lag1Recent": 8,
+        "lag2Recent": 6,
+        "relations": []
+      },
+      {
+        "a": 42,
+        "b": 67,
+        "score": 3.099,
+        "support": 11.9,
+        "coRecent": 7,
+        "coAll": 280,
+        "liftRecent": 1.652,
+        "liftBase": 0.97,
+        "adjRecent": 2,
+        "lag1Recent": 6,
+        "lag2Recent": 4,
+        "relations": []
+      },
+      {
+        "a": 1,
+        "b": 51,
+        "score": 3.0975,
+        "support": 9,
+        "coRecent": 5,
+        "coAll": 249,
+        "liftRecent": 1.377,
+        "liftBase": 0.882,
+        "adjRecent": 2,
+        "lag1Recent": 4,
+        "lag2Recent": 3,
+        "relations": [
+          "СТОЛБ"
+        ]
       }
     ],
     "server": true,
