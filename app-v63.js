@@ -39,7 +39,7 @@
     k5_4:1920,
     k5_5:20000
   });
-  let draws=[],mode='fall',timer=null,fpMode='logic',networkReady=false;
+  let draws=[],mode='fall',timer=null,fpMode='logic',fpPoolView='normal',fpPoolAscending=false,networkReady=false;
   let serverState=null,serverArchive=[],serverFingerprintOnline=false,archiveLookup=new Map();
 
   function valid(o){
@@ -215,6 +215,44 @@
     const hs=new Set((hits||[]).map(Number));
     return `<div class="pool">${(nums||[]).map(n=>`<span class="${hs.has(Number(n))?'hit':''}">${pad(n)}</span>`).join('')}</div>`;
   }
+  // Вертикальные столбцы Столото: СТ1=01,11,...,71; СТ10=10,20,...,80.
+  function fingerprintColumns(nums){
+    const columns=Array.from({length:10},()=>[]);
+    for(const value of nums||[]){
+      const n=Number(value);
+      if(Number.isInteger(n)&&n>=1&&n<=80)columns[(n-1)%10].push(n);
+    }
+    columns.forEach(column=>column.sort((a,b)=>a-b));
+    return columns;
+  }
+  function fingerprintColumnsHtml(nums){
+    const columns=fingerprintColumns(nums);
+    const nonempty=columns.map((numbers,i)=>({index:i+1,numbers})).filter(c=>c.numbers.length);
+    const empty=columns.map((numbers,i)=>({index:i+1,numbers})).filter(c=>!c.numbers.length);
+    return `<div class="fp-column-list">${nonempty.map(c=>`<div class="fp-column-row">
+      <b class="fp-column-label">СТ${c.index} — ${c.numbers.length}</b>
+      <div class="fp-column-balls">${c.numbers.map(n=>`<span>${pad(n)}</span>`).join('')}</div>
+    </div>`).join('')}
+    ${empty.length?`<div class="fp-column-empty">${empty.map(c=>`<span>СТ${c.index} — 0</span>`).join('')}</div>`:''}</div>`;
+  }
+  function fpPoolControlsHtml(label,nums){
+    const columns=fpPoolView==='columns';
+    return `<div class="fp-pool-header"><div class="label">${label}</div>
+      <div class="fp-pool-actions"><button type="button" data-fp-sort aria-pressed="${fpPoolAscending}" title="Числа по возрастанию">Воз</button>
+      <button type="button" data-fp-columns class="${columns?'active':''}" aria-pressed="${columns}" title="По вертикальным столбцам 1–10">СТ−</button></div></div>
+      ${columns?fingerprintColumnsHtml(nums):poolHtml(fpPoolAscending?[...nums].sort((a,b)=>Number(a)-Number(b)):nums)}`;
+  }
+  function bindFpPoolControls(root){
+    root.querySelector('[data-fp-columns]')?.addEventListener('click',()=>{
+      fpPoolView=fpPoolView==='columns'?'normal':'columns';
+      renderFingerprint().catch(console.error);
+    });
+    root.querySelector('[data-fp-sort]')?.addEventListener('click',()=>{
+      fpPoolAscending=!fpPoolAscending;
+      if(fpPoolView==='columns')fpPoolView='normal';
+      renderFingerprint().catch(console.error);
+    });
+  }
   function actualHtml(p){
     if(!p.actual)return '';
     const logic=new Set((p.poolHits||[]).map(Number)),anti=new Set((p.antiHits||[]).map(Number));
@@ -329,8 +367,9 @@
           <div class="signal"><b>${p.neighborsCount||0}</b><span>исторических состояний</span></div>
           <div class="signal"><b>${Number(weights.analog||0).toFixed(3)}</b><span>вес истории после обучения</span></div>
         </div>
-        <div class="label" style="margin-top:12px">${anti?'ANTILOGIC-20':'POOL-20'}</div>${poolHtml(pool)}
+        ${fpPoolControlsHtml(anti?'ANTILOGIC-20':'POOL-20',pool)}
         <div class="label" style="margin-top:12px">К3 · К4 · К5</div>${combosHtml(combos)}`;
+      bindFpPoolControls(box);
     }catch(error){console.error(error);box.innerHTML=`<div class="row small">Ошибка SERVER FINGERPRINT: ${String(error?.message||error)}</div>`}
   }
 
