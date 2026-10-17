@@ -1,11 +1,11 @@
 'use strict';
 
-const CACHE='pozitron-v63-app-6329';
+const CACHE='pozitron-v63-app-6330';
 const REPO_RAW='https://raw.githubusercontent.com/arsazet17/arsazet17-pozitron-keno-v63/main/';
 
 const STATIC_ASSETS=[
-  './','./index.html','./styles-v63.css?v=6329','./archive-v63.css?v=6329',
-  './version-v63.js?v=6329','./storage-v63.js?v=6329','./engine-v63.js?v=6329','./sync-v63-client.js?v=6329','./app-v63.js?v=6329',
+  './','./index.html','./styles-v63.css?v=6330','./archive-v63.css?v=6329',
+  './version-v63.js?v=6329','./storage-v63.js?v=6329','./engine-v63.js?v=6329','./sync-v63-client.js?v=6329','./app-v63.js?v=6330',
   './iris-engine-v63.js?v=6329','./iris-ui-v63.js?v=6329','./iris-v63.css?v=6329',
   './network80-engine-v63.js?v=6329','./network80-ui-v63.js?v=6329','./network80-v63.css?v=6329',
   './iris-archive-beauty.js?v=6329','./iris-archive-beauty.css?v=6329','./iris-waves-v63.js?v=6329',
