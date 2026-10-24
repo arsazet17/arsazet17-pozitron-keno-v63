@@ -188,6 +188,21 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add $FILES
           git commit -m "KENO v6.3 · Столото OAuth · обучение и прогноз"
-          git fetch origin main --prune
-          git rebase origin/main
-          git push origin HEAD:main
+          for attempt in 1 2 3 4 5 6; do
+            echo "STOLOTO MAIN push attempt $attempt/6"
+            git fetch origin main --prune
+            git rebase origin/main
+
+            if git push origin HEAD:main; then
+              echo "STOLOTO MAIN pushed successfully"
+              exit 0
+            fi
+
+            if [ "$attempt" -lt 6 ]; then
+              echo "::warning::main changed during STOLOTO MAIN push; retrying after refresh"
+              sleep $((attempt * 2))
+            fi
+          done
+
+          echo "::error::STOLOTO MAIN could not be pushed after 6 attempts"
+          exit 1
