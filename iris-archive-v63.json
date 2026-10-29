@@ -1,16 +1,16 @@
 {
   "version": "iris-1.4.0",
-  "updatedAt": "2026-10-29T03:14:24.637Z",
-  "sourceCutoff": 330453,
+  "updatedAt": "2026-10-29T03:36:17.334Z",
+  "sourceCutoff": 330454,
   "evaluation": {
     "version": "iris-1.4.0",
-    "state": "invalid",
+    "state": "waiting_fact",
     "signal": "OFF",
-    "sourceCutoff": 330453,
+    "sourceCutoff": 330454,
     "next": {
-      "draw": 330454,
+      "draw": 330455,
       "date": "2026-10-29",
-      "time": "06:17"
+      "time": "06:32"
     },
     "permissionA": false,
     "permissionB": false,
@@ -19,13 +19,13 @@
     "features": [],
     "historyUsed": 5,
     "sourceWindow": [
-      330449,
       330450,
       330451,
       330452,
-      330453
+      330453,
+      330454
     ],
-    "message": "Пропуск или неверное время в исходных пяти тиражах."
+    "message": "Ждём факт №330455. Новые серии по устаревшему окну не запускаются."
   },
   "gateLog": [
     {
@@ -3446506,9 +3446506,42 @@
           "hitCount": 2,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 330454,
+          "date": "2026-10-29",
+          "time": "06:17",
+          "fact": [
+            27,
+            70,
+            24,
+            31,
+            16,
+            76,
+            22,
+            74,
+            21,
+            38,
+            53,
+            78,
+            67,
+            10,
+            28,
+            1,
+            62,
+            69,
+            54,
+            77
+          ],
+          "hits": [
+            77
+          ],
+          "hitCount": 1,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
-      "status": "active",
+      "status": "closed",
       "research": false,
       "conflicts": [],
       "bestHits": 2,
@@ -3446519,12 +3446552,12 @@
         4
       ],
       "bestStep": 1,
-      "averageHits": 2,
+      "averageHits": 1.8,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
       "hasUnknownPayout": false,
-      "noWin": null,
+      "noWin": true,
       "knownPayout": 0
     },
     {
@@ -3447207,9 +3447240,40 @@
           "hitCount": 2,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 330454,
+          "date": "2026-10-29",
+          "time": "06:17",
+          "fact": [
+            27,
+            70,
+            24,
+            31,
+            16,
+            76,
+            22,
+            74,
+            21,
+            38,
+            53,
+            78,
+            67,
+            10,
+            28,
+            1,
+            62,
+            69,
+            54,
+            77
+          ],
+          "hits": [],
+          "hitCount": 0,
+          "payout": 200,
+          "payoutTable": "network80-existing-v63"
         }
       ],
-      "status": "active",
+      "status": "closed",
       "research": false,
       "conflicts": [],
       "bestHits": 3,
@@ -3447217,13 +3447281,13 @@
         1
       ],
       "bestStep": 1,
-      "averageHits": 2,
-      "winCount": 0,
-      "firstWinStep": null,
-      "totalPayout": 0,
+      "averageHits": 1.6,
+      "winCount": 1,
+      "firstWinStep": 5,
+      "totalPayout": 200,
       "hasUnknownPayout": false,
-      "noWin": null,
-      "knownPayout": 0
+      "noWin": false,
+      "knownPayout": 200
     },
     {
       "id": "iris-1.4.0:330449:MINI3:50-60-80",
@@ -3447526,9 +3447590,40 @@
           "hitCount": 1,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 330454,
+          "date": "2026-10-29",
+          "time": "06:17",
+          "fact": [
+            27,
+            70,
+            24,
+            31,
+            16,
+            76,
+            22,
+            74,
+            21,
+            38,
+            53,
+            78,
+            67,
+            10,
+            28,
+            1,
+            62,
+            69,
+            54,
+            77
+          ],
+          "hits": [],
+          "hitCount": 0,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
-      "status": "active",
+      "status": "closed",
       "research": false,
       "conflicts": [],
       "bestHits": 2,
@@ -3447536,12 +3447631,12 @@
         3
       ],
       "bestStep": 3,
-      "averageHits": 1,
+      "averageHits": 0.8,
       "winCount": 1,
       "firstWinStep": 3,
       "totalPayout": 300,
       "hasUnknownPayout": false,
-      "noWin": null,
+      "noWin": false,
       "knownPayout": 300
     },
     {
@@ -3447889,9 +3447984,40 @@
           "hitCount": 0,
           "payout": 0,
           "payoutTable": "network80-existing-v63"
+        },
+        {
+          "draw": 330454,
+          "date": "2026-10-29",
+          "time": "06:17",
+          "fact": [
+            27,
+            70,
+            24,
+            31,
+            16,
+            76,
+            22,
+            74,
+            21,
+            38,
+            53,
+            78,
+            67,
+            10,
+            28,
+            1,
+            62,
+            69,
+            54,
+            77
+          ],
+          "hits": [],
+          "hitCount": 0,
+          "payout": 0,
+          "payoutTable": "network80-existing-v63"
         }
       ],
-      "status": "active",
+      "status": "closed",
       "research": false,
       "conflicts": [],
       "bestHits": 1,
@@ -3447901,12 +3448027,12 @@
         3
       ],
       "bestStep": 1,
-      "averageHits": 0.75,
+      "averageHits": 0.6,
       "winCount": 0,
       "firstWinStep": null,
       "totalPayout": 0,
       "hasUnknownPayout": false,
-      "noWin": null,
+      "noWin": true,
       "knownPayout": 0
     }
   ]
